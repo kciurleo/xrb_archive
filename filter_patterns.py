@@ -163,9 +163,6 @@ for name, g in grp:
         plt.title(f'{name[0]}')
         plt.tight_layout()
 
-        if not os.path.exists(f'/home/kmc249/test_data/internal_plots/{name[0]}/'):
-            os.makedirs(f'/home/kmc249/test_data/internal_plots/{name[0]}/')
-
         plt.savefig(f'/home/kmc249/test_data/internal_plots/{name[0]}/exptimes_{name[0]}.png')
         plt.show()
 
@@ -176,4 +173,5 @@ for name, g in grp:
 
     #then save this pretty detailed log and also maybe a txt file with info like obj name and nicknames,
     #ra and dec, patterns, any percentages
+    g.to_csv(f'/home/kmc249/test_data/internal_plots/{name[0]}/objlog_{name[0]}.csv', index=False)
     

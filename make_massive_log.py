@@ -25,13 +25,14 @@ biglog = pd.concat(dflist, ignore_index=True)
 biglog = biglog[biglog['filename'].str.contains('rccd', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('flat', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('focus', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains('BIASES', case=False, na=False)]
+biglog = biglog[~biglog['OBJECT'].str.contains('BIAS', case=False, na=False)]
+biglog = biglog[~biglog['OBJECT'].str.contains(' for ', case=False, na=False)]
+
 
 # drop duplicates based on 'filename', 'OBJECT', and 'DATE-OBS', keeping disk as default
 biglog = biglog.sort_values('Physical loc', ascending=False)
 biglog = biglog.drop_duplicates(subset=['filename', 'OBJECT', 'DATE-OBS', 'TIME-OBS'])
 biglog.reset_index(drop=True, inplace=True)
-
 for id, row in biglog.iterrows():
     try:
         biglog.at[id, 'proper name']=get_proper_name(row['OBJECT'])

@@ -16,6 +16,13 @@ repo=os.getcwd()
 #get all the files specifically rccd right now 
 files = [f for f in os.listdir(repo) if f.endswith('fits')]
 
+files = []
+for dirpath, dirnames, filenames in os.walk(repo):
+    for f in filenames:
+        if f.endswith('.fits') and f.startswith('rccd'):
+            full_path = os.path.join(dirpath, f)
+            files.append(full_path)
+
 #initialize data frame
 keywords=['OBJECT','RA','DEC','DATE-OBS','TIME-OBS','JD','EXPTIME','SECZ','CCDFLTID','IRFLTID','TILT1','TILT2','TILT3']
 df=pd.DataFrame(columns=['filename'] + keywords)
@@ -27,7 +34,8 @@ for id, file in enumerate(files):
 
     #if reading the whole file is an issue and takes longer than 15 seconds
     try:
-        hdr=fits.getheader(repo+'/'+file)
+        #hdr=fits.getheader(repo+'/'+file)
+        hdr=fits.getheader(file)
     except:
         print(f'Could not read header for {file}')
         for keyword in keywords:
@@ -64,7 +72,8 @@ else:
     print(f"Youngest date: {df['DATE-OBS'].max()}")
 
 df=df.sort_values(by='DATE-OBS')
-
+for id, row in df.iterrows():
+    df.at[id,'filename']=df.at[id,'filename'].split('/')[-1]
 print(df)
 
 #naming log files in a smart way to always include the name of the obj
