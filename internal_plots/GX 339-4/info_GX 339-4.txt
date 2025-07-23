@@ -1,0 +1,8 @@
+Name:
+GX 339-4
+Nicknames:
+['GX339-4', 'GX339', 'GX 339-4']
+Filter pattern(s):
+['B', 'V', 'I']	['V', 'I']
+Exptime pattern(s):
+[180.0, 300.0, 180.0]	[300.0, 300.0]

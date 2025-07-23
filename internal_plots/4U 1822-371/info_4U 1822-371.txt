@@ -1,0 +1,8 @@
+Name:
+4U 1822-371
+Nicknames:
+['3A 1822-371', '4u 1822-371']
+Filter pattern(s):
+['B', 'I', 'V']	['I', 'V']
+Exptime pattern(s):
+[100.0, 100.0, 100.0]	[100.0, 100.0]

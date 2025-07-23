@@ -1,0 +1,8 @@
+Name:
+J1818-245
+Nicknames:
+['J1818-245', 'XTE J1818-245']
+Filter pattern(s):
+['I']	[]
+Exptime pattern(s):
+[540.0]	[]

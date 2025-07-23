@@ -1,0 +1,8 @@
+Name:
+J1659-152
+Nicknames:
+['MAXI_J1659-152']
+Filter pattern(s):
+['R', 'I']	[]
+Exptime pattern(s):
+[500.0, 360.0]	[]

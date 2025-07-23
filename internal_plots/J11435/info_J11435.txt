@@ -1,0 +1,8 @@
+Name:
+J11435
+Nicknames:
+['J11435-6109']
+Filter pattern(s):
+['V', 'I']	[]
+Exptime pattern(s):
+[300.0, 330.0]	[]

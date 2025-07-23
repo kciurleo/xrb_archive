@@ -1,0 +1,8 @@
+Name:
+GRO J1655-40
+Nicknames:
+['GRO J1655-40', 'J1655-40', 'GROJ1655-40', 'GRO 1655-40']
+Filter pattern(s):
+['B', 'V', 'I']	['V', 'I']
+Exptime pattern(s):
+[480.0, 240.0, 120.0]	[120.0, 120.0]

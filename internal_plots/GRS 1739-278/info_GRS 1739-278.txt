@@ -1,0 +1,8 @@
+Name:
+GRS 1739-278
+Nicknames:
+['GRS 1739-278']
+Filter pattern(s):
+['V']	[]
+Exptime pattern(s):
+[900.0]	[]

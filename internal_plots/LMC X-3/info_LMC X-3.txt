@@ -1,0 +1,8 @@
+Name:
+LMC X-3
+Nicknames:
+['LMCX-3', 'LMC X-3']
+Filter pattern(s):
+['B', 'B', 'I', 'I', 'V', 'V']	['B', 'I', 'V']
+Exptime pattern(s):
+[300.0, 300.0, 300.0, 300.0, 300.0, 300.0]	[300.0, 300.0, 300.0]

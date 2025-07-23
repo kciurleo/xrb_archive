@@ -1,0 +1,8 @@
+Name:
+IGR J17091-3624
+Nicknames:
+['J1709', 'IGR_J17091']
+Filter pattern(s):
+['I', 'R']	['B', 'R']
+Exptime pattern(s):
+[480.0, 480.0]	[480.0, 480.0]

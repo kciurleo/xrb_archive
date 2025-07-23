@@ -1,0 +1,8 @@
+Name:
+J1813-095
+Nicknames:
+['J1813-095']
+Filter pattern(s):
+['I', 'V', 'B']	[]
+Exptime pattern(s):
+[240.0, 240.0, 240.0]	[]

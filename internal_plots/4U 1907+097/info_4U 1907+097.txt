@@ -1,0 +1,8 @@
+Name:
+4U 1907+097
+Nicknames:
+['4u 1907+097']
+Filter pattern(s):
+['I', 'V']	[]
+Exptime pattern(s):
+[300.0, 300.0]	[]

@@ -1,0 +1,8 @@
+Name:
+J1957+032
+Nicknames:
+['MAXI1957+032']
+Filter pattern(s):
+['R', 'V', 'I', 'B']	[]
+Exptime pattern(s):
+[200.0, 200.0, 200.0, 200.0]	[]

@@ -1,0 +1,8 @@
+Name:
+J0911
+Nicknames:
+['SwiftJ0911']
+Filter pattern(s):
+['I']	[]
+Exptime pattern(s):
+[314.0]	[]

@@ -1,0 +1,8 @@
+Name:
+4U 1755-338
+Nicknames:
+['4U1755-338']
+Filter pattern(s):
+['R']	[]
+Exptime pattern(s):
+[180.0]	[]

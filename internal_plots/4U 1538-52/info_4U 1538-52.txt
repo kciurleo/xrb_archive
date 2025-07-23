@@ -1,0 +1,8 @@
+Name:
+4U 1538-52
+Nicknames:
+['4u 1538-52', '4U 1538-52']
+Filter pattern(s):
+['B', 'I', 'V']	[]
+Exptime pattern(s):
+[60.0, 15.0, 30.0]	[]

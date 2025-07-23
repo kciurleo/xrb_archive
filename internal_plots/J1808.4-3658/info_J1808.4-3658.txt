@@ -1,0 +1,8 @@
+Name:
+J1808.4-3658
+Nicknames:
+['SAX_J1808.4-3658']
+Filter pattern(s):
+['R', 'I']	['I', 'R']
+Exptime pattern(s):
+[360.0, 360.0]	[360.0, 360.0]

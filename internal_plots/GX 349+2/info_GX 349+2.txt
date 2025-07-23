@@ -1,0 +1,8 @@
+Name:
+GX 349+2
+Nicknames:
+['GX 349+2']
+Filter pattern(s):
+['I', 'V']	[]
+Exptime pattern(s):
+[300.0, 300.0]	[]

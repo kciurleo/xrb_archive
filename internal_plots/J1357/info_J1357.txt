@@ -1,0 +1,8 @@
+Name:
+J1357
+Nicknames:
+['J1357']
+Filter pattern(s):
+['I', 'V']	['I']
+Exptime pattern(s):
+[300.0, 300.0]	[300.0]

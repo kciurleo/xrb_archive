@@ -1,0 +1,8 @@
+Name:
+J1828-249
+Nicknames:
+['J1828-249']
+Filter pattern(s):
+['R']	[]
+Exptime pattern(s):
+[300.0]	[]

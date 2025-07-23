@@ -1,0 +1,8 @@
+Name:
+J1858.6-0814
+Nicknames:
+['Swift 1858', 'Swift1858', 'J1858.6-0814']
+Filter pattern(s):
+['B', 'R']	[]
+Exptime pattern(s):
+[180.0, 180.0]	[]

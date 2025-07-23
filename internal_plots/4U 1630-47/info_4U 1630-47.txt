@@ -1,0 +1,8 @@
+Name:
+4U 1630-47
+Nicknames:
+['4U1630-47']
+Filter pattern(s):
+['I', 'V']	['V']
+Exptime pattern(s):
+[570.0, 570.0]	[1050.0]

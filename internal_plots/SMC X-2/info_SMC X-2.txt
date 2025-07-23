@@ -1,0 +1,8 @@
+Name:
+SMC X-2
+Nicknames:
+['SMCX-2']
+Filter pattern(s):
+['I', 'R', 'B']	[]
+Exptime pattern(s):
+[200.0, 200.0, 200.0]	[]

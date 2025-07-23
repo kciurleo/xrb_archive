@@ -1,0 +1,8 @@
+Name:
+J0051-736
+Nicknames:
+['MAXIJ0051-736']
+Filter pattern(s):
+['R', 'B', 'R']	[]
+Exptime pattern(s):
+[280.0, 210.0, 200.0]	[]

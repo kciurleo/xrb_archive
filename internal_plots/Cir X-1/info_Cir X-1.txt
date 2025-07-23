@@ -1,0 +1,8 @@
+Name:
+Cir X-1
+Nicknames:
+['Cir X-1']
+Filter pattern(s):
+['V']	[]
+Exptime pattern(s):
+[540.0]	[]

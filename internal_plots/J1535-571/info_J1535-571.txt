@@ -1,0 +1,8 @@
+Name:
+J1535-571
+Nicknames:
+['J1535-571']
+Filter pattern(s):
+['V', 'I']	['I']
+Exptime pattern(s):
+[600.0, 600.0]	[600.0]

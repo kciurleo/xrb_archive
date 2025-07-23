@@ -1,0 +1,8 @@
+Name:
+4U 1254-690
+Nicknames:
+['4u 1254-690']
+Filter pattern(s):
+['I', 'V']	[]
+Exptime pattern(s):
+[600.0, 600.0]	[]

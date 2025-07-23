@@ -1,0 +1,8 @@
+Name:
+Sco X-1
+Nicknames:
+['Sco x-1', 'Sco X-1']
+Filter pattern(s):
+['B', 'I']	['I', 'R']
+Exptime pattern(s):
+[120.0, 120.0]	[300.0, 300.0]

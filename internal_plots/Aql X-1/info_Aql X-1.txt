@@ -1,0 +1,8 @@
+Name:
+Aql X-1
+Nicknames:
+['Aql X-1', 'Aqll X-1', 'AqlX-1']
+Filter pattern(s):
+['R', 'I', 'V']	['B', 'R', 'V']
+Exptime pattern(s):
+[300.0, 600.0, 600.0]	[600.0, 300.0, 600.0]

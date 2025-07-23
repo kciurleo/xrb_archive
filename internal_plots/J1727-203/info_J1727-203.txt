@@ -1,0 +1,8 @@
+Name:
+J1727-203
+Nicknames:
+['J1727-203']
+Filter pattern(s):
+['I', 'V', 'B']	[]
+Exptime pattern(s):
+[240.0, 240.0, 240.0]	[]

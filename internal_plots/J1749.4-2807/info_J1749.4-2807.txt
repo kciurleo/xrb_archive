@@ -1,0 +1,8 @@
+Name:
+J1749.4-2807
+Nicknames:
+['Swift_J1749']
+Filter pattern(s):
+['I']	[]
+Exptime pattern(s):
+[360.0]	[]

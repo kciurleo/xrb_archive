@@ -1,0 +1,8 @@
+Name:
+GRS 1716−249
+Nicknames:
+['GRS1716']
+Filter pattern(s):
+['I', 'I', 'I', 'V', 'V', 'V']	[]
+Exptime pattern(s):
+[90.0, 90.0, 90.0, 90.0, 90.0, 90.0]	[]

@@ -1,0 +1,8 @@
+Name:
+A0620-00
+Nicknames:
+['A0620-00', 'A0620', nan]
+Filter pattern(s):
+['B', 'V', 'I']	['V', 'I']
+Exptime pattern(s):
+[360.0, 360.0, 360.0]	[360.0, 360.0]

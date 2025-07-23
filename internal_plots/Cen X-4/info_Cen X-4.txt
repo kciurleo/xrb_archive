@@ -1,0 +1,8 @@
+Name:
+Cen X-4
+Nicknames:
+['Cen X-4', 'CenX-4']
+Filter pattern(s):
+['I', 'V', 'V']	['I', 'V']
+Exptime pattern(s):
+[900.0, 900.0, 900.0]	[900.0, 900.0]

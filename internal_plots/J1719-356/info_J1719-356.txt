@@ -1,0 +1,8 @@
+Name:
+J1719-356
+Nicknames:
+['J171900.4-353217']
+Filter pattern(s):
+['I']	[]
+Exptime pattern(s):
+[360.0]	[]

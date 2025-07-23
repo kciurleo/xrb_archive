@@ -1,0 +1,8 @@
+Name:
+Nova Musca
+Nicknames:
+['Nova Musca', 'Nova Musc 1991', nan, 'NovaMusca']
+Filter pattern(s):
+['I', 'I', 'V', 'V']	['I', 'V']
+Exptime pattern(s):
+[900.0, 900.0, 900.0, 900.0]	[900.0, 900.0]

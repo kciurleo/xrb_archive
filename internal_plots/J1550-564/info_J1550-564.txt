@@ -1,0 +1,8 @@
+Name:
+J1550-564
+Nicknames:
+['XTEJ1550-564', 'XTE J1550-564']
+Filter pattern(s):
+['I', 'V']	['V']
+Exptime pattern(s):
+[600.0, 600.0]	[600.0]

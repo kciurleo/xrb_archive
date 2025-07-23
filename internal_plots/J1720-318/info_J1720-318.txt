@@ -1,0 +1,8 @@
+Name:
+J1720-318
+Nicknames:
+['XTE J1720-318']
+Filter pattern(s):
+['I', 'V']	['I']
+Exptime pattern(s):
+[600.0, 900.0]	[600.0]

@@ -1,0 +1,8 @@
+Name:
+GS 1354-645
+Nicknames:
+['GS1354-645', 'GS 1354-645']
+Filter pattern(s):
+['I', 'V']	[]
+Exptime pattern(s):
+[360.0, 360.0]	[]

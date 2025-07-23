@@ -1,0 +1,8 @@
+Name:
+J1746-322
+Nicknames:
+['XTE J1746-322']
+Filter pattern(s):
+['I']	[]
+Exptime pattern(s):
+[350.0]	[]

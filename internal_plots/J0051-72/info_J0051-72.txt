@@ -1,0 +1,8 @@
+Name:
+J0051-72
+Nicknames:
+['J0051-72', 'Swift J0051-72']
+Filter pattern(s):
+['B', 'B', 'R', 'R']	['B', 'R']
+Exptime pattern(s):
+[300.0, 300.0, 300.0, 300.0]	[300.0, 300.0]

@@ -1,0 +1,8 @@
+Name:
+LMC X-1
+Nicknames:
+['LMC X-1']
+Filter pattern(s):
+['B', 'V']	[]
+Exptime pattern(s):
+[120.0, 120.0]	[]
