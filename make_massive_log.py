@@ -27,6 +27,7 @@ biglog = biglog[~biglog['OBJECT'].str.contains('flat', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('focus', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('BIAS', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains(' for ', case=False, na=False)]
+biglog = biglog[~biglog['OBJECT'].str.contains(' JUNK ', case=False, na=False)]
 
 
 # drop duplicates based on 'filename', 'OBJECT', and 'DATE-OBS', keeping disk as default
