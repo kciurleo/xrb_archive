@@ -1,8 +1,0 @@
-Name:
-4U 1543-47
-Nicknames:
-['4U1543-47', '4U1543']
-Filter pattern(s):
-['B', 'I', 'V']	['V', 'I']
-Exptime pattern(s):
-[300.0, 180.0, 180.0]	[180.0, 180.0]
