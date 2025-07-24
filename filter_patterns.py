@@ -87,7 +87,6 @@ skipnames=['4U 1254-690',
  'J1701-462',
  'J1719-356',
  'J1720-318',
- 'J1726-476',
  'J1727-203',
  'J1746-322',
  'J1749.4-2807',
@@ -103,11 +102,13 @@ skipnames=['4U 1254-690',
  'J1957+032',
  'LMC X-1',
  'LMC X-2',
+ 'LMC X-3',
  'Nova Musca',
  'SMC X-1',
  'SMC X-2',
  'SMC X-3',
- 'Sco X-1',]
+ 'Sco X-1',
+ 'V4641']
 
 for name, g in grp:
     if name[0] in skipnames:
