@@ -14,17 +14,19 @@ warnings.filterwarnings('ignore', category=UserWarning, append=True)
 repo=os.getcwd()
 
 #get all the files specifically rccd right now 
-files = [f for f in os.listdir(repo) if f.endswith('fits')]
+#files = [f for f in os.listdir(repo) if f.endswith('fits')]
 
 files = []
 for dirpath, dirnames, filenames in os.walk(repo):
+    if 'reduced' in dirpath or 'aqlx1_yalo_IR' in dirpath:
+        continue
     for f in filenames:
-        if f.endswith('.fits') and f.startswith('rccd'):
+        if f.endswith('.fits') and (f.startswith('binir') or f.startswith('ir')):
             full_path = os.path.join(dirpath, f)
             files.append(full_path)
 
 #initialize data frame
-keywords=['OBJECT','RA','DEC','DATE-OBS','TIME-OBS','JD','EXPTIME','SECZ','CCDFLTID','IRFLTID','TILT1','TILT2','TILT3']
+keywords=['OBJECT','RA','DEC','DATE-OBS','TIME-OBS','JD','EXPTIME','SECZ','CCDFLTID','IRFLTID','TILT1','TILT2','TILT3','OWNER']
 df=pd.DataFrame(columns=['filename'] + keywords)
 print('Reading headers...')
 
@@ -34,6 +36,7 @@ for id, file in enumerate(files):
 
     #if reading the whole file is an issue and takes longer than 15 seconds
     try:
+        print(f'Reading {file}')
         #hdr=fits.getheader(repo+'/'+file)
         hdr=fits.getheader(file)
     except:
