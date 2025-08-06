@@ -88,7 +88,7 @@ for name, g in grp:
     if not os.path.exists(f'/home/kmc249/test_data/xrb_archive/internal_plots/{name[0]}/'):
         os.makedirs(f'/home/kmc249/test_data/xrb_archive/internal_plots/{name[0]}/')
 
-    plt.savefig(f'/home/kmc249/test_data/xrb_archive/internal_plots/{name[0]}/calendar_{name[0]}.png')
+    plt.savefig(f'/home/kmc249/test_data/xrb_archive/internal_plots/{name[0]}/optical_calendar_{name[0]}.png')
     #plt.show()
     plt.close(f)
     print(f'did {name[0]}')

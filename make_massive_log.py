@@ -10,10 +10,11 @@ logs=glob.glob('**/LOG*csv', recursive=True)
 #make a list of all the logs
 dflist=[]
 for log in logs:
-    df=pd.read_csv(log)
+    df=pd.read_csv(log, low_memory=False)
     df['Location']=log.split('LOG_')[0]
     df['prop name help']=log.split('LOG_')[1].split('.')[0]
-    if df['Location'][0]=='optical_CD_header_logs/':
+    #if df['Location'][0]=='optical_CD_header_logs/':
+    if 'CD_header_logs' in df['Location'][0]:
         df['Physical loc']='CD'
     else:
         df['Physical loc']='Disk'
@@ -22,8 +23,10 @@ for log in logs:
 biglog = pd.concat(dflist, ignore_index=True)
 
 #filter to ignore some stuff, check it's just rccd
-biglog = biglog[biglog['filename'].str.contains('rccd', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains('flat', case=False, na=False)]
+#biglog = biglog[biglog['filename'].str.contains('rccd', case=False, na=False)]
+biglog = biglog[biglog['filename'].str.contains('ir', case=False, na=False)]
+biglog = biglog[~biglog['OBJECT'].str.contains('shift', case=False, na=False)]
+#biglog = biglog[~biglog['OBJECT'].str.contains('flat', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('focus', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('BIAS', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains(' for ', case=False, na=False)]
@@ -55,4 +58,4 @@ for id, row in biglog.iterrows():
                 
 
 
-biglog.to_csv('all_optical_log.csv', index=False)
+biglog.to_csv('all_ir_log.csv', index=False)
