@@ -110,8 +110,10 @@ skipnames=['4U 1254-690',
  'Sco X-1',
  'V4641']
 
+donames=['A0620-00']
+
 for name, g in grp:
-    if name[0] in skipnames:
+    if name[0] not in donames:
         continue
     #do some sorting
     g.sort_values(by=['nice time'], ascending=True, inplace=True)
