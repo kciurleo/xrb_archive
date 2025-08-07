@@ -12,9 +12,9 @@ from collections import Counter
 infile='/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/objlog_A0620-00.csv'
 
 #list of patterns, should correspond
-filt_pats=[['B', 'V', 'I', 'V', 'I'], ['B', 'V', 'I'],['B', 'V', 'I'], ['B', 'V', 'I'], ['V', 'I'], ['V', 'I'],['I','V'], ['I'], ['B'], ['V']]
-exp_pats=[[360.0, 360.0, 360.0, 360.0, 360.0],[360.0, 360.0, 360.0], [240.0, 240.0, 240.0], [300.0, 240.0, 240.0], [360.0, 360.0], [660.0, 660.0],[240.0,240.0], [240.0], [360.0], [360.0]]
-colors=['sienna','g','violet','k','yellow', 'gray', 'blue','cyan', 'darkorange','indigo']
+filt_pats=[['B', 'V', 'I', 'V', 'I'], ['B', 'V', 'I'],['B', 'V', 'I'], ['B', 'V', 'I'], ['V', 'I'], ['V', 'I'], ['I'], ['B'], ['V']]
+exp_pats=[[360.0, 360.0, 360.0, 360.0, 360.0],[360.0, 360.0, 360.0], [240.0, 240.0, 240.0], [300.0, 240.0, 240.0], [360.0, 360.0], [660.0, 660.0], [240.0], [360.0], [360.0]]
+colors=['sienna','g','violet','k','yellow', 'blue', 'cyan', 'darkorange','indigo']
 
 table=pd.read_csv(infile)
 
@@ -47,7 +47,7 @@ for pnum in range(len(filt_pats)):
             table.loc[i:i+n-1, 'in FULL pattern'] = pnum
 
 #plot things
-f, a = plt.subplots(11, 2, figsize=(22, 16),layout='constrained')
+f, a = plt.subplots(11, 2, figsize=(11, 8),layout='constrained')
 axes=np.ravel(a, order='F')
 
 #for each year, find the associate obs
@@ -79,6 +79,10 @@ plt.legend(ncol=2)
 
 if not os.path.exists(f'/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/'):
     os.makedirs(f'/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/')
+
+for pnum in range(len(filt_pats)):
+    df=table.loc[table['in FULL pattern']==pnum]
+    print(df[['filename','DATE-OBS','TIME-OBS','JD','EXPTIME','CCDFLTID','in FULL pattern']])
 
 plt.savefig(f'/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/real_patterns_A0620-00.png', dpi=300)
 plt.show()
