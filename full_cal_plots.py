@@ -41,7 +41,7 @@ years = np.arange(1998, 2020, 1)
 for name, g in grp:
     f, a = plt.subplots(11, 2, figsize=(10, 8), sharey=True)
     axes = np.ravel(a, order='F')
-
+    to_upload=[]
     for id, year in enumerate(years):
         yrtable = g.loc[g['DATE-OBS'].dt.year == year]
 
@@ -56,6 +56,7 @@ for name, g in grp:
             elif row['Physical loc'] == 'CD':
                 c = 'gold'
                 z = 2
+                to_upload.append(row.to_dict())
             elif row['Physical loc'] == 'Disk':
                 c = 'lightgreen'
                 z = 3
@@ -94,4 +95,18 @@ for name, g in grp:
     plt.savefig(f'{outdir}/combined_calendar_{name[0]}.png')
     #plt.show()
     plt.close(f)
-    print(f'did {name[0]}')
+
+    #make a list of the CDs I need to upload per obj
+    upload_df = pd.DataFrame(to_upload)
+    inv=pd.read_csv('/home/kmc249/test_data/inventory_bydisk_08_07_25.csv', low_memory=False)
+    if not upload_df.empty:
+        upload_df = upload_df.merge(inv, how='left', left_on='log name', right_on='Logname')
+        for id, row in upload_df.iterrows():
+            upload_df.at[id, 'spot'] = f"{row['Location_y']}:{row['Page']}:{row['Slot']}"
+        
+        st=set(upload_df['spot'])
+    else:
+        st=''
+
+    print(f"{name[0]}: {st}")
+    #print(f'did {name[0]}')

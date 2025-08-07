@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 infile='/home/kmc249/test_data/massive_log_temp.csv'
+infile='/home/kmc249/test_data/massive_log_temp.csv'
 
 table=pd.read_csv(infile, low_memory=False)
 table['DATE-OBS'] = pd.to_datetime(table['DATE-OBS'], errors='coerce')

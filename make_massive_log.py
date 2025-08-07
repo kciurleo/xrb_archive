@@ -11,6 +11,7 @@ logs=glob.glob('**/LOG*csv', recursive=True)
 dflist=[]
 for log in logs:
     df=pd.read_csv(log, low_memory=False)
+    df['log name']=f"{log.split('/')[-2]}/{log.split('/')[-1]}"
     df['Location']=log.split('LOG_')[0]
     df['prop name help']=log.split('LOG_')[1].split('.')[0]
     #if df['Location'][0]=='optical_CD_header_logs/':
@@ -23,19 +24,21 @@ for log in logs:
 biglog = pd.concat(dflist, ignore_index=True)
 
 #filter to ignore some stuff, check it's just rccd
-#biglog = biglog[biglog['filename'].str.contains('rccd', case=False, na=False)]
-biglog = biglog[biglog['filename'].str.contains('ir', case=False, na=False)]
+biglog = biglog[biglog['filename'].str.contains('rccd', case=False, na=False)]
+#biglog = biglog[biglog['filename'].str.contains('ir', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('shift', case=False, na=False)]
-#biglog = biglog[~biglog['OBJECT'].str.contains('flat', case=False, na=False)]
+biglog = biglog[~biglog['OBJECT'].str.contains('flat', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('focus', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('BIAS', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains(' for ', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains(' JUNK ', case=False, na=False)]
 
-
+#make .gz also count as duplicates
+biglog['filename_base'] = biglog['filename'].str.replace(r'\.gz$', '', regex=True)
 # drop duplicates based on 'filename', 'OBJECT', and 'DATE-OBS', keeping disk as default
 biglog = biglog.sort_values('Physical loc', ascending=False)
-biglog = biglog.drop_duplicates(subset=['filename', 'OBJECT', 'DATE-OBS', 'TIME-OBS'])
+biglog = biglog.drop_duplicates(subset=['filename_base', 'OBJECT', 'DATE-OBS', 'TIME-OBS'])
+biglog = biglog.drop(columns='filename_base')
 biglog.reset_index(drop=True, inplace=True)
 for id, row in biglog.iterrows():
     try:
@@ -58,4 +61,4 @@ for id, row in biglog.iterrows():
                 
 
 
-biglog.to_csv('all_ir_log.csv', index=False)
+biglog.to_csv('all_optical_log.csv', index=False)
