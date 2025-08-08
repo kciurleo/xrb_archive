@@ -1,0 +1,8 @@
+Name:
+Cen X-4
+Nicknames:
+['CenX-4', 'Dark 45s', nan, 'Cen X-4', 'Dome H On, Dither=2/40', 'Dome H Off, Dither=2/40', 'K Dome Flat Lights OFF', 'H Dome Flat Lights ON', 'H Dome Flat Lights OFF', 'Dome K On, Dither=2/40', 'Dome K Off, Dither', 'junk IR image', 'K Dome Flat Lights ON']
+Filter pattern(s):
+['H', 'H', 'H', 'H']	[]
+Exptime pattern(s):
+[40.04, 40.04, 40.04, 40.04]	[]

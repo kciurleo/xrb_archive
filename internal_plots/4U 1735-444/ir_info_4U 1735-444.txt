@@ -1,0 +1,8 @@
+Name:
+4U 1735-444
+Nicknames:
+['4u 1734-444']
+Filter pattern(s):
+['J', 'J', 'J', 'J']	[]
+Exptime pattern(s):
+[30.04, 30.04, 30.05, 30.05]	[]

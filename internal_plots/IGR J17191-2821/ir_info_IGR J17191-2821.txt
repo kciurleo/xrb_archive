@@ -1,0 +1,8 @@
+Name:
+IGR J17191-2821
+Nicknames:
+['IGR J17191-2821']
+Filter pattern(s):
+['H', 'H', 'H', 'H']	[]
+Exptime pattern(s):
+[30.04, 30.05, 30.05, 30.04]	[]

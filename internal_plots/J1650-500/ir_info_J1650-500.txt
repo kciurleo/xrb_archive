@@ -1,0 +1,8 @@
+Name:
+J1650-500
+Nicknames:
+['X1650-500']
+Filter pattern(s):
+['H']	[]
+Exptime pattern(s):
+[90.02]	[]

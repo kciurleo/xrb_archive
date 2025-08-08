@@ -1,0 +1,8 @@
+Name:
+J1752-223
+Nicknames:
+['XTE JI752-223', 'XTEJ1752-223']
+Filter pattern(s):
+['H', 'H', 'H', 'H', 'H', 'H']	[]
+Exptime pattern(s):
+[40.04, 40.04, 40.04, 40.04, 40.04, 40.04]	[]

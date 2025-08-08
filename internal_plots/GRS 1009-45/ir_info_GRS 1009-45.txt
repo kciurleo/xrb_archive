@@ -1,0 +1,8 @@
+Name:
+GRS 1009-45
+Nicknames:
+['GRS 1009-45', 'GRS1009-45']
+Filter pattern(s):
+['J', 'J', 'J', 'J']	[]
+Exptime pattern(s):
+[40.04, 40.04, 40.04, 40.04]	[]

@@ -1,0 +1,8 @@
+Name:
+Cen X-3
+Nicknames:
+['Cen X-3']
+Filter pattern(s):
+['J', 'J', 'J', 'J', 'J']	[]
+Exptime pattern(s):
+[25.05, 25.04, 25.04, 25.04, 25.04]	[]

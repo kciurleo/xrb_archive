@@ -1,0 +1,8 @@
+Name:
+J11435
+Nicknames:
+['BJ Dome Flat', 'BK Dome Flat', 'J11435-6109']
+Filter pattern(s):
+['J', 'J', 'J', 'J', 'J', 'J', 'K', 'K', 'K', 'K', 'K', 'K']	[]
+Exptime pattern(s):
+[35.04, 35.04, 35.05, 35.04, 35.04, 35.05, 40.05, 40.04, 40.04, 40.04, 40.05, 40.04]	[]

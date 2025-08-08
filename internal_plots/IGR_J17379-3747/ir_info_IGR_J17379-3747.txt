@@ -1,0 +1,8 @@
+Name:
+IGR_J17379-3747
+Nicknames:
+['IGR_J17379-374', 'IGR_J17379-3747']
+Filter pattern(s):
+['H', 'H', 'H', 'H', 'H']	[]
+Exptime pattern(s):
+[40.04, 40.04, 40.04, 40.04, 40.04]	[]

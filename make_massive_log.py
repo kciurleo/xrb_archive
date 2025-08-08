@@ -31,7 +31,10 @@ biglog = biglog[~biglog['OBJECT'].str.contains('flat', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('focus', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains('BIAS', case=False, na=False)]
 biglog = biglog[~biglog['OBJECT'].str.contains(' for ', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains(' JUNK ', case=False, na=False)]
+biglog = biglog[~biglog['OBJECT'].str.contains('JUNK', case=False, na=False)]
+biglog = biglog[~biglog['OBJECT'].str.contains('dome', case=False, na=False)]
+biglog = biglog[~biglog['OBJECT'].str.contains('dark', case=False, na=False)]
+
 
 #make .gz also count as duplicates
 biglog['filename_base'] = biglog['filename'].str.replace(r'\.gz$', '', regex=True)

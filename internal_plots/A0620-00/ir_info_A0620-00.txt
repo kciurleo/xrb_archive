@@ -1,0 +1,8 @@
+Name:
+A0620-00
+Nicknames:
+['H_Bright', 'Dark 45s', 'junk', nan, 'A0620', 'Dome H Off, Dither=2/40', 'H Dome Flat Lights OFF', 'H Dome Flat Lights ON', 'A0620-00', 'Dome H On, Dither=2/40']
+Filter pattern(s):
+['H', 'H', 'H', 'H']	[]
+Exptime pattern(s):
+[30.04, 30.04, 30.04, 30.04]	[]

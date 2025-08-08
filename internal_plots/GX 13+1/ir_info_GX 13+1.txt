@@ -1,0 +1,8 @@
+Name:
+GX 13+1
+Nicknames:
+['GX13+1']
+Filter pattern(s):
+['K', 'K', 'K', 'K', 'K']	[]
+Exptime pattern(s):
+[60.03, 60.03, 60.03, 60.03, 60.03]	[]

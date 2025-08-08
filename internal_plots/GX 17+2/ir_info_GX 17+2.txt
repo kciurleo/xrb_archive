@@ -1,0 +1,8 @@
+Name:
+GX 17+2
+Nicknames:
+['GX 17+2']
+Filter pattern(s):
+['K', 'K', 'K']	['J', 'J', 'J']
+Exptime pattern(s):
+[50.04, 50.04, 50.04]	[30.04, 30.04, 30.04]

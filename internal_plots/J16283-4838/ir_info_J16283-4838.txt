@@ -1,0 +1,8 @@
+Name:
+J16283-4838
+Nicknames:
+['J16283-4838']
+Filter pattern(s):
+['K', 'K', 'K', 'K', 'K', 'K']	[]
+Exptime pattern(s):
+[60.03, 60.03, 60.03, 60.03, 60.03, 60.03]	[]

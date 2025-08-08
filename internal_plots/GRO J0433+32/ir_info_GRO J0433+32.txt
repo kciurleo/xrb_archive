@@ -1,0 +1,8 @@
+Name:
+GRO J0433+32
+Nicknames:
+['GRO J0433+32']
+Filter pattern(s):
+['H', 'H', 'H', 'H', 'H', 'H', 'H']	[]
+Exptime pattern(s):
+[90.02, 90.02, 90.03, 90.02, 90.02, 90.02, 90.02]	[]

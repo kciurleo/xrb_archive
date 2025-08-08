@@ -1,0 +1,8 @@
+Name:
+J1543-564
+Nicknames:
+['4U5143-47', 'MAXI J1543-564', 'MAXIJ1543-564']
+Filter pattern(s):
+['K', 'K', 'K', 'K']	[]
+Exptime pattern(s):
+[90.02, 90.02, 90.02, 90.02]	[]

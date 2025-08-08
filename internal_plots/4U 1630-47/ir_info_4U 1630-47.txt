@@ -1,0 +1,8 @@
+Name:
+4U 1630-47
+Nicknames:
+['4U1630-47', 'JUNK', '4U1630-472']
+Filter pattern(s):
+['K', 'K', 'K', 'K']	[]
+Exptime pattern(s):
+[120.01, 120.01, 120.01, 120.01]	[]

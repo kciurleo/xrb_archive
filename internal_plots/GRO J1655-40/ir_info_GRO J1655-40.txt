@@ -1,0 +1,8 @@
+Name:
+GRO J1655-40
+Nicknames:
+['junk', 'Dark 45s', nan, 'GROJ1655-40', 'J1655-40', 'junk IR image', 'Dome K Off, Dither', 'K Dome Flat Lights OFF', 'Dome K On, Dither=2/40', 'K Dome Flat Lights ON', 'GRO J1655-40']
+Filter pattern(s):
+['J', 'J', 'J', 'J', 'K', 'K', 'K', 'K']	[]
+Exptime pattern(s):
+[60.03, 60.03, 60.03, 60.03, 40.04, 40.04, 40.04, 40.04]	[]

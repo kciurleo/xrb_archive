@@ -1,0 +1,8 @@
+Name:
+V4641
+Nicknames:
+['v4641 Sgr', nan, 'H_Bright', 'V4641', 'V4641 Sgr', 'K_Bright']
+Filter pattern(s):
+['J', 'J', 'J', 'J']	['K', 'K', 'K', 'K']
+Exptime pattern(s):
+[15.05, 15.05, 15.05, 15.05]	[20.05, 20.05, 20.05, 20.05]

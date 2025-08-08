@@ -1,0 +1,8 @@
+Name:
+J1631-478
+Nicknames:
+['MAX J1631-478']
+Filter pattern(s):
+['H']	[]
+Exptime pattern(s):
+[60.03]	[]

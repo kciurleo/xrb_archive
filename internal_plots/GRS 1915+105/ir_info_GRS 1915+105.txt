@@ -1,0 +1,8 @@
+Name:
+GRS 1915+105
+Nicknames:
+['grs1915', 'GRS1915+105', 'K_Bright', nan, 'K_Junk', 'GRXS1915+105', 'K Dome Flat Lights OFF', 'K Dome Flat Lights ON']
+Filter pattern(s):
+['K', 'K', 'K', 'K']	[]
+Exptime pattern(s):
+[40.04, 40.04, 40.04, 40.04]	[]

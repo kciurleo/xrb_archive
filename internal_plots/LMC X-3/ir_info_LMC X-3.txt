@@ -1,0 +1,8 @@
+Name:
+LMC X-3
+Nicknames:
+['LMCX-3', 'LMC X-3']
+Filter pattern(s):
+['J', 'J', 'J']	[]
+Exptime pattern(s):
+[30.04, 30.04, 30.04]	[]
