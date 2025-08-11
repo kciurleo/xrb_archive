@@ -18,10 +18,8 @@ repo=os.getcwd()
 
 files = []
 for dirpath, dirnames, filenames in os.walk(repo):
-    if 'reduced' in dirpath or 'aqlx1_yalo_IR' in dirpath:
-        continue
     for f in filenames:
-        if f.endswith('.fits') and (f.startswith('binir') or f.startswith('ir')):
+        if f.endswith('.fits') and (f.startswith('rccd') or f.startswith('ccd')):
             full_path = os.path.join(dirpath, f)
             files.append(full_path)
 
@@ -87,4 +85,5 @@ else:
     string=f"LOG_{repo.split('/')[-1]}.{str(df['DATE-OBS'].min()).split(' ')[0].replace('-', '')}thru{str(df['DATE-OBS'].max()).split(' ')[0].replace('-', '')}"
 
 #save log
+print('saved to:',f'/home/kmc249/test_data/{string}.csv')
 df.to_csv(f'/home/kmc249/test_data/{string}.csv', index=False)
