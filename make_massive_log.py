@@ -26,14 +26,8 @@ biglog = pd.concat(dflist, ignore_index=True)
 #filter to ignore some stuff, check it's just rccd
 biglog = biglog[biglog['filename'].str.contains('rccd', case=False, na=False)]
 #biglog = biglog[biglog['filename'].str.contains('ir', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains('shift', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains('flat', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains('focus', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains('BIAS', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains(' for ', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains('JUNK', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains('dome', case=False, na=False)]
-biglog = biglog[~biglog['OBJECT'].str.contains('dark', case=False, na=False)]
+pattern = r'focus|BIAS| for |JUNK|dome|dark|shift|faint|bright|dither|flat|test|sky|summed'
+biglog = biglog[~biglog['OBJECT'].str.contains(pattern, case=False, na=False)]
 
 
 #make .gz also count as duplicates

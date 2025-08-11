@@ -98,7 +98,7 @@ for name, g in grp:
 
     #make a list of the CDs I need to upload per obj
     upload_df = pd.DataFrame(to_upload)
-    inv=pd.read_csv('/home/kmc249/test_data/inventory_bydisk_08_07_25.csv', low_memory=False)
+    inv=pd.read_csv('/home/kmc249/test_data/inventory_bydisk_08_11_25.csv', low_memory=False)
     if not upload_df.empty:
         upload_df = upload_df.merge(inv, how='left', left_on='log name', right_on='Logname')
         for id, row in upload_df.iterrows():
