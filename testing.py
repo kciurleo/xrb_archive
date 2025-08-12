@@ -56,3 +56,5 @@ plt.hist(np.array(alloffsets), bins=100)
 plt.xscale('log')
 plt.title('all offsets')
 plt.show()
+
+#this comment is to test if I can edit and use git on this linux machine too

@@ -24,8 +24,8 @@ for log in logs:
 biglog = pd.concat(dflist, ignore_index=True)
 
 #filter to ignore some stuff, check it's just rccd
-biglog = biglog[biglog['filename'].str.contains('rccd', case=False, na=False)]
-#biglog = biglog[biglog['filename'].str.contains('ir', case=False, na=False)]
+#biglog = biglog[biglog['filename'].str.contains('rccd', case=False, na=False)]
+biglog = biglog[biglog['filename'].str.contains('ir', case=False, na=False)]
 pattern = r'focus|BIAS| for |JUNK|dome|dark|shift|faint|bright|dither|flat|test|sky|summed'
 biglog = biglog[~biglog['OBJECT'].str.contains(pattern, case=False, na=False)]
 
@@ -58,4 +58,4 @@ for id, row in biglog.iterrows():
                 
 
 
-biglog.to_csv('all_optical_log.csv', index=False)
+biglog.to_csv('all_ir_log.csv', index=False)
