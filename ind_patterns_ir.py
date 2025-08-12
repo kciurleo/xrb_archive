@@ -9,18 +9,21 @@ import datetime
 import matplotlib.dates as mdates
 from collections import Counter
 
-infile='/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/ir_objlog_A0620-00.csv'
+#infile='/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/ir_objlog_A0620-00.csv'
+infile='/home/kmc249/test_data/all_ir_log.csv'
 
 #list of patterns, should correspond
 filt_pats=[['K','K','K','K','K', 'K', 'K', 'K','J','J','J','J','J','J', 'H', 'H','H','H','H','H'],['J','J', 'J', 'J', 'J','H', 'H', 'H', 'H','H','K','K', 'K', 'K', 'K','K'], ['H', 'H', 'H', 'H','H', 'H', 'H', 'H','H', 'H', 'H', 'H','H', 'H'],['H', 'H', 'H', 'H','H', 'H', 'H', 'H','H', 'H', 'H', 'H','H', 'H']]
-exp_pats=[[30.04, 30.04, 30.04, 30.04,30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04,30.04, 30.04,30.04, 30.04, 30.04, 30.04,30.04, 30.04],[30.04, 30.04, 30.04, 30.04,30.04, 30.04, 30.04, 30.04,30.04, 30.04,30.04, 30.04, 30.04, 30.04,30.04, 30.04],[30.04, 30.04, 30.04, 30.04,30.04, 30.04, 30.04, 30.04,30.04, 30.04, 30.04, 30.04,30.04, 30.04], [90.03, 90.03, 90.03, 90.03,90.03, 90.03, 90.03, 90.03,90.03, 90.03, 90.03, 90.03,90.03, 90.03]]
+exp_pats=[[30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04],[30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04],[30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04, 30.04], [90.03, 90.03, 90.03, 90.03, 90.03, 90.03, 90.03, 90.03, 90.03, 90.03, 90.03, 90.03,90.03, 90.03]]
 exp_pats = [[int(x) for x in sub] for sub in exp_pats]
 colors=['blue', 'violet', 'g','gold']
 #colors=['sienna','g','violet','k','yellow', 'blue', 'cyan', 'darkorange','indigo']
 
-table=pd.read_csv(infile)
-table=table.loc[table['OBJECT'].isin(['A0620','A0620-00'])]
+table=pd.read_csv(infile, low_memory=False)
+table=table.loc[table['proper name']=='A0620-00']
 table = table[table['filename'].str.startswith(('ir', 'binir'))]
+filter_map2 = {'Y': 0, 'J': 1, 'H': 2, 'K': 3}
+table['filter num'] = table['IRFLTID'].map(filter_map2)
 
 table['DATE-OBS']=pd.to_datetime(table['DATE-OBS'], errors='coerce')
 
@@ -91,4 +94,8 @@ for pnum in range(len(filt_pats)):
 
 plt.savefig(f'/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/real_ir_patterns_A0620-00.png', dpi=300)
 plt.show()
-table.to_csv('/home/kmc249/test_data/xrb_archive/A0620_test_ir.csv')
+#table.to_csv('/home/kmc249/test_data/xrb_archive/A0620_test_ir.csv')
+
+
+table=table[['filename','OBJECT','RA','DEC','DATE-OBS','TIME-OBS','JD','EXPTIME','SECZ','CCDFLTID','IRFLTID','proper name','in FULL pattern']]
+table.to_csv('/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/A0620_ir_patterns.csv', index=False)

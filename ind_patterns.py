@@ -9,16 +9,20 @@ import datetime
 import matplotlib.dates as mdates
 from collections import Counter
 
-infile='/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/objlog_A0620-00.csv'
+#infile='/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/objlog_A0620-00.csv'
+infile='/home/kmc249/test_data/all_optical_log.csv'
 
 #list of patterns, should correspond
 filt_pats=[['B', 'V', 'I', 'V', 'I'], ['B', 'V', 'I'],['B', 'V', 'I'], ['B', 'V', 'I'], ['V', 'I'], ['V', 'I'], ['I'], ['B'], ['V']]
 exp_pats=[[360.0, 360.0, 360.0, 360.0, 360.0],[360.0, 360.0, 360.0], [240.0, 240.0, 240.0], [300.0, 240.0, 240.0], [360.0, 360.0], [660.0, 660.0], [240.0], [360.0], [360.0]]
 colors=['sienna','g','violet','k','yellow', 'blue', 'cyan', 'darkorange','indigo']
 
-table=pd.read_csv(infile)
+table=pd.read_csv(infile, low_memory=False)
+table=table.loc[table['proper name']=='A0620-00']
 
 table['DATE-OBS']=pd.to_datetime(table['DATE-OBS'], errors='coerce')
+filter_map2 = {'B': 0, 'V': 1, 'R': 2, 'I': 3}
+table['filter num'] = table['CCDFLTID'].map(filter_map2)
 
 for id, row in table.iterrows():
     if not pd.isna(row['TIME-OBS']):
@@ -84,5 +88,8 @@ for pnum in range(len(filt_pats)):
     df=table.loc[table['in FULL pattern']==pnum]
     print(df[['filename','DATE-OBS','TIME-OBS','JD','EXPTIME','CCDFLTID','in FULL pattern']])
 
-plt.savefig(f'/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/real_patterns_A0620-00.png', dpi=300)
+#plt.savefig(f'/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/real_patterns_A0620-00.png', dpi=300)
 plt.show()
+
+table=table[['filename','OBJECT','RA','DEC','DATE-OBS','TIME-OBS','JD','EXPTIME','SECZ','CCDFLTID','IRFLTID','proper name','in FULL pattern']]
+table.to_csv('/home/kmc249/test_data/xrb_archive/internal_plots/A0620-00/A0620_opt_patterns.csv', index=False)
