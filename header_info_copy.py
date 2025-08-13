@@ -19,9 +19,10 @@ repo=os.getcwd()
 files = []
 for dirpath, dirnames, filenames in os.walk(repo):
     for f in filenames:
-        if f.endswith('.fits') and (f.startswith('rccd') or f.startswith('ccd')):
+        if f.endswith('.fits') or f.endswith('.fits.gz') :# and (f.startswith('rccd') or f.startswith('ccd')):
             full_path = os.path.join(dirpath, f)
-            files.append(full_path)
+            if not any(x in full_path for x in ['bad', 'junk', 'other']):
+                files.append(full_path)
 
 #initialize data frame
 keywords=['OBJECT','RA','DEC','DATE-OBS','TIME-OBS','JD','EXPTIME','SECZ','CCDFLTID','IRFLTID','TILT1','TILT2','TILT3','OWNER']
@@ -85,5 +86,5 @@ else:
     string=f"LOG_{repo.split('/')[-1]}.{str(df['DATE-OBS'].min()).split(' ')[0].replace('-', '')}thru{str(df['DATE-OBS'].max()).split(' ')[0].replace('-', '')}"
 
 #save log
-print('saved to:',f'/home/kmc249/test_data/{string}.csv')
-df.to_csv(f'/home/kmc249/test_data/{string}.csv', index=False)
+#print('saved to:',f'/home/kmc249/test_data/{string}.csv')
+df.to_csv(f'/home/kmc249/test_data/LOG_temp_archive_11_13.csv', index=False)

@@ -5,6 +5,7 @@ import matplotlib.dates as mdates
 import datetime
 from astropy.time import Time
 import os
+import re
 
 # Load both datasets
 optical = pd.read_csv('/home/kmc249/test_data/all_optical_log.csv', low_memory=False)
@@ -29,6 +30,15 @@ def clean_table(table):
     table['DATE-OBS'] = pd.to_datetime(table['DATE-OBS'], errors='coerce')
     return table
 
+def normalize_filename(fn):
+    # Remove known prefixes
+    fn = re.sub(r'^(r|bin)', '', fn)
+    # Remove known suffixes
+    fn = re.sub(r'\.gz$', '', fn)
+    return fn
+
+
+
 optical = clean_table(optical)
 ir = clean_table(ir)
 
@@ -39,11 +49,44 @@ grp = table.groupby(['proper name'])
 years = np.arange(1998, 2020, 1)
 
 for name, g in grp:
+    ###addition: the new usb drives
+    try:
+        on_usb=pd.read_csv(f'/home/kmc249/usbdrive_logs/usbdrivereplog_{name[0]}.csv', low_memory=False)
+        on_usb['DATE-OBS'] = pd.to_datetime(on_usb['UTDate'], errors='coerce')
+        
+        g_filenames_normalized = g['filename'].dropna().apply(normalize_filename)
+        on_usb['normalized'] = on_usb['Filename'].dropna().apply(normalize_filename)
+        skip=False
+    except:
+        skip=True
+        
     f, a = plt.subplots(11, 2, figsize=(10, 8), sharey=True)
     axes = np.ravel(a, order='F')
+    
     to_upload=[]
+     
     for id, year in enumerate(years):
         yrtable = g.loc[g['DATE-OBS'].dt.year == year]
+        if not skip:
+            yrtable2 = on_usb.loc[on_usb['DATE-OBS'].dt.year == year]
+            for jd, row in yrtable2.iterrows():
+                start = row['DATE-OBS']
+                end = start + pd.Timedelta(days=1)
+    
+                c = 'indigo'
+                z=1
+    
+                # choose vertical position depending on source
+                if 'ccd' in row['Filename']:
+                    y_pos = 0.25
+                else:
+                    y_pos = 0.75
+    
+                axes[id].barh(y=y_pos, width=(end - start).days, left=start, height=0.2, color=c, zorder=z)
+    
+                # handle span crossing year
+                if end.year == year + 1:
+                    axes[id+1].barh(y=y_pos, width=(end - start).days, left=start, height=0.2, color=c, zorder=z)
 
         for jd, row in yrtable.iterrows():
             start = row['DATE-OBS']
@@ -93,9 +136,9 @@ for name, g in grp:
     outdir = f'/home/kmc249/test_data/xrb_archive/internal_plots/{name[0]}/'
     os.makedirs(outdir, exist_ok=True)
     plt.savefig(f'{outdir}/combined_calendar_{name[0]}.png')
-    #plt.show()
+    plt.show()
     plt.close(f)
-
+'''
     #make a list of the CDs I need to upload per obj
     upload_df = pd.DataFrame(to_upload)
     inv=pd.read_csv('/home/kmc249/test_data/inventory_bydisk_08_11_25.csv', low_memory=False)
@@ -110,3 +153,4 @@ for name, g in grp:
 
     print(f"{name[0]}: {st}")
     #print(f'did {name[0]}')
+'''
