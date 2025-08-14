@@ -74,7 +74,7 @@ for name, g in grp:
                 end = start + pd.Timedelta(days=1)
     
                 c = 'indigo'
-                z=1
+                z=1.65
     
                 # choose vertical position depending on source
                 if 'ccd' in row['Filename']:
@@ -95,14 +95,20 @@ for name, g in grp:
             # color by location:
             if pd.isna(row['TIME-OBS']):
                 c = 'red'
-                z = 5
+                z = 1.5
+            elif row['Location'] == 'miniarchive':
+                c='black'
+                z=1.95
             elif row['Physical loc'] == 'CD':
                 c = 'gold'
-                z = 2
+                z = 1.6
                 to_upload.append(row.to_dict())
             elif row['Physical loc'] == 'Disk':
                 c = 'lightgreen'
-                z = 3
+                z = 1.8
+            elif row['Physical loc'] == 'Data scrape':
+                c = 'violet'
+                z = 1.7
 
             # choose vertical position depending on source
             if row['source'] == 'optical':
@@ -136,9 +142,9 @@ for name, g in grp:
     outdir = f'/home/kmc249/test_data/xrb_archive/internal_plots/{name[0]}/'
     os.makedirs(outdir, exist_ok=True)
     plt.savefig(f'{outdir}/combined_calendar_{name[0]}.png')
-    plt.show()
+    #plt.show()
     plt.close(f)
-'''
+
     #make a list of the CDs I need to upload per obj
     upload_df = pd.DataFrame(to_upload)
     inv=pd.read_csv('/home/kmc249/test_data/inventory_bydisk_08_11_25.csv', low_memory=False)
@@ -153,4 +159,3 @@ for name, g in grp:
 
     print(f"{name[0]}: {st}")
     #print(f'did {name[0]}')
-'''
