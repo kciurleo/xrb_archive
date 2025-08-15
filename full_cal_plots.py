@@ -45,13 +45,13 @@ ir = clean_table(ir)
 # Combine datasets
 table = pd.concat([optical, ir], ignore_index=True)
 
-grp = table.groupby(['proper name'])
 years = np.arange(1998, 2020, 1)
 
-for name, g in grp:
+for name in xrb_list:
+    g=table.loc[table['proper name']==name]
     ###addition: the new usb drives
     try:
-        on_usb=pd.read_csv(f'/home/kmc249/usbdrive_logs/usbdrivereplog_{name[0]}.csv', low_memory=False)
+        on_usb=pd.read_csv(f'/home/kmc249/usbdrive_logs/usbdrivereplog_{name}.csv', low_memory=False)
         on_usb['DATE-OBS'] = pd.to_datetime(on_usb['UTDate'], errors='coerce')
         
         g_filenames_normalized = g['filename'].dropna().apply(normalize_filename)
@@ -137,11 +137,11 @@ for name, g in grp:
                 axes[id].annotate('IR\n\nOpt', xy=(0.93, 0.92), xycoords='axes fraction',
                     horizontalalignment='left', verticalalignment='top')
 
-    plt.suptitle(name[0])
+    plt.suptitle(name)
     plt.tight_layout()
-    outdir = f'/home/kmc249/test_data/xrb_archive/internal_plots/{name[0]}/'
+    outdir = f'/home/kmc249/test_data/xrb_archive/internal_plots/{name}/'
     os.makedirs(outdir, exist_ok=True)
-    plt.savefig(f'{outdir}/combined_calendar_{name[0]}.png')
+    plt.savefig(f'{outdir}/combined_calendar_{name}.png')
     #plt.show()
     plt.close(f)
 
@@ -157,5 +157,5 @@ for name, g in grp:
     else:
         st=''
 
-    print(f"{name[0]}: {st}")
-    #print(f'did {name[0]}')
+    print(f"{name}: {st}")
+    #print(f'did {name}')

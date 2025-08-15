@@ -77,7 +77,7 @@ for p in paths2:
     paths.append(newp)
 
 #make a dictionary to hold all the rows
-df_dict=dict.fromkeys(xrb_list, [])
+df_dict = {xrb: [] for xrb in xrb_list}
 
 keywords=['OBJECT','RA','DEC','DATE-OBS','TIME-OBS','JD','EXPTIME','SECZ','CCDFLTID','IRFLTID','TILT1','TILT2','TILT3','OWNER']
 

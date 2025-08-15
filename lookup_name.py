@@ -1,10 +1,11 @@
 import sys
-from astroquery.simbad import Simbad
 
 proper_to_nicknames = {
     #XRBs
     'A0620-00': ['A0620-00', 'A0620', 'AO620'],
     'AqlX-1': ['Aql X-1',  'AqlX-1', 'Aql X1', 'AqlX1', 'Aql X-1 r', 'Aql X-1 i', 'Aql X-1 v', 'Aqll X-1'],
+    'BWCir': ['BW Cir', 'BWCir'],
+    'Cal83': ['Cal83', 'CAL 83'],
     'CenX-3': ['Cen X-3', 'CenX-3', 'CenX3', 'Cen X3'],
     'CenX-4': ['Cen X-4', 'CenX-4', 'CenX4', 'Cen X4'],
     'CirX-1': ['Cir X-1', 'CirX-1', 'CirX1', 'Cir X1'],
@@ -15,6 +16,7 @@ proper_to_nicknames = {
     'GRS1716−249': ['GRS 1716−249', 'GRS1716−249', 'GRS1716', 'GRS 1716'],
     'GRS1915+105': ['GRS 1915+105', 'GRS1915+105', 'GRS1915', 'GRS 1915', 'GRXS1915+105'],
     'GS1354-645': ['GS 1354-645', 'GS1354-645'],
+    'GUMus': ['GUMus', 'GU Mus'],
     'GX301-2': ['GX 301-2', 'GX301-2'],
     'GX1+4': ['GX 1+4', 'GX1+4'],
     'GX13+1': ['GX 13+1', 'GX13+1'],
@@ -24,9 +26,15 @@ proper_to_nicknames = {
     'GX354-0': ['GX 354-0', 'GX354-0'],
     'GX9+9': ['GX 9+9', 'GX9+9'],
     'GX5-1': ['GX 5-1', 'GX5-1'],
+    'HD96670': ['HD96670', 'HD 96670'],
     'IGRJ17191-2821': ['IGR J17191-2821', 'IGR_J17191-2821', 'IGRJ17191-2821'],
     'IGRJ17091-3624': ['IGR J17091-3624', 'IGR_J17091-3624', 'IGRJ17091-3624', 'IGR_J17091', 'IGR J17091', 'J1709'],
+    'IGR17098-3628': ['IGR 17098-3628', 'IGR_17098-3628', 'IGR17098-3628'],
     'IGRJ17379-3747': ['IGR J17379-374', 'IGR_J17379-374', 'IGRJ17379-374', 'IGR J17379-3747', 'IGR_J17379-3747', 'IGRJ17379-3747'],
+    'IGRJ17454': ['IGRJ1745', 'IGRJ17454', 'IGR J17454', 'IGR_J17454', 'IGR J17454−2919', 'IGRJ17454−2919'],
+    'IGRJ17544-2619': ['IGR J17544-2619', 'IGR_J17544-2619', 'IGRJ17544-2619', 'IJR17544-2619', 'IJR 17544-2619'],
+    'IGR17597-2201': ['IGR 17597-2201', 'IGR_17597-2201', 'IGR17597-2201'],
+    'J004308.6+411247': ['XMMUJ004','XMMU J004308.6+411247', 'J004308.6+411247'],
     'J0051-72': ['J0051-72', 'Swift J0051-72'],
     'J0051-736': ['MAXIJ0051-736', 'J0051-736'],
     'J0556-332': ['MAXI J0556-332', 'MAXIJ0556-332', 'J0556-332'],
@@ -38,12 +46,14 @@ proper_to_nicknames = {
     'J1535-571': ['J1535-571', 'MAXI J1535-571', 'MAX J1535-571'],
     'J1543-564': ['MAXI J1543-564', 'J1543-564', 'MAXIJ1543-564', '4U5143-47'],
     'J1550-564': ['XTEJ1550-564', 'XTE J1550-564', 'J1550-564', 'J1550', 'XTE J1550'],
+    'J1626.6': ['Swift_J1626.6', 'J1626.6', 'J1626.6-5156', 'Swift J1626.6-5156'],
     'J1628-41': ['J1628-41', 'VASC J1628-41'],
     'J16283-4838': ['J16283-4838', 'IGR J16283-4838'],
     'J1631-478': ['J1631-478','MAXJ1631-478','MAX J1631-478', 'MAXI J1631-478', 'MAXI J1631-479','J1631-479'],
     'J16320-4751': ['J16320-4751', 'IGR J16320-4751'],
     'J16358-4726': ['J16358-4726', 'IGR J16358-4726'],
     'J1650-500': ['J1650-500', 'X1650-500', 'XTE J1650-500', 'XTEJ1650-500', 'J1650'],
+    'J165408-395636': ['J165408-395636'],
     'J1659-152': ['J1659-152','MAXI_J1659-152'],
     'J1701-462' : ['J1701-462', 'XTE J1701-462', 'XTEJ1701-462'],
     'J1719-356': ['J171900.4-353217', 'J1719-356', 'XTE J1719-356', 'XTEJ1719-356'],
@@ -52,26 +62,29 @@ proper_to_nicknames = {
     'J1727-203' : ['J1727-203', 'MAXI J1727-203', 'MAXIJ1727-203'],
     'J1745-26': ['J1745-26', 'SwiftJ1745-26', 'Swift J1745-26', 'Swift_J1745-26'],
     'J1746-322': ['J1746', 'J1746-322', 'XTE J1746-322', 'XTEJ1746-322','J1746-323', 'XTE J1746-323', 'XTEJ1746-323'],
+    'J174716.1-281048': ['J174716.1-281048', 'XMMU J174716 - 2', 'XMMU J174716.1-281048', 'XMMU J174716'],
     'J1749.4-2807': ['SwiftJ1749', 'Swift J1749', 'Swift_J1749','J1749', 'J1749.4-2807'],
     'J1752-223': ['JI752-223', 'XTE JI752-223', 'XTEJI752-223', 'J1752-223', 'XTE J1752-223', 'XTEJ1752-223'],
-    'J1753': ['SwiftJ1753.5-0127', 'Swift J1753.5-0127', 'Swift_J1753.5-0127', 'J1753.5-0127', 'J1753'],
+    'J1753': ['SwiftJ1753.5-0127', 'Swift J1753.5-0127', 'Swift_J1753.5-0127', 'J1753.5-0127', 'J1753', 'Swift_J1753.5-01'],
     'J1808.4-3658': ['J1808.4-3658','SAXJ1808.4-3658','SAX J1808.4-3658','SAX_J1808.4-3658'],
     'J1813-095' : ['J1813-095', 'MAXI J1813-095', 'MAXIJ1813-095'],
     'J1817-330' : ['J1817-33', 'J1817-330', 'XTE J1817-330'],
     'J1818-245': ['J1818-245', 'XTE J1818-245', 'XTEJ1818-245'],
-    'J1820': ['J1820', 'J1820+070', 'MAXI J1820+070'],
+    'J1820': ['J1820', 'J1820+070', 'MAXI J1820+070', 'MAXI1820'],
     'J1828-249':['J1828-249', 'MAXI J1828-249'],
     'J1858.6-0814': ['J1858.6-0814','Swift1858', 'Swift 1858', 'Swift_1858'],
     'J1957+032': ['J1957+032', 'MAXI1957+032', 'MAXI 1957+032'],
     'LMCX-1': ['LMC X-1', 'LMCX-1', 'LMCX1', 'LMC X1'],
     'LMCX-2': ['LMC X-2', 'LMCX-2', 'LMCX2', 'LMC X2'],
     'LMCX-3': ['LMC X-3', 'LMCX-3', 'LMCX3', 'LMC X3'],
+    'MMVel': ['MMVel', 'MM Vel'],
     'NovaMusca': ['Nova Musca', 'Nova Musc', 'NovaMusca', 'Nova Musca 1991', 'Nova Musc 1991'],
     'ScoX-1': ['Sco X-1', 'ScoX-1', 'ScoX1', 'Sco X1'],
     'SMCX-1': ['SMCX-1', 'SMC X-1', 'SMCX1', 'SMC X1'],
     'SMCX-2': ['SMCX-2', 'SMC X-2', 'SMCX2', 'SMC X2'],
     'SMCX-3': ['SMCX-3', 'SMC X-3', 'SMCX3', 'SMC X3'],
     'UYVol': ['UY Vol', 'UYVol'],
+    'V1408Aql': ['V1408 Aql', 'V1408Aql'],
     'V4641': ['V4641', 'V4641 Sgr'],
     '4U1254-690': ['4U1254-690', '4U 1254-690'],
     '4U1538-52': ['4U1538-52', '4U 1538-52'],
@@ -79,7 +92,7 @@ proper_to_nicknames = {
     '4U1543-624': ['4U1543-624', '4U 1543-624'],
     '4U1608-52': ['4U1608-52', '4U 1608-52'],
     '4U1630-47': ['4U1630-47', '4U 1630-47', '4U1630-472', '4U 1630-472'],
-    '4U1636-536': ['4U1636-536', '4U 1636-536'],
+    '4U1636-536': ['4U1636-536', '4U 1636-536', '4U1636-53', '4U 1636-53', 'V801 Ara'],
     '4U1658-298': ['4U1658-298', '4U 1658-298', 'MXB 1658-298'],
     '4U1702-429': ['4U1702-429', '4U 1702-429'],
     '4U1735-444': ['4U1735-444', '4U 1735-444','4U1734-444', '4U 1734-444'],
@@ -1006,6 +1019,34 @@ proper_to_nicknames = {
     'YALE-08A-0001': ['YALE-08A-0001'],
     'YY Dor': ['YY Dor'],
     'YY Mon': ['YY Mon'],
+    'j1102+2239': ['j1102+2239'],
+    'J0836.2-7908': ['J0836.2-7908'],
+    'New_Transient J1': ['New_Transient J1'],
+    'j1709+2348': ['j1709+2348'],
+    'J130753.9+064213': ['J130753.9+064213'],
+    'j09426+1926': ['j09426+1926'],
+    'J0112+0217': ['J0112+0217'],
+    'J122715.3+220142': ['J122715.3+220142'],
+    'J17451-3022': ['J17451-3022'],
+    'j0017-0512': ['j0017-0512'],
+    'J155624.8-222': ['J155624.8-222'],
+    'J1246+0238': ['J1246+0238'],
+    'J0538-0242': ['J0538-0242'],
+    'j0948+002': ['j0948+002'],
+    'J0024-01': ['J0024-01'],
+    'j1644+2619': ['j1644+2619'],
+    'J123325.8+093123': ['J123325.8+093123'],
+    'J1421+2824': ['J1421+2824'],
+    'j1102-2239': ['j1102-2239'],
+    'j0100-0200': ['j0100-0200'],
+    'J122500.8+132623': ['J122500.8+132623'],
+    'J122906.6+020308': ['J122906.6+020308'],
+    'J1405+2657': ['J1405+2657'],
+    'j0956+2515': ['j0956+2515'],
+    'j2004-447': ['j2004-447'],
+    'J2316-05': ['J2316-05'],
+    'J0507+2447': ['J0507+2447'],
+    'J160545.4-20': ['J160545.4-20'],
     
 
 
@@ -1274,7 +1315,7 @@ proper_to_nicknames = {
     'macho125b': ['macho125b'],
     'mach310a': ['mach310a'],
 }
-'''
+
 xrb_list = ['A0620-00', 'Aql X-1', 'CenX-3', 'CenX-4', 'CirX-1', 'GROJ1655-40', 'GRS1009-45', 
             'GRS1739-278', 'GRS1716−249', 'GRS1915+105', 'GS1354-645', 'GX301-2', 'GX1+4', 
             'GX17+2', 'GX339-4', 'GX349+2', 'GX354-0', 'GX9+9', 'GX5-1', 'IGRJ17191-2821', 
@@ -1286,10 +1327,10 @@ xrb_list = ['A0620-00', 'Aql X-1', 'CenX-3', 'CenX-4', 'CirX-1', 'GROJ1655-40', 
             'ScoX-1', 'SMCX-1', 'SMCX-2', 'SMCX-3', 'V4641', '4U1254-690', '4U1538-52', '4U1543-47', 
             '4U1543-624', '4U1608-52', '4U1630-47', '4U1636-536', '4U1658-298', '4U1702-429', 
             '4U1735-444', '4U1755-338', '4U1822-371', '4U1907+097','J1726-476','J1543-564', 'J1650-500',
-            'GX13+1', 'J16320-4751', 'J16358-4726', 'GROJ0433+32', 'J0556-332', 'J1305-704', 'UYVol']        
-'''
-
-xrb_list = ['SMCX-1', 'J1535-571', 'J0556-332', 'GX1+4', '4U1735-444', 'IGRJ17091-3624']
+            'GX13+1', 'J16320-4751', 'J16358-4726', 'GROJ0433+32', 'J0556-332', 'J1305-704', 'UYVol',
+            'BWCir', 'Cal83', 'GUMus', 'HD96670', 'IGR17098-3628', 'IGRJ17454', 'IGRJ17544-2619',
+            'IGR17597-2201', 'J004308.6+411247', 'J1626.6', 'J165408-395636', 'J174716.1-281048', 'MMVel',
+            'V1408Aql']        
 
 def get_proper_name(alias: str) -> str:
     '''
@@ -1326,48 +1367,6 @@ def is_xrb_quick(real_name: str) -> bool:
     For a given proper name only, return bool True if XRB
     '''
     return(real_name in xrb_list)
-
-def simbad_time(objs=proper_to_nicknames.keys()):
-    '''testing some things with simbad, this definitely doesn't work on some objects (see A0620 not coming up right)'''
-    Simbad.add_votable_fields('otype') 
-    keys=[]
-    fails=[]
-    objs=[]
-    listo=[]
-    for key in objs:
-        try:
-            # Try querying the primary name
-            result_table = Simbad.query_object(key)
-            keys.append(result_table['main_id'][0])
-            objs.append(result_table['otype'][0])
-            listo.append(key)
-        except:
-            # If it fails, try the nicknames
-            found = False
-            listy = get_nicknames(key)
-            for i in listy:
-                try:
-                    result_table = Simbad.query_object(i)
-                    keys.append(result_table['main_id'][0])
-                    objs.append(result_table['otype'][0])
-                    listo.append(key)
-                    found = True
-                    break  # stop once one nickname succeeds
-                except:
-                    continue  # try the next nickname
-            
-            if not found:
-                print('failed:', key)
-                fails.append(key)
-    print(len(keys))
-    print(len(set(keys)))
-    for i in range(len(keys)):
-        print(listo[i])
-        print(keys[i])
-        print(objs[i])
-        print('___')
-    print('fails: ',len(fails))
-    print(fails)
 
 if __name__ == '__main__':
     
