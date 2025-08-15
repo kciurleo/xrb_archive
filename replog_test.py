@@ -80,7 +80,7 @@ for log in loglist:
     df = pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs,skipfooter=footer_line, names=colnames)
 
     #use the second format if necessary
-    if df['Logged_UT'].isna().any():
+    if df['Logged_UT'].isna().any() or not df['Filename'][0].startswith(['rccd','bin','ir', 'ccd']):
         df=pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs2, skipfooter=footer_line, names=colnames2)
     
     df['replog']=log

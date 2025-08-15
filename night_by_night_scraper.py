@@ -11,6 +11,9 @@ from astropy.io import fits
 from lookup_name import *
 import pandas as pd
 import numpy as np
+import warnings
+
+warnings.filterwarnings('ignore', category=UserWarning, append=True)
 
 paths=['/USB4/archive', '/USB2/archive/20130101thru0130', '/USB2/archive/20130201thru0228', '/USB2/archive/20130301thru0331', '/USB2/archive/20130401thru0430']
 

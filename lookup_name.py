@@ -1274,7 +1274,7 @@ proper_to_nicknames = {
     'macho125b': ['macho125b'],
     'mach310a': ['mach310a'],
 }
-
+'''
 xrb_list = ['A0620-00', 'Aql X-1', 'CenX-3', 'CenX-4', 'CirX-1', 'GROJ1655-40', 'GRS1009-45', 
             'GRS1739-278', 'GRS1716−249', 'GRS1915+105', 'GS1354-645', 'GX301-2', 'GX1+4', 
             'GX17+2', 'GX339-4', 'GX349+2', 'GX354-0', 'GX9+9', 'GX5-1', 'IGRJ17191-2821', 
@@ -1287,7 +1287,9 @@ xrb_list = ['A0620-00', 'Aql X-1', 'CenX-3', 'CenX-4', 'CirX-1', 'GROJ1655-40', 
             '4U1543-624', '4U1608-52', '4U1630-47', '4U1636-536', '4U1658-298', '4U1702-429', 
             '4U1735-444', '4U1755-338', '4U1822-371', '4U1907+097','J1726-476','J1543-564', 'J1650-500',
             'GX13+1', 'J16320-4751', 'J16358-4726', 'GROJ0433+32', 'J0556-332', 'J1305-704', 'UYVol']        
+'''
 
+xrb_list = ['SMCX-1', 'J1535-571', 'J0556-332', 'GX1+4', '4U1735-444', 'IGRJ17091-3624']
 
 def get_proper_name(alias: str) -> str:
     '''
@@ -1325,14 +1327,14 @@ def is_xrb_quick(real_name: str) -> bool:
     '''
     return(real_name in xrb_list)
 
-def simbad_time():
+def simbad_time(objs=proper_to_nicknames.keys()):
     '''testing some things with simbad, this definitely doesn't work on some objects (see A0620 not coming up right)'''
     Simbad.add_votable_fields('otype') 
     keys=[]
     fails=[]
     objs=[]
     listo=[]
-    for key in proper_to_nicknames.keys():
+    for key in objs:
         try:
             # Try querying the primary name
             result_table = Simbad.query_object(key)

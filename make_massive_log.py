@@ -72,14 +72,14 @@ for log in replogs:
     df['prop name help']=''
     df['Physical loc']='Data replog'
 
-biglog = pd.concat(dflist, ignore_index=True)
+biggestlog = pd.concat(dflist, ignore_index=True)
 
 for band in ['ir', 'optical']:
     #filter to ignore some stuff, check it's just rccd
     if band=='optical':
-        biglog = biglog[biglog['filename'].str.contains('rccd', case=False, na=False)]
+        biglog = biggestlog[biggestlog['filename'].str.contains('rccd', case=False, na=False)]
     else:
-        biglog = biglog[biglog['filename'].str.contains('ir', case=False, na=False)]
+        biglog = biggestlog[biggestlog['filename'].str.contains('ir', case=False, na=False)]
     pattern = r'focus|BIAS| for |JUNK|dome|dark|shift|faint|bright|dither|flat|test|sky|summed'
     biglog = biglog[~biglog['OBJECT'].str.contains(pattern, case=False, na=False)]
     
