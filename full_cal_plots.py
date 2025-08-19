@@ -15,6 +15,10 @@ optical['source'] = 'optical'
 ir = pd.read_csv('/home/kmc249/test_data/all_ir_log.csv', low_memory=False)
 ir['source'] = 'IR'
 
+tapes=pd.read_csv('/home/kmc249/test_data/inventory_tapes_08_19_25.csv')
+tapes['Start Date'] = pd.to_datetime(tapes['Start Date'], errors='coerce')
+tapes['End Date'] = pd.to_datetime(tapes['End Date'], errors='coerce')
+
 # Apply your same cleaning to both datasets (put into a function for convenience)
 def clean_table(table):
     table = table.loc[table['xrb'] == True]
@@ -61,6 +65,9 @@ for name in xrb_list:
     except:
         skip=True
         
+    #temp tapes thing
+    gtape=tapes.loc[tapes['Obj ID']==name]
+    
     f, a = plt.subplots(11, 2, figsize=(10, 8), sharey=True)
     axes = np.ravel(a, order='F')
     
@@ -68,6 +75,33 @@ for name in xrb_list:
      
     for id, year in enumerate(years):
         yrtable = g.loc[g['DATE-OBS'].dt.year == year]
+        if len(gtape)>0:
+            yrtable3 = tapes.loc[tapes['Start Date'].dt.year == year]
+            for jd, row in yrtable3.iterrows():
+                start=row['Start Date']
+                end=row['End Date']
+                if end==start:
+                    end = start + pd.Timedelta(days=1)
+                c = 'cyan'
+                z = 1.4
+               
+                y_vals=[]
+                # choose vertical position depending on source
+                if 'Optical' in row['Optical/IR']:
+                    y_vals.append(0.25)
+                elif 'IR' in row['Optical/IR']:
+                    y_vals.append(0.75)
+                elif 'Both' in row['Optical/IR']:
+                    y_vals.append(0.75)
+                    y_vals.append(0.25)
+                
+                for y_pos in y_vals:
+                    axes[id].barh(y=y_pos, width=(end - start).days, left=start, height=0.2, color=c, zorder=z)
+    
+                    # handle span crossing year
+                    if end.year == year + 1:
+                        axes[id+1].barh(y=y_pos, width=(end - start).days, left=start, height=0.2, color=c, zorder=z)
+
         if not skip:
             yrtable2 = on_usb.loc[on_usb['DATE-OBS'].dt.year == year]
             for jd, row in yrtable2.iterrows():
