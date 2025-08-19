@@ -63,24 +63,27 @@ for log in loglist:
     #figure out where to skip to
     with open(log) as f:
         lines = f.readlines()
-    header_line=0
-    footer_line=0
+    
+    
+    header_line = None
+    footer_line = 0
+    templn=''
     for i, line in enumerate(lines):
         if line.strip().startswith("Project"):
             header_line = i
-        #in case they add comments after the table
-        if line.startswith("--------") and header_line!=0 and i>header_line:
-            footer_line=i
-        
+        if header_line and line.strip() == "" and footer_line==0:
+            footer_line = len(lines)-i
+ 
+
     #if we didn't find that log, then there was no observing that night, so skip
-    if header_line==0:
+    if header_line is None:
         no_obs_list.append(log)
         continue
     
     df = pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs,skipfooter=footer_line, names=colnames)
 
     #use the second format if necessary
-    if df['Logged_UT'].isna().any() or not df['Filename'][0].startswith(['rccd','bin','ir', 'ccd']):
+    if df['Logged_UT'].isna().any() or not df['Filename'][0].startswith(('rccd','bin','ir', 'ccd')):
         df=pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs2, skipfooter=footer_line, names=colnames2)
     
     df['replog']=log

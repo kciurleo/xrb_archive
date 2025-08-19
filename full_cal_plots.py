@@ -6,6 +6,7 @@ import datetime
 from astropy.time import Time
 import os
 import re
+from lookup_name import *
 
 # Load both datasets
 optical = pd.read_csv('/home/kmc249/test_data/all_optical_log.csv', low_memory=False)
@@ -154,8 +155,7 @@ for name in xrb_list:
             upload_df.at[id, 'spot'] = f"{row['Location_y']}:{row['Page']}:{row['Slot']}"
         
         st=set(upload_df['spot'])
+        print(f"{name}: {st}")
     else:
-        st=''
-
-    print(f"{name}: {st}")
+        print(f'nothing for {name}')
     #print(f'did {name}')
