@@ -76,7 +76,7 @@ for name in xrb_list:
     for id, year in enumerate(years):
         yrtable = g.loc[g['DATE-OBS'].dt.year == year]
         if len(gtape)>0:
-            yrtable3 = tapes.loc[tapes['Start Date'].dt.year == year]
+            yrtable3 = gtape.loc[gtape['Start Date'].dt.year == year]
             for jd, row in yrtable3.iterrows():
                 start=row['Start Date']
                 end=row['End Date']
