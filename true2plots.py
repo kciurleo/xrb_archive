@@ -87,10 +87,10 @@ for id, row in true2s.iterrows():
     # Limits
     axes[0].set_ylim(0,90)
     axes[0].set_xlim(0,24)
-    axes[0].axvline(11, color='black', linestyle='--', label='Feb/Aug midnight')
-    axes[0].axvline(20, color='black', linestyle='--')
-    axes[0].axvspan(2, 11-6, color='black', alpha=1, zorder=2)
-    axes[0].axvspan(2, 11-6, color='black', alpha=1, zorder=2)
+    axes[0].axvline(11, color='black', linestyle='--', label='Feb/July midnight')
+    axes[0].axvline(19, color='black', linestyle='--')
+    axes[0].axvspan(1, 11-6, color='black', alpha=1, zorder=2)
+    axes[0].axvspan(1, 11-6, color='black', alpha=1, zorder=2)
     # Text
     axes[0].legend()
     axes[0].set_xlabel("LST (hours)")
@@ -108,9 +108,9 @@ for id, row in true2s.iterrows():
     axes[1].set_ylabel("Airmass")
     axes[1].yaxis.set_inverted(True)
     
-    axes[1].axvline(11, color='black', linestyle='--', label='Feb/Aug midnight')
-    axes[1].axvline(20, color='black', linestyle='--')
-    axes[1].axvspan(2, 11-6, color='black', alpha=1, zorder=2)
-    axes[1].axvspan(2, 11-6, color='black', alpha=1, zorder=2)
+    axes[1].axvline(11, color='black', linestyle='--', label='Feb/July midnight')
+    axes[1].axvline(19, color='black', linestyle='--')
+    axes[1].axvspan(1, 11-6, color='black', alpha=1, zorder=2)
+    axes[1].axvspan(1, 11-6, color='black', alpha=1, zorder=2)
     plt.tight_layout()
     plt.savefig(f'{path}/{row["CXO Name"]}.png')
