@@ -54,6 +54,29 @@ colnames2 = [
     "SecZ", "LST", "UTDate", "UTC", "JD", "Filename"
 ]
 
+#another version of the colspecs
+special_colspecs = [
+    (0, 9),    # ProjectID
+    (9, 16),   # ImType
+    (16, 42),   # Object
+    (42, 53),   # RA
+    (53, 63),   # Dec\
+    (63, 71),   # Equinox
+    (71, 79),   # ExpTime
+    (79, 92),   # Filter
+    (92, 97),   # SecZ
+    (97, 108),   # LST
+    (108, 119),  # UTDate
+    (119, 130), # UTC
+    (130, 140), # JD
+    (140, None) # Filename
+]
+
+special_colnames = [
+    "ProjectID", "ImType", "Object",  "RA", "Dec", "Equinox", "ExpTime", "Filter",
+    "SecZ", "LST", "UTDate", "UTC", "JD", "Filename"
+]
+
 colspecs3 = [
     (0, 9),    # ProjectID
     (9, 16),   # ImType
@@ -79,6 +102,9 @@ no_obs_list=[]
 error_list=[]
 all_names=[]
 xrb_rows=[]
+ones=[]
+twos=[]
+
 for log in loglist:
     print(log)
     #figure out where to skip to
@@ -109,11 +135,25 @@ for log in loglist:
     if '2000.0' not in sety:
         print('second try')
         needed_second=True
-        print(df)
-        df=pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs, skipfooter=footer_line, names=colnames)
-    
+        try:
+            if np.isnan(df['RA'][0]):
+                print('special case where the ra and stuff is blank')
+                df=pd.read_fwf(log, skiprows=header_line+1, colspecs=special_colspecs, skipfooter=footer_line, names=special_colnames)
+            
+            else:
+                print('df  didnt have an equinox and we need to try again')
+                ones.append(log)
+                print(df)
+                df=pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs, skipfooter=footer_line, names=colnames)
+        except:
+            print('getting ra nan failed')
+            print(df)
+            twos.append(log)
+            df=pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs, skipfooter=footer_line, names=colnames)
+            
     if df['Filename'].isna().any():
         print('third try')
+        needed_second=True
         df=pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs3, skipfooter=footer_line, names=colnames3)
     
     
@@ -142,7 +182,7 @@ for log in loglist:
         except:
             print('faulty nickname')
     if needed_second:
-        print(df)
+        print(df.head(10))
 
 unique_names = set().union(*all_names)
 #print(unique_names)
@@ -151,7 +191,8 @@ newnames.sort()
 print(newnames)
 #print(no_obs_list)
 print(error_list)
-
+print('ones'. ones)
+print('twos', twos)
 '''
 ### find the xrbs and what files exist for each of them. 
 #we're going to make a massive log to be used with the nice calendar thing
