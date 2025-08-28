@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import glob
 from lookup_name import *
+from time import sleep
 
 path='/scratch/REPLOGS'
 
@@ -181,8 +182,9 @@ for log in loglist:
                 xrb_rows.append(row)
         except:
             print('faulty nickname')
-    if needed_second:
-        print(df.head(10))
+
+    print(df.head(15))
+    sleep(1)
 
 unique_names = set().union(*all_names)
 #print(unique_names)
