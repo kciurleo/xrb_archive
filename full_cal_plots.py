@@ -19,7 +19,12 @@ tapes=pd.read_csv('/home/kmc249/test_data/inventory_tapes_08_19_25.csv')
 tapes['Start Date'] = pd.to_datetime(tapes['Start Date'], errors='coerce')
 tapes['End Date'] = pd.to_datetime(tapes['End Date'], errors='coerce')
 
-# Apply your same cleaning to both datasets (put into a function for convenience)
+#load by night tape things
+night_tape_df=pd.read_csv("/home/kmc249/test_data/early_by_night.csv")
+night_tape_df['Date']=pd.to_datetime(night_tape_df['Date'], errors='coerce')
+night_tape_df=night_tape_df.set_index('Date')
+
+#functions
 def clean_table(table):
     table = table.loc[table['xrb'] == True]
     for id, row in table.iterrows():
@@ -36,9 +41,7 @@ def clean_table(table):
     return table
 
 def normalize_filename(fn):
-    # Remove known prefixes
     fn = re.sub(r'^(r|bin)', '', fn)
-    # Remove known suffixes
     fn = re.sub(r'\.gz$', '', fn)
     return fn
 
@@ -64,6 +67,10 @@ for name in xrb_list:
         skip=False
     except:
         skip=True
+    try:
+        tapedates = list(night_tape_df.index[night_tape_df[name]])
+    except:
+        tapedates = []
         
     #temp tapes thing
     gtape=tapes.loc[tapes['Obj ID']==name]
@@ -74,6 +81,17 @@ for name in xrb_list:
     to_upload=[]
      
     for id, year in enumerate(years):
+        if len(tapedates)>0:
+            filtered = [ts for ts in tapedates if ts.year == year]
+            for item in filtered:
+                start=item
+                end = start + pd.Timedelta(days=1)
+                c = 'saddlebrown'
+                z = 1.45
+                y_vals=[0.25, 0.75]
+                for y_pos in y_vals:
+                    axes[id].barh(y=y_pos, width=(end - start).days, left=start, height=0.2, color=c, zorder=z)
+                
         yrtable = g.loc[g['DATE-OBS'].dt.year == year]
         if len(gtape)>0:
             yrtable3 = gtape.loc[gtape['Start Date'].dt.year == year]

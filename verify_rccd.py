@@ -11,7 +11,7 @@ import os
 import astropy.io.fits as fits
 from lookup_name import *
 
-workdir='/home/kmc249/temp_CD_data'
+workdir='/scratch/temp_CD_data'
 folders=glob.glob(f'{workdir}/*')
 print(folders)
 
