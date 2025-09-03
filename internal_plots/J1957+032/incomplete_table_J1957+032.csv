@@ -1,0 +1,5 @@
+filename,OBJECT,RA,DEC,DATE-OBS,TIME-OBS,JD,EXPTIME,SECZ,CCDFLTID,IRFLTID,TILT1,TILT2,TILT3,log name,Location,prop name help,Physical loc,OWNER,full path,proper name,xrb,source
+rccd151012.0048.fits,MAXI1957+032,19:56:39.13,+03:26:43.0,2015-10-13,01:59:20.153,2457308.58286,200.0,1.61,I,H,1040,1590,1960,xrb_ccd/LOG_ccd.20150620thru20190801.csv,opticaldirecs/xrb_ccd/,ccd,Disk,,,J1957+032,True,optical
+rccd151012.0047.fits,MAXI1957+032,19:56:39.15,+03:26:42.4,2015-10-13,01:55:07.638,2457308.57994,200.0,1.58,V,H,1040,1590,1960,xrb_ccd/LOG_ccd.20150620thru20190801.csv,opticaldirecs/xrb_ccd/,ccd,Disk,,,J1957+032,True,optical
+rccd151012.0046.fits,MAXI1957+032,19:56:39.09,+03:26:43.4,2015-10-13,01:50:56.553,2457308.57703,200.0,1.56,R,H,1040,1590,1960,xrb_ccd/LOG_ccd.20150620thru20190801.csv,opticaldirecs/xrb_ccd/,ccd,Disk,,,J1957+032,True,optical
+rccd151012.0049.fits,MAXI1957+032,19:56:39.15,+03:26:43.6,2015-10-13,02:03:32.131,2457308.58578,200.0,1.64,B,H,1040,1590,1960,xrb_ccd/LOG_ccd.20150620thru20190801.csv,opticaldirecs/xrb_ccd/,ccd,Disk,,,J1957+032,True,optical

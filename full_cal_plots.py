@@ -88,7 +88,7 @@ for name in xrb_list:
                 end = start + pd.Timedelta(days=1)
                 c = 'saddlebrown'
                 z = 1.45
-                y_vals=[0.25, 0.75]
+                y_vals=[0.5]
                 for y_pos in y_vals:
                     axes[id].barh(y=y_pos, width=(end - start).days, left=start, height=0.2, color=c, zorder=z)
                 
@@ -197,6 +197,7 @@ for name in xrb_list:
     plt.savefig(f'{outdir}/combined_calendar_{name}.png')
     #plt.show()
     plt.close(f)
+    g.to_csv(f'{outdir}/incomplete_table_{name}.csv', index=False)
 
     #make a list of the CDs I need to upload per obj
     upload_df = pd.DataFrame(to_upload)

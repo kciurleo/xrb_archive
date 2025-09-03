@@ -3,6 +3,7 @@ import os
 import glob
 import pandas as pd
 from lookup_name import *
+import re
 
 os.chdir('/home/kmc249/test_data/')
 logs=glob.glob('**/LOG*csv', recursive=True)
@@ -77,7 +78,7 @@ biggestlog = pd.concat(dflist, ignore_index=True)
 for band in ['ir', 'optical']:
     #filter to ignore some stuff, check it's just rccd
     if band=='optical':
-        biglog = biggestlog[biggestlog['filename'].str.contains('rccd', case=False, na=False)]
+        biglog = biggestlog[biggestlog['filename'].str.match(r'(?i)^rccd|^r\d+', na=False)]
     else:
         biglog = biggestlog[biggestlog['filename'].str.contains('ir', case=False, na=False)]
     pattern = r'focus|BIAS| for |JUNK|dome|dark|shift|faint|bright|dither|flat|test|sky|summed'
