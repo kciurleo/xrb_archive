@@ -17,7 +17,7 @@ g['START']=['1998-06-04', '1999-01-01','2000-01-01', '2001-01-01', '2001-07-01',
 
 g['END']=['1998-12-31','1999-12-31','2000-12-31', '2001-08-22','2001-12-31', '2002-09-26', '2004-09-23', '2003-04-25', '2004-01-01', '2009-12-31', '2010-12-31', '2011-12-31', '2012-12-31', '2013-12-31', '2014-12-31', '2015-12-31', '2016-12-31', '2017-12-31', '2018-12-31', '2019-09-01']
 
-g['color']=['green', 'green', 'green', 'green','green','green', 'green','green', 'green','green','green','green','green','green','green','green','green','green','green','green',]
+g['color']=['green', 'green', 'green', 'green','green','green', 'yellow','yellow', 'yellow','green','green','green','green','green','green','green','green','green','green','green',]
 
 g['START']=pd.to_datetime(g['START'], errors='coerce')
 g['END']=pd.to_datetime(g['END'], errors='coerce')
