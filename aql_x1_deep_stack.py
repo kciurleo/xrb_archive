@@ -7,9 +7,11 @@ from smith_utils import *
 from photutils.psf import fit_fwhm
 from astropy.visualization import ZScaleInterval, ImageNormalize, SinhStretch
 import warnings
+import os
 warnings.filterwarnings('ignore')
 
 ###USER DEFINED PARAMETERS
+os.chdir('/scratch/temp_CD_data/AqlX-1/1.3m/rccd/')
 
 #get these physical pixel coordinates from placing apertures and manually looking at the region file
 names=['Aql X-1', 'Standard 2', 'Standard 3']
@@ -31,14 +33,14 @@ q1, q2 = 0.05, 0.5
 savedir='/home/kmc249/test_data/'
 
 #base image/hdr
-base='/OLD-NET-DRIVE-COLLECTION/xrb-archive/data/NB-buxton/AqlX1/optical/2011/rccd110626.0109.fits'
+base='/home/kmc249/Downloads/AqlX-1_R_600.0_stack.fits'
 
 ###END USER DEFINED PARAMETERS
 
 #read in log
 biglog=pd.read_csv('/home/kmc249/test_data/all_optical_log.csv',low_memory=False)
-interest=biglog.loc[biglog['proper name'] == 'Aql X-1']
-
+interest=biglog.loc[biglog['proper name'] == 'AqlX-1']
+'''
 #deal with multiple different file paths for right now
 pathmap = {'opticaldirecs/xrb-archive_usb-data_AqlX-1_fitsimages_R/':'/OLD-NET-DRIVE-COLLECTION/xrb-archive/usb-data/AqlX-1/fitsimages/R/', 
     'opticaldirecs/SMARTS_xrb_AqlX-1/': '/netc/bailyn/SMARTS_xrb/AqlX-1/', 
@@ -66,10 +68,11 @@ for id, row in interest.loc[interest['dir']=='/OLD-NET-DRIVE-COLLECTION/xrb-arch
 
 #we're going to skip all the things that fail for right now, likely because they're actually on CDs oops
 interest=interest.loc[~interest['dir'].isin(['FAIL', 'CD FAIL'])]
+'''
 print(f'list of acceptable fits files is is {len(interest)} long')
 
 #only get the things in the exptime and filter requested
-interest=interest.loc[(interest['EXPTIME']==exptime) & (interest['CCDFLTID']==filt)]
+interest=interest.loc[(interest['CCDFLTID']==filt)]
 interest.reset_index(inplace=True)
 
 print(f'{len(interest)} files to look at in this filt/exp')
@@ -81,21 +84,57 @@ filelist=[]
 
 #make file list
 for id, row in interest.iterrows():
-    filelist.append(f'{row["dir"]}{row["filename"]}')
+    #filelist.append(f'{row["dir"]}{row["filename"]}')
+    filelist.append(f'{row["filename"]}')
 
 #align and trim, find fwhm of a handful of stars
-fwhms=pd.DataFrame(columns=['filename']+names)
+fwhms=pd.DataFrame(columns=['filename', 'maxshift', 'xshift', 'yshift', 'bad']+names)
+
 print('initial align and trim')
 for id, file in enumerate(filelist):
     fwhms.at[id, 'filename']=file
-    im,hdr = fits.getdata(file,header=True)
+    try:
+        im,hdr = fits.getdata(file,header=True)
+    except:
+        print('no file', file)
+        print(interest.loc[interest['filename']==file])
+        continue
     #do the fft crossimaging, centered on the star
     xshift, yshift = cross_image(IM, im, int(xcentroids[0]), int(ycentroids[0]), boxsize=400)
     newimg=shift_image(im,xshift,yshift)
     f = fit_fwhm(newimg, xypos=xypos, fit_shape=7)
+    fwhms.at[id, 'maxshift']=np.max([xshift, yshift])
+    fwhms.at[id, 'xshift']=xshift
+    fwhms.at[id, 'yshift']=yshift
     for num, name in enumerate(names):
         fwhms.at[id, name]=f[num]
+    trimimg=newimg[301:813,301:813]
+    
+    fig, ax = plt.subplots(figsize=(10,10))
+    interval = ZScaleInterval()
+    vmin,vmax=interval.get_limits(trimimg)
+    norm=ImageNormalize(vmin=vmin,vmax=vmax,stretch=SinhStretch())
+    ax.imshow(trimimg, cmap='gray',origin='lower',norm=norm,alpha=0.5)
+    plt.title(file)
+    plt.show()
+    print('just showed', file)
 
+    fwhms.at[id, 'bad']=False
+    hdr['TRIM']=True
+    fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_{file}', trimimg, hdr, overwrite=True)
+    print('wrote trim_',file)
+    
+fwhms.to_csv('/home/kmc249/test_data/temp_aql_shifts.csv', index=False)
+'''
+plt.figure(figsize=(8,6))
+plt.hist(fwhms['maxshift'], bins=40)
+plt.show()
+'''
+plt.figure(figsize=(8,8))
+plt.scatter(fwhms['xshift'], fwhms['yshift'])
+plt.show()
+
+'''
 #pick some percentiles; was gonna do avg and std away, but we have a very skewed distribution here
 p20 = fwhms[names].quantile(q1)
 p40 = fwhms[names].quantile(q2)
@@ -156,3 +195,4 @@ plt.colorbar()
 
 plt.scatter(xcentroids,ycentroids, color='red', marker='x', s=3)
 plt.show()
+'''

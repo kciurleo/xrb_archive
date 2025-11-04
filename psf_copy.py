@@ -19,13 +19,25 @@ import pandas as pd
 from astropy.time import Time
 
 
+#read in main df
+fwhms=pd.read_csv('/home/kmc249/test_data/temp_aql_shifts.csv', low_memory=False)
 
-filelist=glob.glob('/Users/katieciurleo/Downloads/aqlX1psfframes/*') #[list of files]
-stacked_full = fits.getdata('/Users/katieciurleo/Downloads/AqlX-1_R_600.0_stack.fits')
-stacked_trim = fits.getdata('/Users/katieciurleo/Downloads/AqlX-1_R_600.0_stack_NEWMASTER.fits')
+bad_list=np.array(['130811.0067', '140529.0030','130504.0083','070524.0061','070809.0032','060710.0057', 
+                   '070411.0052','070413.0070','030329.0212', '130504.0083','170730.0019', '171008.0030',
+                   '130820.0064', '130820.0064', '150408.0159','051010.0021','050517.0149','050719.0101',
+                   '040531.0042','120906.0021','090928.0041','070729.0050','030321.0139','030307.0212',
+                   '160825.0042', '160904.0021', '170604.0070'])
+bad_list='rccd'+bad_list+'.fits'
+
+input_df=fwhms.loc[~fwhms['filename'].isin(bad_list)]
+
+filelist=f'/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_'+np.array(input_df['filename'])
+
+stacked_trim = fits.getdata('/home/kmc249/Downloads/AqlX-1_R_600.0_stack_NEWMASTER.fits')
 
 #load locations of good sources for ePSF
-sources=Table.read('/Users/katieciurleo/Downloads/yalestuff/good_sources.vot')
+sources=Table.read('/home/kmc249/Downloads/good_sources.vot')
+
 
 #put in correct x-y and get rid of epsf guys we won't use
 sources["xcentroid"]=sources["xcentroid"]-301
@@ -39,9 +51,9 @@ mask=((sources['xcentroid']>= 0) &
 sources=sources[mask]
 
 #info about the neighbor
-stacked_neighbor=Table.read('/Users/katieciurleo/Downloads/yalestuff/neighbor_info.vot')
-stacked_aql=Table.read('/Users/katieciurleo/Downloads/yalestuff/aql_info.vot')
-stacked_ensemble=Table.read('/Users/katieciurleo/Downloads/yalestuff/ensemble_info.vot')
+stacked_neighbor=Table.read('/home/kmc249/Downloads/neighbor_info.vot')
+stacked_aql=Table.read('/home/kmc249/Downloads/aql_info.vot')
+stacked_ensemble=Table.read('/home/kmc249/Downloads/ensemble_info.vot')
 eids = list(stacked_ensemble['id'])
 
 #put all the vots in the smaller x-y system
@@ -56,10 +68,17 @@ stacked_ensemble["y_init"]=stacked_ensemble["y_init"]-301
 stacked_flux_factor=stacked_neighbor['stacked_flux_factor'].value[0]
 
 #init params to fit the neighbor and ensemble
-init_params=stacked_ensemble['id','group_id','flux_init','x_fit','y_fit','flux_fit']
-init_params.add_row(stacked_neighbor[0]['id','group_id','flux_init','x_fit','y_fit','flux_fit'])
-init_params.add_row(stacked_aql[0]['id','group_id','flux_init','x_fit','y_fit','flux_fit'])
+init_params=stacked_ensemble['id','flux_init','x_fit','y_fit','flux_fit']
+init_params.add_row(stacked_neighbor[0]['id','flux_init','x_fit','y_fit','flux_fit'])
+init_params.add_row(stacked_aql[0]['id','flux_init','x_fit','y_fit','flux_fit'])
+init_params['group_id'] = np.arange(len(init_params))
 
+# now make Aql and neighbor share the same group_id
+neighbor_id = stacked_neighbor['id'][0]
+aql_id = stacked_aql['id'][0]
+neighbor_idx = np.where(init_params['id'] == neighbor_id)[0][0]
+aql_idx = np.where(init_params['id'] == aql_id)[0][0]
+init_params['group_id'][aql_idx] = init_params['group_id'][neighbor_idx]
 
 #ensemble fluxes to use for std
 ens_d=dict((el,[]) for el in eids)
@@ -77,15 +96,18 @@ big_df['neighbor'] = np.nan
 for e in eids:
     big_df[str(e)] = np.nan 
 
+showplot=True
+nonexistent=[]
+
 for ind, row in big_df.iterrows():
     file=row['filename']
-    fulldata,hdr = fits.getdata(file,header=True)
+    print('trying', file)
+    try:
+        imdata,hdr = fits.getdata(file,header=True)
+    except:
+        nonexistent.append(file)
     big_df.at[ind, 'time']=Time(f"{hdr['DATE-OBS']}T{hdr['TIME-OBS']}")
 
-    #shift image to match the stacked image
-    xshift, yshift = cross_image(stacked_full,fulldata,int(556), int(557), boxsize=400)
-    
-    imdata=shift_image(fulldata,xshift,yshift)[301:813,301:813]
 
     #background subtract data
     sigma_clip=SigmaClip(sigma=3.0)
@@ -94,7 +116,7 @@ for ind, row in big_df.iterrows():
     bkg_sub_full_data=imdata-fullbkg.background
 
     #plot sources on data just to double check
-    '''
+
     interval = ZScaleInterval()
     vmin, vmax = interval.get_limits(bkg_sub_full_data)
     vmin2, vmax2 = interval.get_limits(stacked_trim)
@@ -103,19 +125,19 @@ for ind, row in big_df.iterrows():
     plt.figure(figsize=(10,12))
     plt.imshow(bkg_sub_full_data, cmap='gray', origin='lower', norm=norm)
     plt.imshow(stacked_trim, cmap='viridis', origin='lower', norm=norm2, alpha=0.5)
-    plt.scatter(sources['xcentroid'], sources['ycentroid'], marker='x')
+    plt.scatter(init_params['x_fit'], init_params['y_fit'], marker='x')
 
-    for row in sources:
+    for row in init_params:
         plt.annotate(
             str(row['id']), 
-            (row['xcentroid'], row['ycentroid']),
+            (row['x_fit'], row['y_fit']),
             textcoords="offset points",
             xytext=(5,5),
             fontsize=8,
             color='red'
         )
     plt.show()
-    '''
+
 
     #we need to get rid of the guys that are outside of this image if it's majorly shifted!! Some buffer around,
     #the edges are wonky....or we just trim everything to max shift. temp fix noted below
@@ -148,13 +170,22 @@ for ind, row in big_df.iterrows():
 
 
     #####THIS PART SHOULDN'T EVEN BE NEEDED
-
+    print(init_params)
     #psf fitting, using init params
     psf_model = epsf
     fit_shape=(7,7)
+    #grouper=SourceGrouper(min_separation=8)
     psfphot=PSFPhotometry(psf_model, fit_shape, aperture_radius=8, xy_bounds=0.1)
-    #make the xy pixel fit dist. 0 so it doesn't move
-    phot=psfphot(bkg_sub_full_data, init_params=init_params)
+    
+    
+    #make the xy pixel fit dist. 0.1, avg error in original fit so it doesn't move
+    try:
+        phot = psfphot(bkg_sub_full_data, init_params=init_params)
+    except ValueError as e:
+        print("init_params:", len(init_params))
+        print("npixfit:", len(psfphot._ungroup(psfphot._group_results['npixfit'])))
+        raise
+
     resid=psfphot.make_residual_image(bkg_sub_full_data)
     model=psfphot.make_model_image(np.shape(bkg_sub_full_data))
     '''
@@ -195,7 +226,6 @@ for ind, row in big_df.iterrows():
     #ensemble
     #ids=[69,79,71,18,7]
     ens = phot[np.isin(phot['id'], eids)]
-    print(ens['flux_fit', 'flux_init'])
 
     ave_ens_flux=np.nanmean(ens['flux_fit'])
     #get scaled flux of neighbor for this particular exposure
@@ -223,8 +253,8 @@ for ind, row in big_df.iterrows():
     axes[2].set_xlim(156,356)
     axes[2].set_ylim(156,356)
     plt.tight_layout()
-    plt.savefig(f'/Users/katieciurleo/Downloads/yalestuff/sub_aqlx1/img_{file.split("/")[-1][:-5]}.png')
-    #plt.show()
+    if showplot:
+        plt.show()
 
     final_data=imdata-test
 
@@ -248,85 +278,15 @@ for ind, row in big_df.iterrows():
     savefits=True
     if savefits:
         hdr['SUBTR']=True
-        fits.writeto(f'/Users/katieciurleo/Downloads/yalestuff/sub_aqlx1/sub_{file.split("/")[-1]}',final_data, hdr, overwrite=True)
+        fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/sub_{file.split("/")[-1]}',final_data, hdr, overwrite=True)
+    if showplot:
+        showyn=input('continue to show plots?')
+        if 'y' in showyn:
+            showplot=True
+        else:
+            showplot=False
+    
 
+big_df.to_csv('/home/kmc249/Downloads/psf_fluxes.csv', index=False)
 
-print(ens_d)
-print(nb)
-print(nb_modeled)
-print(aql)
-
-big_df.to_csv('/Users/katieciurleo/Downloads/yalestuff/psf_fluxes.csv', index=False)
-
-# Convert keys to strings
-ens_d_str = {str(k): v for k, v in ens_d.items()}
-
-with open('/Users/katieciurleo/Downloads/yalestuff/photometry_results.json', 'w') as f:
-    json.dump({
-        #'ens_d': ens_d_str,
-        'nb': [float(x) for x in nb],
-        #'nb_modeled': [float(x) for x in nb_modeled],
-        'aql': [float(x) for x in aql]
-    }, f, indent=2)
-
-
-#plotting
-
-def f(x, a, c):
-    return a*np.log10(x)+c
-
-fig, axes = plt.subplots(figsize=(8, 8))
-xdata, ydata=[],[]
-for e in ens_d.keys():
-    x=np.std(ens_d[e])
-    y=-2.5*np.log10(np.nanmean(ens_d[e]))
-    xdata.append(x)
-    ydata.append(y)
-    axes.scatter(x, y)
-    axes.annotate(
-        str(e),
-        (x, y),
-        textcoords="offset points",
-        xytext=(5, 5),
-        fontsize=8,
-        color='red'
-    )
-
-axes.scatter(np.std(nb), -2.5*np.log10(np.nanmean(nb)))
-axes.annotate(
-    'neighbor',
-    (np.std(nb), -2.5*np.log10(np.nanmean(nb))),
-    textcoords="offset points",
-    xytext=(5, 5),
-    fontsize=8,
-    color='red'
-)
-axes.scatter(np.std(nb_modeled), -2.5*np.log10(np.nanmean(nb_modeled)))
-axes.annotate(
-    'MODELED neighbor',
-    (np.std(nb_modeled), -2.5*np.log10(np.nanmean(nb_modeled))),
-    textcoords="offset points",
-    xytext=(5, 5),
-    fontsize=8,
-    color='red'
-)
-
-axes.scatter(np.std(aql), -2.5*np.log10(np.nanmean(aql)))
-axes.annotate(
-    'aql',
-    (np.std(aql), -2.5*np.log10(np.nanmean(aql))),
-    textcoords="offset points",
-    xytext=(5, 5),
-    fontsize=8,
-    color='red'
-)
-
-axes.set_xlabel('std')
-axes.set_ylabel('mag')
-
-popt, pcov = curve_fit(f, np.array(xdata), np.array(ydata))
-x_arr=np.linspace(np.min(xdata), np.max(xdata),150)
-axes.plot(x_arr, f(x_arr, *popt), 'g--')
-plt.savefig('/Users/katieciurleo/Downloads/yalestuff/ensemble_variability.png', dpi=250)
-plt.show()
-
+print('nonexistent: ', nonexistent)
