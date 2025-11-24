@@ -18,7 +18,6 @@ import json
 import pandas as pd
 from astropy.time import Time
 
-
 #read in main df
 fwhms=pd.read_csv('/home/kmc249/test_data/temp_aql_shifts.csv', low_memory=False)
 
@@ -54,6 +53,7 @@ sources=sources[mask]
 stacked_neighbor=Table.read('/home/kmc249/Downloads/neighbor_info.vot')
 stacked_aql=Table.read('/home/kmc249/Downloads/aql_info.vot')
 stacked_ensemble=Table.read('/home/kmc249/Downloads/ensemble_info.vot')
+#stacked_ensemble.remove_row(len(stacked_ensemble)-1)
 eids = list(stacked_ensemble['id'])
 
 #put all the vots in the smaller x-y system
@@ -71,7 +71,7 @@ stacked_flux_factor=stacked_neighbor['stacked_flux_factor'].value[0]
 init_params=stacked_ensemble['id','flux_init','x_fit','y_fit','flux_fit']
 init_params.add_row(stacked_neighbor[0]['id','flux_init','x_fit','y_fit','flux_fit'])
 init_params.add_row(stacked_aql[0]['id','flux_init','x_fit','y_fit','flux_fit'])
-init_params['group_id'] = np.arange(len(init_params))
+init_params['group_id'] = np.arange(len(init_params))+1
 
 # now make Aql and neighbor share the same group_id
 neighbor_id = stacked_neighbor['id'][0]
@@ -98,7 +98,7 @@ for e in eids:
 
 showplot=True
 nonexistent=[]
-
+problems=[]
 for ind, row in big_df.iterrows():
     file=row['filename']
     print('trying', file)
@@ -114,9 +114,10 @@ for ind, row in big_df.iterrows():
     bkg_estimator=MedianBackground()
     fullbkg=Background2D(imdata, (20,20), filter_size=(3,3),sigma_clip=sigma_clip, bkg_estimator=bkg_estimator)
     bkg_sub_full_data=imdata-fullbkg.background
+    bkg_sub_full_data = np.nan_to_num(bkg_sub_full_data, nan=0.0)
 
     #plot sources on data just to double check
-
+    '''
     interval = ZScaleInterval()
     vmin, vmax = interval.get_limits(bkg_sub_full_data)
     vmin2, vmax2 = interval.get_limits(stacked_trim)
@@ -137,7 +138,7 @@ for ind, row in big_df.iterrows():
             color='red'
         )
     plt.show()
-
+    '''
 
     #we need to get rid of the guys that are outside of this image if it's majorly shifted!! Some buffer around,
     #the edges are wonky....or we just trim everything to max shift. temp fix noted below
@@ -152,12 +153,18 @@ for ind, row in big_df.iterrows():
 
     valid_stars = [star for star in good_stars 
                 if np.isfinite(np.sum(star.data)) and np.sum(star.data) > 0]
+    
+    # filter out stars with the wrong shape
+    valid_stars = [star for star in valid_stars if star.data.shape == (size, size)]
 
-    epsf_input = EPSFStars(valid_stars)
-    #end
 
-    epsf_builder=EPSFBuilder(oversampling=2, maxiters=10)
-    epsf, fitted_stars = epsf_builder(epsf_input)
+    try:
+        epsf_input = EPSFStars(valid_stars)
+        epsf_builder=EPSFBuilder(oversampling=2, maxiters=10)
+        epsf, fitted_stars = epsf_builder(epsf_input)
+    except:
+        problems.append(file)
+        continue
     
 
     #plot epsf just to see if it worked
@@ -182,9 +189,7 @@ for ind, row in big_df.iterrows():
     try:
         phot = psfphot(bkg_sub_full_data, init_params=init_params)
     except ValueError as e:
-        print("init_params:", len(init_params))
-        print("npixfit:", len(psfphot._ungroup(psfphot._group_results['npixfit'])))
-        raise
+        raise e
 
     resid=psfphot.make_residual_image(bkg_sub_full_data)
     model=psfphot.make_model_image(np.shape(bkg_sub_full_data))
@@ -290,3 +295,4 @@ for ind, row in big_df.iterrows():
 big_df.to_csv('/home/kmc249/Downloads/psf_fluxes.csv', index=False)
 
 print('nonexistent: ', nonexistent)
+print('problems: ', problems)
