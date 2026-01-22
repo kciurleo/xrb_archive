@@ -286,12 +286,16 @@ plt.show()
 '''
 
 
-'''
+
 #periodogramming things
 #table.to_csv('/home/kmc249/Downloads/psf_fluxes_with_extras.csv', index=False)
 
 #mask outbursts and low 
-table=table.loc[(table['aql mag']>18.2) & (table['aql mag']<18.6)]
+table=table.loc[(table['aql mag']>18.1) & (table['aql mag']<18.6)]
+
+baseline=table['nice time'].max()-table['nice time'].min()
+base_days=baseline.total_seconds() / 3600 /24
+print(base_days)
 
 #folded??
 P = 0.789498  # period in days
@@ -301,10 +305,14 @@ phase = ((times - t0) / P) % 1
 table['their phase']=phase
 
 ##periodograms
-min_frequency = 24/19.25
-max_frequency = 24/18.75
+min_frequency = 24/19.5
+max_frequency = 24/18.5
 
-frequency = np.linspace(min_frequency, max_frequency, 10000)
+deltaf=P/base_days/4
+print('DELTA F:', deltaf)
+print(np.abs(min_frequency-max_frequency)/10000)
+
+frequency = np.arange(min_frequency, max_frequency, deltaf)
 
 fall, pall = LombScargle(times, table['aql mag']-np.nanmean(table['aql mag'])).autopower()
 power = LombScargle(times, table['aql mag']-np.nanmean(table['aql mag'])).power(frequency)
@@ -390,7 +398,7 @@ plt.tight_layout()
 plt.show()
 
 
-
+'''
 #crappy 2-sin cruve fit
 from scipy.optimize import curve_fit
 import numpy as np

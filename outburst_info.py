@@ -36,13 +36,13 @@ def parabola(x, a, b, c):
 
 
 
-'''
+
 plt.figure(figsize=(12,3))
 plt.scatter(table['mjds'], table['aql mag'], s=13, color='k')
 plt.scatter(lco['MJD'], lco['R_mag'], s=13, color='r')
 plt.ylim(20,15)
 plt.show()
-'''
+
 ###mini table stuff
 data = {
     "Number": ["1", "*", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"],
@@ -281,3 +281,17 @@ for i, j in itertools.product(range(n), repeat=2):
 plt.tight_layout()
 plt.savefig('/home/kmc249/test_data/xrb_archive/internal_plots/outburstplots/big_outburst_plot.png', dpi=250)
 #plt.show()
+
+print(df)
+
+#get quiescent time a dumb way for now
+result = []
+
+# shifted start column (start of next row)
+next_start = df['Start (MJD)'].shift(-1)
+
+mask = (~next_start.isna()) & (~df['End (MJD)'].isna())
+
+result = list(zip(df.loc[mask, 'End (MJD)'], next_start[mask]))
+print(result)
+df.to_csv('/home/kmc249/test_data/xrb_archive/internal_plots/outburstplots/aql_outbursts.csv')
