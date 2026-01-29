@@ -111,6 +111,7 @@ for file in glob.glob('/scratch/temp_CD_data/AqlX-1/1m/rccd/*'):
         except:
             filt=hdr['FILTERID']
         if filt=='R':
+        #if filt=='WIDE R':
       
             img = np.asarray(fits.getdata(base), dtype='<f8')
             inp_img = np.asarray(fits.getdata(file), dtype='<f8')
@@ -160,6 +161,7 @@ for file in glob.glob('/scratch/temp_CD_data/AqlX-1/1m/rccd/*'):
             #save to trim:
             hdr['TRIM']=True
             fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_{file.split("/")[-1]}', final_aligned, hdr, overwrite=True, output_verify='ignore')
+            #fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_{file.split("/")[-1]}', final_aligned, hdr, overwrite=True, output_verify='ignore')
         else:
             print(f'skipping {file}, here is hdr: {hdr}')
 print('badlist: ',badlist)

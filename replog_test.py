@@ -3,13 +3,14 @@ import numpy as np
 import glob
 from lookup_name import *
 
-paths=['/USB2/archive/REP-LOGS-2012/','/USB2/archive/2011.lastpart/REP-LOGS/', '/USB1/archive/REP-LOGS/2009/', '/USB1/archive/REP-LOGS/2010/', '/USB1/archive/REP-LOGS/2011firstpart/']
-
+#paths=['/USB2/archive/REP-LOGS-2012/','/USB2/archive/2011.lastpart/REP-LOGS/', '/USB1/archive/REP-LOGS/2009/', '/USB1/archive/REP-LOGS/2010/', '/USB1/archive/REP-LOGS/2011firstpart/']
+paths=['/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/', '/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/2003/', '/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/2004/', '/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/2005/', 
+       '/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/2006/', '/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/2007/', '/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/2008/', '/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/2009/', 
+       '/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/2010/', '/OLD-NET-DRIVE/net_bailyn/yalo180/yalo/SMARTS13m/REP-LOGS/2011/' ]
 loglist=[]
 for path in paths:
-    loglist1=glob.glob(f'{path}/*')
+    loglist1=glob.glob(f'{path}/replog*')
     loglist+=loglist1
-    
 
 #fixed width location for most of 2012 at least
 colspecs = [
@@ -61,7 +62,7 @@ xrb_rows=[]
 for log in loglist:
     print(log)
     #figure out where to skip to
-    with open(log) as f:
+    with open(log, encoding="latin-1") as f:
         lines = f.readlines()
     
     
@@ -80,11 +81,16 @@ for log in loglist:
         no_obs_list.append(log)
         continue
     
-    df = pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs,skipfooter=footer_line, names=colnames)
+    df = pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs,skipfooter=footer_line, names=colnames, encoding="latin-1")
 
     #use the second format if necessary
-    if df['Logged_UT'].isna().any() or not df['Filename'][0].startswith(('rccd','bin','ir', 'ccd')):
-        df=pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs2, skipfooter=footer_line, names=colnames2)
+    try:
+        if df['Logged_UT'].isna().any() or not df['Filename'][0].startswith(('rccd','bin','ir', 'ccd')):
+            df=pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs2, skipfooter=footer_line, names=colnames2, encoding="latin-1")
+    except:
+        print('kt this is the weird error')
+        error_list.append(log)
+        continue
     
     df['replog']=log
     
@@ -115,9 +121,9 @@ unique_names = set().union(*all_names)
 #print(unique_names)
 newnames=list(unique_names)
 newnames.sort()
-#print(newnames)
+print('new names', newnames)
 #print(no_obs_list)
-#print(error_list)
+print('error list', error_list)
 
 
 ### find the xrbs and what files exist for each of them. 
@@ -130,4 +136,4 @@ print(len(xrbdf))
 grp = xrbdf.groupby(['proper name'])
 
 for name, g in grp:
-    g.to_csv(f'/home/kmc249/usbdrive_logs/usbdrivereplog_{name[0]}.csv', index=False)
+    g.to_csv(f'/home/kmc249/usbdrive_logs/missingreplog_{name[0]}.csv', index=False)

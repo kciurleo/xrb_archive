@@ -89,10 +89,17 @@ for id, row in interest.iterrows():
 
 #align and trim, find fwhm of a handful of stars
 fwhms=pd.DataFrame(columns=['filename', 'maxshift', 'xshift', 'yshift', 'bad']+names)
-
+trimdir = '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/'
 print('initial align and trim')
 for id, file in enumerate(filelist):
     fwhms.at[id, 'filename']=file
+    outname = os.path.join(trimdir, f'trim_{file}')
+    
+    # ---- SKIP IF ALREADY TRIMMED ----
+    if os.path.exists(outname):
+        print(f'skipping {file} (trim file exists)')
+        continue
+    # --------------------------------
     try:
         im,hdr = fits.getdata(file,header=True)
     except:

@@ -7,13 +7,21 @@ from astropy.time import Time
 import matplotlib.dates as mdates
 
 #table=pd.read_csv('/Users/katieciurleo/Downloads/yalestuff/psf_fluxes.csv', low_memory=False)
-table=pd.read_csv('/home/kmc249/Downloads/newest_psf_fluxes_neighborhood_2008_apphot.csv', low_memory=False)
+#table=pd.read_csv('/home/kmc249/Downloads/newest_psf_fluxes_neighborhood_2008_apphot.csv', low_memory=False)
+table=pd.read_csv('/home/kmc249/Downloads/1m_psf_fluxes_all.csv', low_memory=False)
+extratable=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv', low_memory=False)
+extratable2=pd.read_csv('/home/kmc249/Downloads/psf_fluxes_2011.csv', low_memory=False)
+table = pd.concat([table, extratable], ignore_index=True)
+table = pd.concat([table, extratable2], ignore_index=True)
 table['nice time'] = pd.to_datetime(table['time'])
-table2=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv', low_memory=False)
+table2=pd.read_csv('/home/kmc249/Downloads/1m_wideR_psf_fluxes.csv', low_memory=False)
 table2['nice time'] = pd.to_datetime(table2['time'])
-table2= table2[table2['nice time'].dt.year == 2008]
+#table2= table2[table2['nice time'].dt.year == 2008]
 standards=pd.read_csv('/home/kmc249/Downloads/BEST_ens_stds_info.csv')
 #table=table2
+print(table.head)
+
+
 def f(x, a, c):
     return a*np.log10(x)+c
 
@@ -21,7 +29,7 @@ fig, axes = plt.subplots(figsize=(8, 8))
 xdata, ydata=[],[]
 threshold = 1e4
 bad_ids = []
-
+ 
 for e in table.columns:
     if e not in ['nice time', 'time', 'filename', '1418','1069','1105','1320', 'a','b','c','d',]:
         flux = table[e].values
@@ -32,8 +40,9 @@ for e in table.columns:
 
 
         x = np.std(flux_safe)
-        if x < threshold:
-            bad_ids.append(e)
+        #if x < threshold:
+		#if e not in ['aql', 'neighbor']:
+		#	bad_ids.append(e)
         y = -2.5 * np.log10(np.nanmean(flux_safe))
         if e not in ['aql']:
             xdata.append(x)
@@ -168,6 +177,7 @@ offset=total_avg+intercept
 
 table['aql mag'] = np.nan       # pre-create column
 table['ave mag'] = np.nan      # if needed for table2
+'''
 plt.figure(figsize=(12,3))
 print('to sum:', [name for name in table.columns if name not in exclude_cols])
 for id, row in table.iterrows():
@@ -220,7 +230,7 @@ ax2.xaxis.set_label_position('bottom')
 plt.subplots_adjust(bottom=0.25)
 ax1.xaxis.set_ticks_position('top')
 plt.tight_layout()
-#plt.savefig('/Users/katieciurleo/Downloads/yalestuff/aql_lc_psf_try1.png', dpi=250)
+plt.savefig('/home/kmc249/Downloads/aql_1m_lc_psf_try1.png', dpi=250)
 plt.show()
 
 eids= [431, 244, 214, 522, 1199, 545, 948, 271, 1065, 1423, 1115, 679, 295, 1081, 1434, 1416, 318, 1140, 397, 1413, 269, 1476, 983, 659, 1146, 670, 376, 784, 1407, 1169, 1458, 1086, 566, 158, 729, 235, 1207, 783, 505, 482, 1337, 812, 1234, 996, 268, 1243, 290, 794, 1160, 1195, 1490, 213, 1053, 759, 1379, 1006, 1280, 704, 1187, 1069, 173, 1039, 744, 514, 153, 1192, 786, 1046, 751, 982, 713, 381, 1320, 1099, 1263, 1167, 1113, 160, 582, 461, 533, 134, 613, 1215, 825, 1460, 1433, 757, 307, 1451, 758, 493, 597, 1477, 1085, 403, 1038, 67, 479, 1341, 1344, 1305, 80, 863, 82, 66, 104, 895, 55, 890, 1340, 163, 1380, 178, 224, 1345, 116, 234, 139, 218, 187, 215, 155, 226, 120, 209, 1382, 309, 1058, 399, 1404, 374, 262, 1007, 1414, 1399, 258, 312, 1385, 1415, 300, 260, 1042, 345, 288, 377, 1388, 1072, 371, 331, 1021, 369, 1023, 404, 395, 1109, 485, 492, 467, 1435, 418, 451, 413, 1094, 503, 445, 1418, 417, 1105, 410, 499, 1104, 1419, 506, 621, 1470, 639, 1161, 1457, 525, 1143, 1440, 1467, 657, 668, 641, 1139, 1471, 534, 695, 1165, 1459, 1141, 558, 530, 1145, 622, 1191, 1132, 1443, 792, 1238, 756, 1502, 1241, 1225, 1504, 1261, 703, 1506, 707, 681, 1489, 1509, 1483, 761, 1208, 1242, 781, 1512, 1211, 1519, 813, 800, 820]
@@ -241,7 +251,7 @@ sdom = std / np.sqrt(len(vals)) # standard deviation of the mean
 print(f"mean = {mean:.5f}")
 print(f"std  = {std:.5f}")
 print(f"sdom = {sdom:.5f}")
-print(aksjhdashj)
+'''
 
 exclude_cols = ['nice time','time', 'filename', 'aql','neighbor','a','b','c','d','1418','1069','1105', '1320']
 table['aql mag'] = np.nan       # pre-create column
@@ -273,13 +283,14 @@ def process_and_plot(table, label='aql', color='k'):
 
 # ---------------- MAIN PLOT ----------------
 
-plt.figure(figsize=(8,3))
+
+plt.figure(figsize=(20,3))
 
 # Table 1
-process_and_plot(table, label='aql new', color='k')
+process_and_plot(table, label='r', color='k')
 
 # Table 2
-process_and_plot(table2, label='aql old', color='red')
+process_and_plot(table2, label='wide r', color='red')
 
 # Avoid auto-duplicate legend entries
 handles, labels = plt.gca().get_legend_handles_labels()
@@ -287,7 +298,8 @@ unique = dict(zip(labels, handles))
 plt.legend(unique.values(), unique.keys())
 
 plt.ylabel('Pan-STARRS r')
-plt.ylim(19.5,17)
+plt.ylim(19.5,15)
+#plt.gca().invert_yaxis()
 
 ax1 = plt.gca()
 ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
@@ -310,8 +322,11 @@ ax2.xaxis.set_label_position('bottom')
 plt.subplots_adjust(bottom=0.25)
 plt.tight_layout()
 plt.show()
-
-
+print(table[['nice time', 'aql mag']].head())
+print(table2[['nice time', 'aql mag']].head())
+table[['nice time', 'aql mag']].to_csv('/home/kmc249/Downloads/rough_aql_r.csv', index=False)
+table2[['nice time', 'aql mag']].to_csv('/home/kmc249/Downloads/rough_aql_wide_r.csv', index=False)
+print(aksjhdasjh)
 #periodogramming things
 #table=table.loc[(table['aql mag']>16.5) & (table['aql mag']<19.2)]
 baseline=table2['nice time'].max()-table2['nice time'].min()

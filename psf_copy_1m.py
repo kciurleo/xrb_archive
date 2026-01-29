@@ -17,20 +17,11 @@ from scipy.optimize import curve_fit
 import json
 import pandas as pd
 from astropy.time import Time
+import os
 
 #read in main df
-fwhms=pd.read_csv('/home/kmc249/test_data/temp_aql_shifts.csv', low_memory=False)
-
-bad_list=np.array(['130811.0067', '140529.0030','130504.0083','070524.0061','070809.0032','060710.0057', 
-                   '070411.0052','070413.0070','030329.0212', '130504.0083','170730.0019', '171008.0030',
-                   '130820.0064', '130820.0064', '150408.0159','051010.0021','050517.0149','050719.0101',
-                   '040531.0042','120906.0021','090928.0041','070729.0050','030321.0139','030307.0212',
-                   '160825.0042', '160904.0021', '170604.0070'])
-bad_list='rccd'+bad_list+'.fits'
-
-input_df=fwhms.loc[~fwhms['filename'].isin(bad_list)]
-
-filelist=f'/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_'+np.array(input_df['filename'])
+filelist=glob.glob('/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_*.fits')
+#filelist=glob.glob('/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_*.fits')
 
 stacked_trim = fits.getdata('/home/kmc249/Downloads/AqlX-1_R_600.0_stack_NEWMASTER.fits')
 
@@ -106,7 +97,12 @@ for ind, row in big_df.iterrows():
         imdata,hdr = fits.getdata(file,header=True)
     except:
         nonexistent.append(file)
-    big_df.at[ind, 'time']=Time(f"{hdr['DATE-OBS']}T{hdr['TIME-OBS']}")
+        continue
+    try:
+        big_df.at[ind, 'time']=Time(f"{hdr['DATE-OBS']}T{hdr['TIME-OBS']}")
+    except:
+        problems.append(file)
+        continue
 
 
     #background subtract data
@@ -139,7 +135,6 @@ for ind, row in big_df.iterrows():
         )
     plt.show()
     '''
-
     #we need to get rid of the guys that are outside of this image if it's majorly shifted!! Some buffer around,
     #the edges are wonky....or we just trim everything to max shift. temp fix noted below
 
@@ -175,9 +170,7 @@ for ind, row in big_df.iterrows():
     plt.show()
     '''
 
-
     #####THIS PART SHOULDN'T EVEN BE NEEDED
-    print(init_params)
     #psf fitting, using init params
     psf_model = epsf
     fit_shape=(7,7)
@@ -283,7 +276,8 @@ for ind, row in big_df.iterrows():
     savefits=True
     if savefits:
         hdr['SUBTR']=True
-        fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/sub_{file.split("/")[-1]}',final_data, hdr, overwrite=True)
+        fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/sub_{file.split("/")[-1]}',final_data, hdr, overwrite=True)
+        #fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/sub_{file.split("/")[-1]}',final_data, hdr, overwrite=True)
     if showplot:
         showyn=input('continue to show plots?')
         if 'y' in showyn:
@@ -291,8 +285,8 @@ for ind, row in big_df.iterrows():
         else:
             showplot=False
     
-
-big_df.to_csv('/home/kmc249/Downloads/psf_fluxes.csv', index=False)
+big_df.to_csv('/home/kmc249/Downloads/1m_psf_fluxes_all.csv', index=False)
+#big_df.to_csv('/home/kmc249/Downloads/1m_wideR_psf_fluxes.csv', index=False)
 
 print('nonexistent: ', nonexistent)
 print('problems: ', problems)

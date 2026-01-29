@@ -25,10 +25,16 @@ bad_list=np.array(['130811.0067', '140529.0030','130504.0083','070524.0061','070
                    '070411.0052','070413.0070','030329.0212', '130504.0083','170730.0019', '171008.0030',
                    '130820.0064', '130820.0064', '150408.0159','051010.0021','050517.0149','050719.0101',
                    '040531.0042','120906.0021','090928.0041','070729.0050','030321.0139','030307.0212',
-                   '160825.0042', '160904.0021', '170604.0070'])
+                   '160825.0042', '160904.0021', '170604.0070', '111107.0001', '110816.0066', '110813.0103', '110713.0067'])
 bad_list='rccd'+bad_list+'.fits'
 
 input_df=fwhms.loc[~fwhms['filename'].isin(bad_list)]
+
+#for just 2008 purposes
+input_df = fwhms.loc[
+    (~fwhms['filename'].isin(bad_list)) &
+    (fwhms['filename'].str.startswith('rccd11'))
+]
 
 filelist=f'/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_'+np.array(input_df['filename'])
 
@@ -292,7 +298,7 @@ for ind, row in big_df.iterrows():
             showplot=False
     
 
-big_df.to_csv('/home/kmc249/Downloads/psf_fluxes.csv', index=False)
+big_df.to_csv('/home/kmc249/Downloads/psf_fluxes_2011.csv', index=False)
 
 print('nonexistent: ', nonexistent)
 print('problems: ', problems)
