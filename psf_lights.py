@@ -8,15 +8,17 @@ import matplotlib.dates as mdates
 
 #table=pd.read_csv('/Users/katieciurleo/Downloads/yalestuff/psf_fluxes.csv', low_memory=False)
 #table=pd.read_csv('/home/kmc249/Downloads/newest_psf_fluxes_neighborhood_2008_apphot.csv', low_memory=False)
-table=pd.read_csv('/home/kmc249/Downloads/1m_psf_fluxes_all.csv', low_memory=False)
-extratable=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv', low_memory=False)
-extratable2=pd.read_csv('/home/kmc249/Downloads/psf_fluxes_2011.csv', low_memory=False)
-table = pd.concat([table, extratable], ignore_index=True)
-table = pd.concat([table, extratable2], ignore_index=True)
+#table=pd.read_csv('/home/kmc249/Downloads/1m_psf_fluxes_all.csv', low_memory=False)
+table=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_08.csv', low_memory=False)
+#extratable=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv', low_memory=False)
+#extratable2=pd.read_csv('/home/kmc249/Downloads/psf_fluxes_2011.csv', low_memory=False)
+#table = pd.concat([table, extratable], ignore_index=True)
+#table = pd.concat([table, extratable2], ignore_index=True)
 table['nice time'] = pd.to_datetime(table['time'])
-table2=pd.read_csv('/home/kmc249/Downloads/1m_wideR_psf_fluxes.csv', low_memory=False)
+#table2=pd.read_csv('/home/kmc249/Downloads/1m_wideR_psf_fluxes.csv', low_memory=False)
+table2=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv', low_memory=False)
 table2['nice time'] = pd.to_datetime(table2['time'])
-#table2= table2[table2['nice time'].dt.year == 2008]
+table2= table2[table2['nice time'].dt.year == 2008]
 standards=pd.read_csv('/home/kmc249/Downloads/BEST_ens_stds_info.csv')
 #table=table2
 print(table.head)
@@ -29,7 +31,7 @@ fig, axes = plt.subplots(figsize=(8, 8))
 xdata, ydata=[],[]
 threshold = 1e4
 bad_ids = []
- 
+mag_dict = {} 
 for e in table.columns:
     if e not in ['nice time', 'time', 'filename', '1418','1069','1105','1320', 'a','b','c','d',]:
         flux = table[e].values
@@ -44,6 +46,7 @@ for e in table.columns:
 		#if e not in ['aql', 'neighbor']:
 		#	bad_ids.append(e)
         y = -2.5 * np.log10(np.nanmean(flux_safe))
+        mag_dict[e] = y
         if e not in ['aql']:
             xdata.append(x)
             ydata.append(y)
@@ -77,6 +80,24 @@ axes.invert_xaxis()
 #plt.savefig('/Users/katieciurleo/Downloads/yalestuff/aql_ensemble_variability.png', dpi=250)
 plt.show(block=False)
 print(list(map(int, bad_ids)))
+
+
+#mean aql mag
+mean_aql_mag = mag_dict['aql']
+distances = []
+
+for k, v in mag_dict.items():
+    if k != 'aql':
+        dist = abs(v - mean_aql_mag)
+        distances.append((k, dist, v))
+        
+# sort by closeness
+distances.sort(key=lambda x: x[1])
+
+for k, dist, mag in distances[:4]:
+    print(f"{k}: Δmag={dist:.4f}, mag={mag:.3f}")
+    
+#%%
 
 #print(askjhd)
 
@@ -280,31 +301,45 @@ def process_and_plot(table, label='aql', color='k'):
         table.at[id, 'aql mag']=mags
         plt.scatter(row['nice time'], mags, marker='.', color=color, s=15, label=label)
 
-
+#%%
 # ---------------- MAIN PLOT ----------------
+merged = table.merge(table2, on='nice time', suffixes=('_ap', '_psf'))
+merged['resid'] = merged['aql mag_ap'] - merged['aql mag_psf']
 
+fig, (ax1, ax_resid) = plt.subplots(
+    2, 1, figsize=(10,5),
+    sharex=True,
+    gridspec_kw={'height_ratios': [3, 1]}
+)
+plt.sca(ax1)
+plt.sca(ax1)
 
-plt.figure(figsize=(20,3))
+process_and_plot(table, label='AP', color='k')
+process_and_plot(table2, label='PSF', color='red')
 
-# Table 1
-process_and_plot(table, label='r', color='k')
-
-# Table 2
-process_and_plot(table2, label='wide r', color='red')
-
-# Avoid auto-duplicate legend entries
-handles, labels = plt.gca().get_legend_handles_labels()
+handles, labels = ax1.get_legend_handles_labels()
 unique = dict(zip(labels, handles))
-plt.legend(unique.values(), unique.keys())
+ax1.legend(unique.values(), unique.keys())
 
-plt.ylabel('Pan-STARRS r')
-plt.ylim(19.5,15)
+ax1.set_ylabel('Pan-STARRS r')
+ax1.set_ylim(18.5, 16)
 #plt.gca().invert_yaxis()
 
-ax1 = plt.gca()
+ax_resid.scatter(
+    merged['nice time'],
+    merged['resid'],
+    color='blue',
+    s=10, label='AP - PSF'
+)
+
+ax_resid.axhline(0, color='gray', linestyle='--')
+ax_resid.set_ylabel('Resids')
+ax_resid.set_xlabel('Date')
+ax_resid.set_ylim(0.5, -0.5)
+ax_resid.legend()
+
 ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
-# Secondary x-axis for MJD
 ax2 = ax1.twiny()
 ax2.set_xlim(ax1.get_xlim())
 
@@ -318,15 +353,15 @@ ax2.set_xticklabels([f'{mjd:.1f}' for mjd in tick_mjds])
 ax2.xaxis.set_ticks_position('bottom')
 ax1.xaxis.set_ticks_position('top')
 ax2.xaxis.set_label_position('bottom')
-
 plt.subplots_adjust(bottom=0.25)
 plt.tight_layout()
 plt.show()
 print(table[['nice time', 'aql mag']].head())
 print(table2[['nice time', 'aql mag']].head())
-table[['nice time', 'aql mag']].to_csv('/home/kmc249/Downloads/rough_aql_r.csv', index=False)
-table2[['nice time', 'aql mag']].to_csv('/home/kmc249/Downloads/rough_aql_wide_r.csv', index=False)
+#table[['nice time', 'aql mag']].to_csv('/home/kmc249/Downloads/rough_aql_r.csv', index=False)
+#table2[['nice time', 'aql mag']].to_csv('/home/kmc249/Downloads/rough_aql_wide_r.csv', index=False)
 print(aksjhdasjh)
+#%%
 #periodogramming things
 #table=table.loc[(table['aql mag']>16.5) & (table['aql mag']<19.2)]
 baseline=table2['nice time'].max()-table2['nice time'].min()

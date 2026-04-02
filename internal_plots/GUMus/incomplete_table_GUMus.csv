@@ -1,1 +1,267 @@
 filename,OBJECT,RA,DEC,DATE-OBS,TIME-OBS,JD,EXPTIME,SECZ,CCDFLTID,IRFLTID,TILT1,TILT2,TILT3,log name,Location,prop name help,Physical loc,OWNER,full path,proper name,xrb,source
+ir041121.0232,GUMus,11:26:27.7,-68:40:28,2004-11-22,08:07:01,2453331.8382,60.0,1.59,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0242,GU Mus,11:26:26.7,-68:40:28,2010-12-09,06:19:52.7,2455539.7638,60.0,1.74,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0253,GU Mus,11:26:28.4,-68:40:24,2010-12-09,06:57:29.9,2455539.7899,60.0,1.61,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0252,GU Mus,11:26:28.2,-68:40:25,2010-12-09,06:54:04.3,2455539.7876,60.0,1.62,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0251,GU Mus,11:26:28.0,-68:40:25,2010-12-09,06:50:39.6,2455539.7852,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0250,GU Mus,11:26:27.9,-68:40:25,2010-12-09,06:47:14.7,2455539.7828,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0249,GU Mus,11:26:27.8,-68:40:25,2010-12-09,06:43:49.1,2455539.7804,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0248,GU Mus,11:26:27.5,-68:40:25,2010-12-09,06:40:23.6,2455539.778,60.0,1.66,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0247,GU Mus,11:26:27.3,-68:40:26,2010-12-09,06:36:58.7,2455539.7757,60.0,1.67,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0246,GU Mus,11:26:27.1,-68:40:27,2010-12-09,06:33:33.3,2455539.7733,60.0,1.69,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0245,GU Mus,11:26:26.8,-68:40:27,2010-12-09,06:30:07.7,2455539.7709,60.0,1.7,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0244,GU Mus,11:26:26.8,-68:40:27,2010-12-09,06:26:43.0,2455539.7686,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0243,GU Mus,11:26:26.7,-68:40:27,2010-12-09,06:23:18.1,2455539.7662,60.0,1.72,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0241,GU Mus,11:26:26.7,-68:40:28,2010-12-09,06:16:27.0,2455539.7614,60.0,1.75,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0260,GU Mus,11:26:29.0,-68:40:26,2010-11-16,08:37:22.8,2455516.8593,60.0,1.58,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0240,GU Mus,11:26:26.4,-68:40:29,2010-12-09,06:13:02.0,2455539.759,60.0,1.76,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0239,GU Mus,11:26:26.5,-68:40:29,2010-12-09,06:09:36.5,2455539.7567,60.0,1.78,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0238,GU Mus,11:26:26.4,-68:40:30,2010-12-09,06:06:10.8,2455539.7543,60.0,1.79,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0237,GU Mus,11:26:26.5,-68:40:32,2010-12-09,06:02:46.0,2455539.7519,60.0,1.81,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0268,GU Mus,11:26:30.5,-68:40:18,2010-11-16,09:04:51.0,2455516.8784,60.0,1.51,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0267,GU Mus,11:26:30.6,-68:40:19,2010-11-16,09:01:25.9,2455516.876,60.0,1.51,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0266,GU Mus,11:26:30.8,-68:40:19,2010-11-16,08:58:01.1,2455516.8736,60.0,1.52,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0265,GU Mus,11:26:30.6,-68:40:20,2010-11-16,08:54:27.6,2455516.8712,60.0,1.53,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0264,GU Mus,11:26:30.4,-68:40:22,2010-11-16,08:51:02.5,2455516.8688,60.0,1.54,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0263,GU Mus,11:26:30.0,-68:40:23,2010-11-16,08:47:37.9,2455516.8664,60.0,1.55,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0262,GU Mus,11:26:29.8,-68:40:24,2010-11-16,08:44:12.7,2455516.864,60.0,1.56,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0254,GU Mus,11:26:28.7,-68:40:24,2010-12-09,07:00:55.2,2455539.7923,60.0,1.6,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0255,GU Mus,11:26:28.9,-68:40:23,2010-12-09,07:04:20.1,2455539.7947,60.0,1.59,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0256,GU Mus,11:26:29.3,-68:40:22,2010-12-09,07:07:45.6,2455539.7971,60.0,1.58,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0257,GU Mus,11:26:29.7,-68:40:22,2010-12-09,07:11:19.5,2455539.7995,60.0,1.57,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0203,GUMus,11:26:27.1,-68:40:31,2011-01-12,06:32:02.1,2455573.7722,60.0,1.37,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0202,GUMus,11:26:27.1,-68:40:31,2011-01-12,06:28:36.3,2455573.7699,60.0,1.38,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0201,GUMus,11:26:27.0,-68:40:32,2011-01-12,06:25:10.5,2455573.7675,60.0,1.38,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0200,GUMus,11:26:26.7,-68:40:33,2011-01-12,06:21:45.3,2455573.7651,60.0,1.39,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0276,GU Mus,11:26:29.1,-68:40:20,2010-12-09,08:16:17.5,2455539.8446,60.0,1.42,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0275,GU Mus,11:26:29.1,-68:40:18,2010-12-09,08:12:52.0,2455539.8423,60.0,1.42,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0274,GU Mus,11:26:29.0,-68:40:20,2010-12-09,08:09:27.1,2455539.8399,60.0,1.43,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0273,GU Mus,11:26:29.0,-68:40:18,2010-12-09,08:06:01.6,2455539.8375,60.0,1.44,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0272,GU Mus,11:26:29.0,-68:40:19,2010-12-09,08:02:36.4,2455539.8352,60.0,1.44,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0271,GU Mus,11:26:29.1,-68:40:18,2010-12-09,07:59:11.5,2455539.8328,60.0,1.45,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0270,GU Mus,11:26:29.2,-68:40:18,2010-12-09,07:55:46.5,2455539.8304,60.0,1.46,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0269,GU Mus,11:26:29.2,-68:40:18,2010-12-09,07:52:21.4,2455539.828,60.0,1.47,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0268,GU Mus,11:26:29.3,-68:40:18,2010-12-09,07:48:56.1,2455539.8257,60.0,1.47,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0267,GU Mus,11:26:29.5,-68:40:17,2010-12-09,07:45:31.2,2455539.8233,60.0,1.48,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0266,GU Mus,11:26:29.8,-68:40:18,2010-12-09,07:42:05.9,2455539.8209,60.0,1.49,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0265,GU Mus,11:26:29.9,-68:40:18,2010-12-09,07:38:40.4,2455539.8185,60.0,1.5,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0264,GU Mus,11:26:30.1,-68:40:18,2010-12-09,07:35:15.7,2455539.8161,60.0,1.5,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0263,GU Mus,11:26:30.4,-68:40:18,2010-12-09,07:31:50.9,2455539.8138,60.0,1.51,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0262,GU Mus,11:26:30.5,-68:40:18,2010-12-09,07:28:25.6,2455539.8114,60.0,1.52,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0261,GU Mus,11:26:30.6,-68:40:19,2010-12-09,07:25:00.1,2455539.809,60.0,1.53,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0260,GU Mus,11:26:30.5,-68:40:20,2010-12-09,07:21:35.2,2455539.8067,60.0,1.54,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0259,GU Mus,11:26:30.3,-68:40:21,2010-12-09,07:18:10.1,2455539.8043,60.0,1.55,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101208.0258,GU Mus,11:26:29.9,-68:40:22,2010-12-09,07:14:44.6,2455539.8019,60.0,1.56,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0261,GU Mus,11:26:29.4,-68:40:25,2010-11-16,08:40:47.5,2455516.8617,60.0,1.57,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0259,GU Mus,11:26:28.7,-68:40:26,2010-11-16,08:33:57.9,2455516.8569,60.0,1.59,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0273,GU Mus,11:26:29.3,-68:40:27,2004-11-23,07:59:56,2453332.8333,60.0,1.6,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0227,GU Mus,11:26:26.3,-68:40:31,2004-11-26,07:57:37,2453335.8317,60.0,1.57,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0226,GU Mus,11:26:26.3,-68:40:31,2004-11-26,07:56:15,2453335.8307,60.0,1.58,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0225,GU Mus,11:26:26.4,-68:40:31,2004-11-26,07:54:53,2453335.8298,60.0,1.58,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0224,GU Mus,11:26:26.4,-68:40:33,2004-11-26,07:53:32,2453335.8288,60.0,1.59,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0280,GUMus,11:26:29.8,-68:40:26,2004-11-23,08:11:32,2453332.8413,60.0,1.57,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0279,GUMus,11:26:29.7,-68:40:26,2004-11-23,08:10:11,2453332.8404,60.0,1.57,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0278,GUMus,11:26:29.6,-68:40:26,2004-11-23,08:07:58,2453332.8389,60.0,1.58,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0277,GUMus,11:26:29.6,-68:40:26,2004-11-23,08:06:36,2453332.8379,60.0,1.58,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0276,GUMus,11:26:29.5,-68:40:26,2004-11-23,08:05:15,2453332.837,60.0,1.59,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0275,GUMus,11:26:29.4,-68:40:27,2004-11-23,08:03:13,2453332.8356,60.0,1.59,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0274,GUMus,11:26:29.4,-68:40:26,2004-11-23,08:01:52,2453332.8346,60.0,1.6,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0272,GU Mus,11:26:29.3,-68:40:27,2004-11-23,07:58:34,2453332.8323,60.0,1.61,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0258,GU Mus,11:26:28.4,-68:40:27,2010-11-16,08:30:33.2,2455516.8546,60.0,1.6,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0271,GU Mus,11:26:29.2,-68:40:27,2004-11-23,07:57:12,2453332.8314,60.0,1.61,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0270,GU Mus,11:26:29.2,-68:40:27,2004-11-23,07:55:50,2453332.8304,60.0,1.61,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0269,GU Mus,11:26:29.1,-68:40:27,2004-11-23,07:54:28,2453332.8295,60.0,1.62,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0268,GU Mus,11:26:29.1,-68:40:27,2004-11-23,07:53:07,2453332.8286,60.0,1.62,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0267,GU Mus,11:26:29.0,-68:40:27,2004-11-23,07:51:45,2453332.8276,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0266,GU Mus,11:26:28.9,-68:40:27,2004-11-23,07:50:23,2453332.8267,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0265,GU Mus,11:26:28.9,-68:40:28,2004-11-23,07:49:01,2453332.8257,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0264,GU Mus,11:26:28.8,-68:40:28,2004-11-23,07:47:39,2453332.8248,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0263,GU Mus,11:26:28.7,-68:40:28,2004-11-23,07:46:17,2453332.8238,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041122.0262,GU Mus,11:26:28.6,-68:40:28,2004-11-23,07:44:56,2453332.8229,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0234,GUMus,11:26:27.9,-68:40:28,2004-11-22,08:10:35,2453331.8407,60.0,1.58,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0228,GU Mus,11:26:26.4,-68:40:31,2004-11-26,07:58:59,2453335.8326,60.0,1.57,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0229,GU Mus,11:26:26.4,-68:40:30,2004-11-26,08:00:20,2453335.8336,60.0,1.57,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0230,GU Mus,11:26:26.4,-68:40:30,2004-11-26,08:01:43,2453335.8345,60.0,1.56,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0231,GU Mus,11:26:26.5,-68:40:30,2004-11-26,08:03:04,2453335.8355,60.0,1.56,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0257,GU Mus,11:26:28.2,-68:40:28,2010-11-16,08:27:08.3,2455516.8522,60.0,1.61,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0256,GU Mus,11:26:28.0,-68:40:28,2010-11-16,08:23:43.7,2455516.8498,60.0,1.62,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0255,GU Mus,11:26:27.8,-68:40:29,2010-11-16,08:20:18.4,2455516.8474,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0254,GU Mus,11:26:27.7,-68:40:29,2010-11-16,08:16:53.2,2455516.8451,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0253,GU Mus,11:26:27.6,-68:40:29,2010-11-16,08:13:28.7,2455516.8427,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0252,GU Mus,11:26:27.5,-68:40:29,2010-11-16,08:10:04.0,2455516.8403,60.0,1.67,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0251,GU Mus,11:26:27.1,-68:40:29,2010-11-16,08:06:38.9,2455516.838,60.0,1.68,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0250,GU Mus,11:26:27.0,-68:40:29,2010-11-16,08:03:13.8,2455516.8356,60.0,1.69,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0249,GU Mus,11:26:26.7,-68:40:30,2010-11-16,07:59:49.2,2455516.8332,60.0,1.7,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0248,GU Mus,11:26:26.7,-68:40:31,2010-11-16,07:56:24.1,2455516.8308,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0247,GU Mus,11:26:26.6,-68:40:31,2010-11-16,07:52:59.0,2455516.8285,60.0,1.73,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir101115.0246,GU Mus,11:26:26.4,-68:40:32,2010-11-16,07:49:34.5,2455516.8261,60.0,1.74,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0242,GUMus,11:26:27.1,-68:40:28,2004-11-26,08:20:09,2453335.8473,60.0,1.51,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0241,GUMus,11:26:27.1,-68:40:28,2004-11-26,08:18:48,2453335.8464,60.0,1.52,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0240,GUMus,11:26:27.0,-68:40:28,2004-11-26,08:16:36,2453335.8449,60.0,1.52,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0239,GUMus,11:26:26.9,-68:40:29,2004-11-26,08:15:14,2453335.8439,60.0,1.53,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0238,GUMus,11:26:26.9,-68:40:28,2004-11-26,08:13:52,2453335.843,60.0,1.53,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0237,GUMus,11:26:26.8,-68:40:29,2004-11-26,08:11:51,2453335.8416,60.0,1.54,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0236,GUMus,11:26:26.7,-68:40:29,2004-11-26,08:10:29,2453335.8406,60.0,1.54,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0235,GU Mus,11:26:26.7,-68:40:29,2004-11-26,08:08:31,2453335.8393,60.0,1.54,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0234,GU Mus,11:26:26.6,-68:40:29,2004-11-26,08:07:10,2453335.8383,60.0,1.55,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0233,GU Mus,11:26:26.5,-68:40:29,2004-11-26,08:05:48,2453335.8374,60.0,1.55,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041125.0232,GU Mus,11:26:26.5,-68:40:30,2004-11-26,08:04:25,2453335.8364,60.0,1.56,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0204,GUMus,11:26:27.2,-68:40:31,2011-01-12,06:35:27.1,2455573.7746,60.0,1.37,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0205,GUMus,11:26:27.2,-68:40:30,2011-01-12,06:38:52.3,2455573.777,60.0,1.36,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0206,GUMus,11:26:27.2,-68:40:30,2011-01-12,06:42:18.1,2455573.7794,60.0,1.36,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0207,GUMus,11:26:27.1,-68:40:30,2011-01-12,06:45:43.0,2455573.7818,60.0,1.35,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0232,GUMus,11:26:27.9,-68:40:24,2011-01-12,08:11:29.6,2455573.8413,60.0,1.29,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0230,GUMus,11:26:28.0,-68:40:24,2011-01-12,08:04:39.0,2455573.8366,60.0,1.29,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0229,GUMus,11:26:28.2,-68:40:24,2011-01-12,08:01:13.5,2455573.8342,60.0,1.29,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0228,GUMus,11:26:28.3,-68:40:24,2011-01-12,07:57:47.8,2455573.8318,60.0,1.29,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0227,GUMus,11:26:28.4,-68:40:24,2011-01-12,07:54:22.7,2455573.8294,60.0,1.29,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0226,GUMus,11:26:28.6,-68:40:24,2011-01-12,07:50:57.7,2455573.8271,60.0,1.3,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0225,GUMus,11:26:28.6,-68:40:25,2011-01-12,07:47:32.1,2455573.8247,60.0,1.3,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0224,GUMus,11:26:28.6,-68:40:26,2011-01-12,07:44:06.2,2455573.8223,60.0,1.3,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0223,GUMus,11:26:28.6,-68:40:26,2011-01-12,07:40:40.9,2455573.8199,60.0,1.3,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0222,GUMus,11:26:28.6,-68:40:27,2011-01-12,07:37:15.3,2455573.8175,60.0,1.3,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0221,GUMus,11:26:28.6,-68:40:27,2011-01-12,07:33:49.3,2455573.8152,60.0,1.31,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0220,GUMus,11:26:28.4,-68:40:28,2011-01-12,07:30:24.2,2455573.8128,60.0,1.31,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0219,GUMus,11:26:28.3,-68:40:28,2011-01-12,07:26:49.3,2455573.8103,60.0,1.31,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0218,GUMus,11:26:28.2,-68:40:28,2011-01-12,07:23:23.5,2455573.8079,60.0,1.31,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0217,GUMus,11:26:28.0,-68:40:29,2011-01-12,07:19:57.7,2455573.8055,60.0,1.32,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0216,GUMus,11:26:27.9,-68:40:29,2011-01-12,07:16:32.1,2455573.8032,60.0,1.32,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0215,GUMus,11:26:27.8,-68:40:29,2011-01-12,07:13:06.3,2455573.8008,60.0,1.32,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0214,GUMus,11:26:27.8,-68:40:30,2011-01-12,07:09:41.2,2455573.7984,60.0,1.33,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0213,GUMus,11:26:27.7,-68:40:30,2011-01-12,07:06:16.2,2455573.796,60.0,1.33,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0212,GUMus,11:26:27.7,-68:40:30,2011-01-12,07:02:50.4,2455573.7936,60.0,1.33,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0211,GUMus,11:26:27.6,-68:40:30,2011-01-12,06:59:25.2,2455573.7913,60.0,1.34,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0210,GUMus,11:26:27.5,-68:40:30,2011-01-12,06:56:00.0,2455573.7889,60.0,1.34,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0209,GUMus,11:26:27.3,-68:40:30,2011-01-12,06:52:34.3,2455573.7865,60.0,1.35,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0208,GUMus,11:26:27.3,-68:40:30,2011-01-12,06:49:08.3,2455573.7841,60.0,1.35,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0231,GUMus,11:26:27.9,-68:40:23,2011-01-12,08:08:03.9,2455573.8389,60.0,1.29,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0233,GUMus,11:26:27.8,-68:40:23,2011-01-12,08:14:55.2,2455573.8437,60.0,1.29,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0234,GUMus,11:26:27.8,-68:40:23,2011-01-12,08:18:20.2,2455573.8461,60.0,1.28,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0239,GUMus,11:26:27.7,-68:40:20,2011-01-12,08:35:27.6,2455573.858,60.0,1.28,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0238,GUMus,11:26:27.7,-68:40:21,2011-01-12,08:32:01.9,2455573.8556,60.0,1.28,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0237,GUMus,11:26:27.7,-68:40:22,2011-01-12,08:28:36.8,2455573.8532,60.0,1.28,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0236,GUMus,11:26:27.7,-68:40:22,2011-01-12,08:25:11.0,2455573.8508,60.0,1.28,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir110111.0235,GUMus,11:26:27.7,-68:40:22,2011-01-12,08:21:45.3,2455573.8484,60.0,1.28,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0233,GUMus,11:26:27.7,-68:40:28,2004-11-22,08:09:14,2453331.8397,60.0,1.59,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0231,GUMus,11:26:27.7,-68:40:29,2004-11-22,08:05:39,2453331.8373,60.0,1.6,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0230,GUMus,11:26:27.5,-68:40:29,2004-11-22,08:04:17,2453331.8363,60.0,1.6,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0139,GU Mus,11:26:17.6,-68:40:41,2004-11-18,07:56:44,2453327.8311,60.0,1.68,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0138,GU Mus,11:26:17.4,-68:40:41,2004-11-18,07:55:22,2453327.8301,60.0,1.68,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0137,GU Mus,11:26:17.4,-68:40:41,2004-11-18,07:54:00,2453327.8292,60.0,1.69,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0136,GU Mus,11:26:17.3,-68:40:42,2004-11-18,07:52:39,2453327.8282,60.0,1.69,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0135,GU Mus,11:26:17.2,-68:40:42,2004-11-18,07:51:17,2453327.8273,60.0,1.7,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0134,GU Mus,11:26:17.1,-68:40:43,2004-11-18,07:49:55,2453327.8263,60.0,1.7,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0133,GU Mus,11:26:16.9,-68:40:43,2004-11-18,07:48:33,2453327.8254,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0132,GU Mus,11:26:16.8,-68:40:44,2004-11-18,07:47:12,2453327.8245,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0131,GU Mus,11:26:16.7,-68:40:44,2004-11-18,07:45:50,2453327.8235,60.0,1.72,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0130,GU Mus,11:26:16.6,-68:40:45,2004-11-18,07:44:27,2453327.8225,60.0,1.72,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0129,GU Mus,11:26:16.6,-68:40:45,2004-11-18,07:43:06,2453327.8216,60.0,1.73,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0140,GU Mus,11:26:17.8,-68:40:41,2004-11-18,07:58:05,2453327.832,60.0,1.67,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0141,GUMus,11:26:17.9,-68:40:41,2004-11-18,08:00:02,2453327.8334,60.0,1.67,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0142,GUMus,11:26:17.9,-68:40:41,2004-11-18,08:01:23,2453327.8343,60.0,1.66,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0288,GUMus,11:26:29.3,-68:40:23,2004-11-20,08:00:42,2453329.8338,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0276,GU Mus,11:26:26.4,-68:40:32,2004-11-21,07:16:52,2453330.8034,60.0,1.78,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0275,GU Mus,11:26:26.3,-68:40:32,2004-11-21,07:15:30,2453330.8024,60.0,1.79,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0274,GU Mus,11:26:26.4,-68:40:32,2004-11-21,07:14:09,2453330.8015,60.0,1.8,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0273,GU Mus,11:26:26.4,-68:40:32,2004-11-21,07:12:47,2453330.8005,60.0,1.8,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0272,GU Mus,11:26:26.4,-68:40:32,2004-11-21,07:11:24,2453330.7996,60.0,1.81,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0271,GU Mus,11:26:26.5,-68:40:32,2004-11-21,07:10:03,2453330.7986,60.0,1.81,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0293,GUMus,11:26:29.6,-68:40:22,2004-11-20,08:08:59,2453329.8396,60.0,1.61,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0292,GUMus,11:26:29.5,-68:40:22,2004-11-20,08:07:38,2453329.8386,60.0,1.61,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0291,GUMus,11:26:29.4,-68:40:22,2004-11-20,08:05:26,2453329.8371,60.0,1.62,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0290,GUMus,11:26:29.4,-68:40:22,2004-11-20,08:04:04,2453329.8362,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0289,GUMus,11:26:29.3,-68:40:22,2004-11-20,08:02:42,2453329.8352,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0287,GUMus,11:26:29.2,-68:40:23,2004-11-20,07:59:21,2453329.8329,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0143,GUMus,11:26:18.1,-68:40:41,2004-11-18,08:03:25,2453327.8357,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0286,GU Mus,11:26:29.1,-68:40:23,2004-11-20,07:57:24,2453329.8315,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0285,GU Mus,11:26:29.0,-68:40:23,2004-11-20,07:56:03,2453329.8306,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0284,GU Mus,11:26:28.9,-68:40:23,2004-11-20,07:54:41,2453329.8296,60.0,1.66,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0283,GU Mus,11:26:28.8,-68:40:23,2004-11-20,07:53:19,2453329.8287,60.0,1.66,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0282,GU Mus,11:26:28.7,-68:40:24,2004-11-20,07:51:58,2453329.8278,60.0,1.67,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0281,GU Mus,11:26:28.6,-68:40:24,2004-11-20,07:50:36,2453329.8268,60.0,1.67,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0280,GU Mus,11:26:28.5,-68:40:24,2004-11-20,07:49:14,2453329.8259,60.0,1.68,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0279,GU Mus,11:26:28.4,-68:40:24,2004-11-20,07:47:52,2453329.8249,60.0,1.68,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0278,GU Mus,11:26:28.3,-68:40:24,2004-11-20,07:46:31,2453329.824,60.0,1.69,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0277,GU Mus,11:26:28.2,-68:40:25,2004-11-20,07:45:09,2453329.823,60.0,1.69,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0276,GU Mus,11:26:28.1,-68:40:25,2004-11-20,07:43:47,2453329.8221,60.0,1.7,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0277,GU Mus,11:26:26.4,-68:40:32,2004-11-21,07:18:15,2453330.8043,60.0,1.78,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0278,GU Mus,11:26:26.5,-68:40:32,2004-11-21,07:19:36,2453330.8053,60.0,1.77,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0279,GU Mus,11:26:26.5,-68:40:31,2004-11-21,07:20:57,2453330.8062,60.0,1.77,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0280,GU Mus,11:26:26.7,-68:40:31,2004-11-21,07:22:19,2453330.8072,60.0,1.76,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0229,GUMus,11:26:27.5,-68:40:29,2004-11-22,08:02:16,2453331.8349,60.0,1.61,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0228,GUMus,11:26:27.4,-68:40:29,2004-11-22,08:00:55,2453331.834,60.0,1.61,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0227,GU Mus,11:26:27.3,-68:40:29,2004-11-22,07:58:59,2453331.8326,60.0,1.62,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0226,GU Mus,11:26:27.3,-68:40:29,2004-11-22,07:57:37,2453331.8317,60.0,1.62,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0225,GU Mus,11:26:27.2,-68:40:30,2004-11-22,07:56:15,2453331.8307,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0224,GU Mus,11:26:27.1,-68:40:30,2004-11-22,07:54:53,2453331.8298,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0223,GU Mus,11:26:27.0,-68:40:30,2004-11-22,07:53:32,2453331.8288,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0222,GU Mus,11:26:26.9,-68:40:31,2004-11-22,07:52:10,2453331.8279,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0221,GU Mus,11:26:26.9,-68:40:31,2004-11-22,07:50:48,2453331.827,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0220,GU Mus,11:26:26.8,-68:40:32,2004-11-22,07:49:26,2453331.826,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0219,GU Mus,11:26:26.7,-68:40:32,2004-11-22,07:48:05,2453331.8251,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0218,GU Mus,11:26:26.6,-68:40:32,2004-11-22,07:46:43,2453331.8241,60.0,1.66,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0217,GU Mus,11:26:26.6,-68:40:32,2004-11-22,07:45:21,2453331.8232,60.0,1.66,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041121.0216,GU Mus,11:26:26.5,-68:40:32,2004-11-22,07:43:59,2453331.8222,60.0,1.67,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0289,GUMus,11:26:27.6,-68:40:27,2004-11-21,07:36:38,2453330.8171,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0288,GUMus,11:26:27.6,-68:40:27,2004-11-21,07:35:16,2453330.8162,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0287,GUMus,11:26:27.4,-68:40:28,2004-11-21,07:33:04,2453330.8146,60.0,1.72,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0286,GUMus,11:26:27.2,-68:40:28,2004-11-21,07:31:42,2453330.8137,60.0,1.73,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0285,GUMus,11:26:27.2,-68:40:29,2004-11-21,07:30:20,2453330.8127,60.0,1.73,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0284,GUMus,11:26:27.1,-68:40:29,2004-11-21,07:28:20,2453330.8114,60.0,1.74,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0283,GUMus,11:26:27.0,-68:40:30,2004-11-21,07:26:59,2453330.8104,60.0,1.74,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0282,GU Mus,11:26:26.9,-68:40:30,2004-11-21,07:25:03,2453330.8091,60.0,1.75,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041120.0281,GU Mus,11:26:26.8,-68:40:30,2004-11-21,07:23:42,2453330.8081,60.0,1.76,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0275,GU Mus,11:26:28.0,-68:40:25,2004-11-20,07:42:26,2453329.8211,60.0,1.7,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0274,GUMus,11:26:27.8,-68:40:26,2004-11-20,07:40:22,2453329.8197,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0273,GUMus,11:26:27.7,-68:40:26,2004-11-20,07:39:01,2453329.8188,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041116.0271,GUMus,11:26:16.1,-68:41:06,2004-11-17,07:25:37,2453326.8095,60.0,1.81,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041115.0245,GUMus,11:26:16.4,-68:41:07,2004-11-16,07:56:02,2453325.8306,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041115.0244,GUMus,11:26:16.3,-68:41:07,2004-11-16,07:54:40,2453325.8296,60.0,1.71,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041115.0243,GUMus,11:26:16.3,-68:41:07,2004-11-16,07:53:18,2453325.8287,60.0,1.72,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041115.0242,GUMus,11:26:16.2,-68:41:08,2004-11-16,07:51:56,2453325.8277,60.0,1.72,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041114.0315,GUMus,11:26:25.2,-68:40:33,2004-11-15,08:10:43,2453324.8408,60.0,1.67,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041114.0314,GUMus,11:26:25.1,-68:40:33,2004-11-15,08:09:22,2453324.8398,60.0,1.67,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041114.0313,GUMus,11:26:25.1,-68:40:34,2004-11-15,08:08:00,2453324.8389,60.0,1.68,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041114.0312,GUMus,11:26:24.9,-68:40:34,2004-11-15,08:06:38,2453324.8379,60.0,1.68,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041114.0311,GUMus,11:26:24.9,-68:40:34,2004-11-15,08:05:17,2453324.837,60.0,1.69,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041113.0314,GUMus,11:26:26.4,-68:40:32,2004-11-14,08:41:05,2453323.8619,60.0,1.58,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041113.0313,GUMus,11:26:26.5,-68:40:31,2004-11-14,08:39:43,2453323.8609,60.0,1.59,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041113.0312,GUMus,11:26:26.6,-68:40:32,2004-11-14,08:38:21,2453323.86,60.0,1.59,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041113.0311,GUMus,11:26:26.5,-68:40:32,2004-11-14,08:36:59,2453323.859,60.0,1.6,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041113.0310,GUMus,11:26:26.5,-68:40:32,2004-11-14,08:35:38,2453323.8581,60.0,1.6,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041105.0327,GUMus,11:26:26.8,-68:40:31,2004-11-06,08:29:56,2453315.8541,60.0,1.73,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041105.0326,GUMus,11:26:26.7,-68:40:31,2004-11-06,08:28:34,2453315.8532,60.0,1.73,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041105.0325,GUMus,11:26:26.7,-68:40:31,2004-11-06,08:27:12,2453315.8522,60.0,1.74,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041105.0324,GUMus,11:26:26.6,-68:40:32,2004-11-06,08:25:50,2453315.8513,60.0,1.74,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041105.0323,GUMus,11:26:26.5,-68:40:32,2004-11-06,08:24:29,2453315.8503,60.0,1.75,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0147,GUMus,11:26:18.4,-68:40:40,2004-11-18,08:09:43,2453327.8401,60.0,1.63,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0146,GUMus,11:26:18.3,-68:40:40,2004-11-18,08:08:21,2453327.8391,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0145,GUMus,11:26:18.2,-68:40:40,2004-11-18,08:06:08,2453327.8376,60.0,1.64,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041117.0144,GUMus,11:26:18.1,-68:40:40,2004-11-18,08:04:46,2453327.8366,60.0,1.65,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041115.0246,GUMus,11:26:16.4,-68:41:06,2004-11-16,07:57:23,2453325.8315,60.0,1.7,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041116.0272,GUMus,11:26:16.0,-68:41:06,2004-11-17,07:26:58,2453326.8104,60.0,1.81,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0272,GUMus,11:26:27.6,-68:40:27,2004-11-20,07:36:50,2453329.8172,60.0,1.72,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041116.0273,GUMus,11:26:16.0,-68:41:06,2004-11-17,07:28:21,2453326.8114,60.0,1.8,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0271,GUMus,11:26:27.5,-68:40:27,2004-11-20,07:35:27,2453329.8163,60.0,1.73,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0270,GUMus,11:26:27.4,-68:40:28,2004-11-20,07:34:06,2453329.8153,60.0,1.73,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0269,GUMus,11:26:27.2,-68:40:28,2004-11-20,07:32:05,2453329.8139,60.0,1.74,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0268,GUMus,11:26:27.2,-68:40:29,2004-11-20,07:30:44,2453329.813,60.0,1.74,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0267,GU Mus,11:26:27.1,-68:40:29,2004-11-20,07:28:46,2453329.8117,60.0,1.75,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0266,GU Mus,11:26:27.0,-68:40:29,2004-11-20,07:27:25,2453329.8107,60.0,1.76,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0265,GU Mus,11:26:26.9,-68:40:30,2004-11-20,07:26:03,2453329.8098,60.0,1.76,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0264,GU Mus,11:26:26.7,-68:40:30,2004-11-20,07:24:41,2453329.8088,60.0,1.77,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0263,GU Mus,11:26:26.6,-68:40:31,2004-11-20,07:23:20,2453329.8079,60.0,1.77,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0262,GU Mus,11:26:26.5,-68:40:31,2004-11-20,07:21:58,2453329.8069,60.0,1.78,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0261,GU Mus,11:26:26.5,-68:40:31,2004-11-20,07:20:36,2453329.806,60.0,1.79,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0260,GU Mus,11:26:26.4,-68:40:31,2004-11-20,07:19:14,2453329.805,60.0,1.79,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0259,GU Mus,11:26:26.5,-68:40:32,2004-11-20,07:17:53,2453329.8041,60.0,1.8,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0258,GU Mus,11:26:26.4,-68:40:32,2004-11-20,07:16:30,2453329.8031,60.0,1.8,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0257,GU Mus,11:26:26.4,-68:40:32,2004-11-20,07:15:09,2453329.8022,60.0,1.81,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041119.0256,GU Mus,11:26:26.5,-68:40:32,2004-11-20,07:13:47,2453329.8013,60.0,1.81,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041118.0289,GUMus,11:26:26.7,-68:40:32,2004-11-19,07:26:50,2453328.8103,60.0,1.78,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041118.0288,GUMus,11:26:26.6,-68:40:32,2004-11-19,07:25:29,2453328.8094,60.0,1.78,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041118.0287,GUMus,11:26:26.6,-68:40:32,2004-11-19,07:24:07,2453328.8084,60.0,1.79,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041118.0286,GUMus,11:26:26.5,-68:40:32,2004-11-19,07:22:45,2453328.8075,60.0,1.79,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041118.0285,GUMus,11:26:26.5,-68:40:32,2004-11-19,07:21:24,2453328.8065,60.0,1.8,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041116.0275,GUMus,11:26:16.1,-68:41:05,2004-11-17,07:31:04,2453326.8132,60.0,1.79,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR
+ir041116.0274,GUMus,11:26:16.1,-68:41:06,2004-11-17,07:29:43,2453326.8123,60.0,1.8,J,J,,,,missingreplog_GUMus.csv,,,Data replog,,,GUMus,True,IR

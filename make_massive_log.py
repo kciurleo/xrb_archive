@@ -72,6 +72,7 @@ for log in replogs:
         df['Location']=''
     df['prop name help']=''
     df['Physical loc']='Data replog'
+    dflist.append(df)
 
 biggestlog = pd.concat(dflist, ignore_index=True)
 

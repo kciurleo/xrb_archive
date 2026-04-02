@@ -18,16 +18,16 @@ import datetime as dt
 
 from astropy.timeseries import LombScargle
 
-#table=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv')
+table=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv')
 
 
-table=pd.read_csv('/home/kmc249/Downloads/psf_fluxes_with_extras.csv', low_memory=False)
+#table=pd.read_csv('/home/kmc249/Downloads/psf_fluxes_with_extras.csv', low_memory=False)
 
 table['nice time'] = pd.to_datetime(table['time'])
 
 standards=pd.read_csv('/home/kmc249/Downloads/BEST_ens_stds_info.csv')
 
-'''
+
 def f(x, a, c):
     return a*np.log10(x)+c
 
@@ -73,7 +73,7 @@ popt, pcov = curve_fit(f, np.array(xdata), np.array(ydata))
 x_arr=np.linspace(np.min(xdata), np.max(xdata),150)
 axes.plot( f(x_arr, *popt),x_arr, 'g--')
 axes.invert_xaxis()
-plt.savefig('/home/kmc249/Downloads/aql_ensemble_variability.png', dpi=250)
+#plt.savefig('/home/kmc249/Downloads/aql_ensemble_variability.png', dpi=250)
 plt.show(block=False)
 
 
@@ -121,7 +121,7 @@ axes.plot(x3_arr, slope*x3_arr+intercept, 'g--', label=f'y={np.round(slope,2)}x+
 axes.invert_yaxis()
 axes.invert_xaxis()
 plt.legend()
-plt.savefig('/home/kmc249/Downloads/aql_ensemble_to_stds_psf.png', dpi=250)
+#plt.savefig('/home/kmc249/Downloads/aql_ensemble_to_stds_psf.png', dpi=250)
 plt.show()
 
 
@@ -157,7 +157,7 @@ for e in table.columns:
 axes.set_ylabel('resid (panstarrs r - linear model)')
 axes.set_xlabel('panstarrs g-r (mag)')
 plt.legend()
-plt.savefig('/home/kmc249/Downloads/aql_resids_stds_color.png', dpi=250)
+#plt.savefig('/home/kmc249/Downloads/aql_resids_stds_color.png', dpi=250)
 plt.show()
 
 print('badlist: ',badlist)
@@ -281,9 +281,9 @@ for ax_idx, (ax, date_filter) in enumerate(zip(
 
 plt.tight_layout()
 plt.subplots_adjust(hspace=0.3, bottom=0.1)
-plt.savefig('/home/kmc249/Downloads/aql_lc_psf_split.png', dpi=250)
+#plt.savefig('/home/kmc249/Downloads/aql_lc_psf_split.png', dpi=250)
 plt.show()
-'''
+
 
 
 

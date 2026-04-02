@@ -12,11 +12,14 @@ warnings.filterwarnings('ignore', category=UserWarning, append=True)
 
 #take current repository
 repo=os.getcwd()
+repo='/scratch'
 
 #get all the files specifically rccd right now 
 #files = [f for f in os.listdir(repo) if f.endswith('fits')]
 
 files = []
+
+#swapped out for above
 for dirpath, dirnames, filenames in os.walk(repo):
     #if 'temp_CD_data' in dirpath:
         #continue
@@ -26,6 +29,7 @@ for dirpath, dirnames, filenames in os.walk(repo):
             if not any(x in full_path for x in ['bad', 'junk', 'other']):
                 files.append(full_path)
 
+print("Number of files:", len(files))
 #initialize data frame
 keywords=['OBJECT','RA','DEC','DATE-OBS','TIME-OBS','JD','EXPTIME','SECZ','CCDFLTID','IRFLTID','TILT1','TILT2','TILT3','OWNER']
 df=pd.DataFrame(columns=['filename'] + keywords)
@@ -89,4 +93,4 @@ else:
 
 #save log
 #print('saved to:',f'/home/kmc249/test_data/{string}.csv')
-df.to_csv(f'/home/kmc249/test_data/LOG_temp_archive_9_2.csv', index=False)
+df.to_csv(f'/home/kmc249/test_data/opticaldirecs/other/LOG_temp_archive_2_2.csv', index=False)

@@ -488,8 +488,8 @@ if label:
 plt.show()
 
 #comparing these two
-print(finalphot[['x_init','x_fit', 'y_init', 'y_fit', 'flux_fit', 'flags', 'id']])
-
+print(finalphot[['x_fit', 'y_fit', 'flux_fit','x_init','y_init', 'flags', 'id']])
+print(finalphot.columns)
 finalphot['name']=['b','a','c','e']
 ref_row2 = finalphot[finalphot['name'] == 'a'][0]
 
@@ -544,6 +544,7 @@ plotstuff(fivephot, fivemodel-just_a, fiveresid, zoomdata-just_a)
 #getting the scaled fluxes for everything, save x, y, and relative flux to a csv file
 #using finalphot as the correct one instead of fivephot for now
 final_phot=finalphot
+final_phot.write("/home/kmc249/radec_finalphot_hires.csv", format="csv", overwrite=True)
 
 #we need to put x and y back in the trimmed coordinates, so:
 
@@ -558,8 +559,8 @@ final_phot = final_phot[final_phot['name'] != 'e']
 
 final_phot=final_phot[['name','x_0', 'y_0','scaled flux', 'x_err','y_err','flux_err']]
 
-final_phot.write("/home/kmc249/new_final_phot_hires.csv", format="csv", overwrite=True)
-aql.write("/home/kmc249/new_final_phot_aql_hires.csv", format="csv", overwrite=True)
+#final_phot.write("/home/kmc249/new_final_phot_hires.csv", format="csv", overwrite=True)
+#aql.write("/home/kmc249/new_final_phot_aql_hires.csv", format="csv", overwrite=True)
 print('flux error aql: ', aql['flux_err'].value[0])
 print('max pos. error aql, in 512x512 land: ',np.nanmax(list(aql['y_err'])+list(aql['x_err']))/res)
 
@@ -571,7 +572,10 @@ norm2 = ImageNormalize(vmin=vmin2, vmax=vmax2, stretch=SinhStretch())
 plt.figure(figsize=(10,12))
 plt.imshow(stacked_trim_zoom, cmap='grey', origin='lower', norm=norm2, alpha=1)
 plt.scatter(final_phot['x_0'], final_phot['y_0'], marker='x')
+plt.scatter(aql['x_0'], aql['y_0'], marker='x')
 
 plt.show()
 
 print(final_phot['scaled flux'])
+
+print(final_phot)

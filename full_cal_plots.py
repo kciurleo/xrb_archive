@@ -58,6 +58,7 @@ years = np.arange(1998, 2020, 1)
 for name in xrb_list:
     g=table.loc[table['proper name']==name]
     ###addition: the new usb drives
+    '''
     try:
         on_usb=pd.read_csv(f'/home/kmc249/usbdrive_logs/usbdrivereplog_{name}.csv', low_memory=False)
         on_usb['DATE-OBS'] = pd.to_datetime(on_usb['UTDate'], errors='coerce')
@@ -67,6 +68,7 @@ for name in xrb_list:
         skip=False
     except:
         skip=True
+    '''
     try:
         tapedates = list(night_tape_df.index[night_tape_df[name]])
     except:
@@ -119,7 +121,7 @@ for name in xrb_list:
                     # handle span crossing year
                     if end.year == year + 1:
                         axes[id+1].barh(y=y_pos, width=(end - start).days, left=start, height=0.2, color=c, zorder=z)
-
+        '''
         if not skip:
             yrtable2 = on_usb.loc[on_usb['DATE-OBS'].dt.year == year]
             for jd, row in yrtable2.iterrows():
@@ -140,7 +142,7 @@ for name in xrb_list:
                 # handle span crossing year
                 if end.year == year + 1:
                     axes[id+1].barh(y=y_pos, width=(end - start).days, left=start, height=0.2, color=c, zorder=z)
-
+        '''
         for jd, row in yrtable.iterrows():
             start = row['DATE-OBS']
             end = start + pd.Timedelta(days=1)
@@ -161,6 +163,9 @@ for name in xrb_list:
                 z = 1.8
             elif row['Physical loc'] == 'Data scrape':
                 c = 'violet'
+                z = 1.7
+            elif row['Physical loc'] == 'Data replog':
+                c = 'indigo'
                 z = 1.7
 
             # choose vertical position depending on source

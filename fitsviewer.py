@@ -30,14 +30,17 @@ print(np.shape(data))
 import glob
 file='/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/sub_trim_rccd000405.0042.fits'
 
-for file in glob.glob('/scratch/temp_CD_data/AqlX-1/1m/rccd/*'):
+for file in glob.glob('/scratch/temp_CD_data/AqlX-1/1.3m/rccd/*'):
     print(f'now showing{file}')
     data=fits.getdata(file)
     hdr=fits.getheader(file)
+    print(hdr)
     try:
         filt=hdr['CCDFLTID']
+        continue
     except:
         filt=hdr['FILTERID']
+
     interval = ZScaleInterval()
     vmin, vmax = interval.get_limits(data)
     norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
