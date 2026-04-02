@@ -32,10 +32,12 @@ bad_list='rccd'+bad_list+'.fits'
 input_df=fwhms.loc[~fwhms['filename'].isin(bad_list)]
 
 #for just 2008 purposes
+'''
 input_df = fwhms.loc[
     (~fwhms['filename'].isin(bad_list)) &
     (fwhms['filename'].str.startswith('rccd08'))
 ]
+'''
 
 filelist=f'/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_'+np.array(input_df['filename'])
 
@@ -350,6 +352,7 @@ for ind, row in big_df.iterrows():
     '''
 
     savefits=True
+    showplot=False
     if savefits:
         hdr['SUBTR']=True
         fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/sub_{file.split("/")[-1]}',final_data_unbkg, hdr, overwrite=True)
@@ -361,7 +364,7 @@ for ind, row in big_df.iterrows():
             showplot=False
     
 
-big_df.to_csv('/home/kmc249/Downloads/phot_fluxes_08.csv', index=False)
+big_df.to_csv('/home/kmc249/Downloads/phot_fluxes_smaller_ap.csv', index=False)
 
 print('nonexistent: ', nonexistent)
 print('problems: ', problems)
