@@ -278,7 +278,7 @@ for ind, row in big_df.iterrows():
     final_data = bkg_sub_full_data - test
     
     #aperture photometry instead
-    r_ap = 8.0
+    r_ap = 5.0
     
     #using fitted positions from PSF photometry
     positions = np.transpose((phot['x_fit'], phot['y_fit']))
