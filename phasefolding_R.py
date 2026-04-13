@@ -45,6 +45,31 @@ mjd = np.asarray(table['MJD'], dtype=float)
 quiescence=pd.read_csv('/home/kmc249/Downloads/quiescence_mjd_ranges_v5.csv')
 for start, end in zip(quiescence['q_start_mjd'], quiescence['q_end_mjd']):
     mask |= (mjd >= start) & (mjd <= end)
+    
+    
+table['in_quiescence'] = mask
+
+plt.figure(figsize=(12,6))
+
+plt.scatter(
+    table.loc[~table['in_quiescence'], 'nice time'],
+    table.loc[~table['in_quiescence'], 'Rmag'],
+    s=5, alpha=0.5, label='Out of quiescence', color='gray'
+)
+
+plt.scatter(
+    table.loc[table['in_quiescence'], 'nice time'],
+    table.loc[table['in_quiescence'], 'Rmag'],
+    s=5, alpha=0.8, label='In quiescence', color='red'
+)
+
+plt.gca().invert_yaxis()  # optional for magnitudes
+plt.xlabel("Time")
+plt.ylabel("R mag")
+plt.legend()
+plt.tight_layout()
+plt.show()
+    
 table = table[mask]
 
 #%%
@@ -307,12 +332,12 @@ from scipy.ndimage import zoom
 
 keep=set(pd.read_csv('/home/kmc249/Downloads/NEWEST_aql_R_600.0_list.csv')['filename'])
 import os
-'''
+
 filtered_table = table[
     table['filename'].apply(os.path.basename).isin(keep)
 ]
-'''
-filtered_table=table
+
+#filtered_table=table
 filenames_by_bin = filtered_table.groupby('our phase bin')['filename'].apply(list)
 
 for phase_bin, files in filenames_by_bin.items():
@@ -376,12 +401,6 @@ for phase_bin, files in filenames_by_bin_them.items():
 
     median_image = zoom(median_image, 2, order=3)
 
-    fits.writeto(
-        f'/home/kmc249/Downloads/Aql_us_phase_{phase_bin}.fits',
-        median_image,
-        header=HDR,
-        overwrite=True
-    )
     fits.writeto(f'/home/kmc249/Downloads/Aql_them_phase_{phase_bin}.fits',median_image,header=HDR, overwrite=True)
         
  #%%
@@ -418,9 +437,9 @@ from astropy.coordinates import SkyCoord
 #load locations of good sources for ePSF
 sources=Table.read('/home/kmc249/Downloads/good_sources.vot')
 res=2
-#filelist=glob.glob('/home/kmc249/Downloads/Aql_us_phase*')
-filelist=glob.glob('/home/kmc249/Downloads/Aql_them_phase*')
-testimage=fits.getdata(filelist[0])
+filelist_us=glob.glob('/home/kmc249/Downloads/Aql_us_phase*')
+filelist_them=glob.glob('/home/kmc249/Downloads/Aql_them_phase*')
+testimage=fits.getdata(filelist_us[0])
 
 #put in correct x-y and get rid of epsf guys we won't use
 sources["xcentroid"]=sources["xcentroid"]-301
@@ -459,9 +478,16 @@ nb=[]
 aql=[]
 
 #make df
-cols=['filename','phase bin', 'a','e']
-big_df = pd.DataFrame(0, index=np.arange(len(filelist)), columns=cols)
-big_df['filename'] = filelist
+cols=['filename','phase bin', 'a','e', 'usthem']
+big_df_one = pd.DataFrame(0, index=np.arange(len(filelist_us)), columns=cols)
+big_df_one['filename'] = filelist_us
+big_df_one['usthem'] = 'us'
+big_df_two = pd.DataFrame(0, index=np.arange(len(filelist_them)), columns=cols)
+big_df_two['filename'] = filelist_them
+big_df_two['usthem'] = 'them'
+
+big_df = pd.concat([big_df_one, big_df_two], ignore_index=True)
+
 big_df['phase bin'] = np.nan
 big_df['a'] = np.nan
 big_df['e'] = np.nan
@@ -472,7 +498,7 @@ showplot=True
 nonexistent=[]
 problems=[]
 for ind, row in big_df.iterrows():
-    print(f'working on {ind} of {len(filelist)}')
+    print(f'working on {ind} of {len(big_df)}')
     file=row['filename']
     print('trying', file)
     try:
@@ -599,11 +625,102 @@ for ind, row in big_df.iterrows():
     
 #%%
 
+
+
 for id, row in big_df.iterrows():
     print(row)
 
-plt.figure(figsize=(10,6))
+
 #plt.scatter(big_df['phase bin'], big_df['a'])
 #plt.scatter(big_df['phase bin'], big_df['e'])
-plt.scatter(big_df['phase bin'], big_df['e']/(big_df['a']+big_df['e']))
+
+a = big_df['a'].to_numpy()
+e = big_df['e'].to_numpy()
+
+da = big_df['a_err'].to_numpy()
+de = big_df['e_err'].to_numpy()
+
+f = e / (a + e)
+
+big_df['ratio_err'] = np.sqrt(
+    (a / (a + e)**2 * de)**2 +
+    (e / (a + e)**2 * da)**2
+)
+
+
+us = big_df.loc[big_df['usthem']=='us']
+them = big_df.loc[big_df['usthem']=='them']
+
+plt.figure(figsize=(10,6))
+plt.errorbar(us['phase bin'],(us['e'] / (us['a']+us['e'])), yerr=us['ratio_err'], fmt='.')
+plt.show()
+
+plt.figure(figsize=(10,6))
+plt.errorbar(them['phase bin'],(them['e'] / (them['a']+them['e'])), yerr=them['ratio_err'], fmt='.')
+plt.show()
+
+#%%
+
+
+# Our binned data
+xdata = us['phase bin'].astype(float).values
+ydata = (us['e'] / (us['a']+us['e']))
+yerr = us['ratio_err']
+
+# Initial guesses
+A1_guess = 0.5  # small amplitude at orbital frequency
+A2_guess = 0.1   # ellipsoidal amplitude
+delta_guess = 0.2
+m0_guess = np.mean(ydata)
+
+p0 = [A1_guess, A2_guess, delta_guess, m0_guess]
+
+# Fit
+popt, pcov = curve_fit(ellipsoidal_model, xdata, ydata, sigma=yerr, p0=p0)
+
+# Extract parameters
+A1_fit, A2_fit, delta_fit, m0_fit = popt
+print(f"A1 = {A1_fit:.3f}, A2 = {A2_fit:.3f}, delta = {delta_fit:.3f}, mean mag = {m0_fit:.3f}")
+
+# Plot
+phase_fit = np.linspace(0, 1, 500)
+mag_fit = ellipsoidal_model(phase_fit, *popt)
+
+plt.figure(figsize=(8,4))
+plt.errorbar(xdata, ydata, yerr=yerr, fmt='o', color='red', label='Binned data')
+plt.plot(phase_fit, mag_fit, color='blue', label='Ellipsoidal fit')
+plt.xlabel('Orbital Phase')
+plt.ylabel('R mag')
+plt.gca().invert_yaxis()
+plt.legend()
+plt.title('us')
+plt.tight_layout()
+plt.show(block=False)
+
+
+# their binned data
+xdata = them['phase bin'].astype(float).values
+ydata = (them['e'] / (them['a']+them['e']))
+yerr = them['ratio_err']
+
+# Fit
+popt, pcov = curve_fit(ellipsoidal_model, xdata, ydata, sigma=yerr, p0=p0)
+
+# Extract parameters
+A1_fit, A2_fit, delta_fit, m0_fit = popt
+print(f"A1 = {A1_fit:.3f}, A2 = {A2_fit:.3f}, delta = {delta_fit:.3f}, mean mag = {m0_fit:.3f}")
+
+# Plot
+phase_fit = np.linspace(0, 1, 500)
+mag_fit = ellipsoidal_model(phase_fit, *popt)
+
+plt.figure(figsize=(8,4))
+plt.errorbar(xdata, ydata, yerr=yerr, fmt='o', color='red', label='Binned data')
+plt.plot(phase_fit, mag_fit, color='blue', label='Ellipsoidal fit')
+plt.xlabel('Orbital Phase')
+plt.ylabel('R mag')
+plt.gca().invert_yaxis()
+plt.legend()
+plt.title('them')
+plt.tight_layout()
 plt.show()

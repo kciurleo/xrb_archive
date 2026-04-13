@@ -63,7 +63,7 @@ tables = {
 }
 
 #####DELETE LATER
-
+'''
 import glob
 import os
 import re
@@ -95,7 +95,7 @@ tables = dict(sorted(
     tables.items(),
     key=lambda x: float(x[0].split('=')[1])
 ))
-
+'''
 ######
 
 
@@ -114,8 +114,8 @@ hiresphot=pd.read_csv("/home/kmc249/best_r_ensemble.csv")
 def f(x, a, c):
     return a*np.log10(x)+c
 
-def fline(x, a, c):
-    return a*np.log10(x)+c
+def fline(x, c):
+    return np.log10(x)+c
 for tbname, info in tables.items():
     table = info['df']
 
@@ -168,7 +168,9 @@ for tbname, info in tables.items():
         
         axes.set_xlabel('psf mag of standard stars')
         axes.set_ylabel('panstarrs mag')
-        slope, intercept, r, p, se =linregress(xdata3, ydata3)
+        #slope, intercept, r, p, se =linregress(xdata3, ydata3)
+        intercept = np.mean(np.array(ydata3) - np.array(xdata3))
+        slope = 1.0
         x3_arr=np.linspace(np.min(xdata3), np.max(xdata3))
         axes.plot(x3_arr, slope*x3_arr+intercept, 'g--', label=f'y={np.round(slope,2)}x+{np.round(intercept, 2)}')
         axes.invert_yaxis()
@@ -262,17 +264,17 @@ for tbname, info in tables.items():
 #getting errors
 for tbname, info in tables.items():
     if tbname=='LCO':
+    #if tbname!='AP 1m':
         continue
     table=info['df']
     # build one combined mask
     mask = np.zeros(len(table), dtype=bool)
-    info['quiescence_mask']=mask
     
     for start, end in zip(quiescence['start_dt'], quiescence['end_dt']):
         mask |= (table['nice time'] >= start) & (table['nice time'] <= end)
-
+    info['quiescence_mask']=mask
     # compute overall mean
-    mean_quiescent = table.loc[mask, 'aql mag'].mean()
+    mean_quiescent = np.nanmean(table.loc[mask, 'aql mag'])
     info['aql_mean_quiescent_mag']=mean_quiescent
     print(mean_quiescent)
     
@@ -297,16 +299,15 @@ for tbname, info in tables.items():
                 ave_mag = table['ave mag'].values
                 
             mag_safe=info['slope']*(-2.5 * np.log10(flux_safe))+info['intercept']
-            print(np.mean(mag_safe))
+            print(np.nanmean(mag_safe))
             residuals = ave_mag - mag_safe
             x = np.nanstd(residuals)
             #x = np.std(mag_safe)#/np.sqrt(len(mag_safe))
-            y = np.mean(-2.5 * np.log10(flux_safe))
+            y = np.nanmean(-2.5 * np.log10(flux_safe))+info['intercept']
             x_vals.append(x)
             y_vals.append(y)
             cols_used.append(col)
 
-    
     x_vals = np.array(x_vals)
     y_vals = np.array(y_vals)
     cols_used = np.array(cols_used)
@@ -328,9 +329,8 @@ for tbname, info in tables.items():
     constanterror = np.mean(x_vals[closest_idx])
     #print(constanterror)
     print("Stars closest to aql:", cols_used[closest_idx])
-    print("Average x (std) of 4 closest stars:", constanterror)
-    info['error mag']=constanterror
-    table['error']=constanterror
+    print("Average x (std) of 5 closest stars:", constanterror)
+    info['error aql ave mag']=constanterror
 
 
     plt.figure(figsize=(8,6))
@@ -346,12 +346,68 @@ for tbname, info in tables.items():
             plt.annotate(label, (y, x), xytext=(3,3),
                          textcoords='offset points', fontsize=7, alpha=0.6)
     
-    plt.xlabel('Mean instr. mag')
+    plt.xlabel('Mean PanSTARRS mag')
     plt.ylabel('Std of residuals (ave ens mag - mag)')
     plt.gca().invert_xaxis()  # brighter stars on left (astronomy convention)
     plt.title(f'{tbname}: Scatter vs Magnitude')
     plt.tight_layout()
     plt.show()
+    
+    #errors per point
+    star_stats = {
+        col: {"mean_mag": y, "std": x}
+        for col, x, y in zip(cols_used, x_vals, y_vals)
+        if col != 'aql'
+    }
+    
+    # prepare array for per-row errors
+    row_errors = np.full(len(table), np.nan)
+    
+    for i, row in table.iterrows():
+        aql_mag = row['aql mag']
+        
+        if np.isnan(aql_mag):
+            continue
+    
+        # compute distance to each star's mean magnitude
+        dists = []
+        for col, stats in star_stats.items():
+            d = abs(stats["mean_mag"] - aql_mag)
+            dists.append((col, d))
+    
+        # sort and take 5 closest
+        closest = sorted(dists, key=lambda x: x[1])[:5]
+        
+        # get their stds
+        closest_stds = [star_stats[col]["std"] for col, _ in closest]
+        
+        # average std → error for this row
+        row_errors[i] = np.nanmean(closest_stds)
+    
+    # assign back to table
+    table['error'] = row_errors
+
+#%%
+
+#do any of the math to get r wide on the same scale?
+#quiescent wideR mean
+
+wideRmask = tables['AP Wide']['quiescence_mask']
+q_wide=np.nanmean(wideR.loc[wideRmask, 'aql mag'])
+
+#quiescent 1m R mean
+oneRmask = tables['AP 1m']['quiescence_mask']
+q_one=np.nanmean(onem.loc[oneRmask, 'aql mag'])
+
+#get difference and shift wideR
+print(q_wide)
+print(q_one)
+
+diff=q_one-q_wide
+print(diff)
+
+wideR['aql mag']=wideR['aql mag']+diff
+
 #%%
 plt.figure(figsize=(12,3))
 for tbname, info in tables.items():
@@ -435,7 +491,7 @@ for i, ax_main in enumerate(axes):
                 table.loc[mask, 'nice time'],
                 table.loc[mask, 'aql mag'],
                 fmt='.',
-                yerr=info['error mag'],
+                yerr=table.loc[mask, 'error'],
                 color=info['color'],
                 label=tbname,
             )
@@ -460,7 +516,7 @@ plt.show()
 
 
 #%%
-#do any of the math to get r wide on the same scale?
+#save
 
 final_R = pd.concat([table1, onem, wideR], ignore_index=True)
 final_R = final_R.sort_values('nice time')
@@ -469,7 +525,7 @@ final_R[['nice time', 'Rmag','e_Rmag', 'filename']].to_csv('/home/kmc249/Downloa
 
 
 #%%
-
+'''
 #problem solving
 idns = [258, 104, 395]
 
@@ -523,3 +579,4 @@ plt.title('Flux vs Aperture Size')
 plt.legend()
 plt.grid(alpha=0.3)
 plt.show()
+'''
