@@ -10,8 +10,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 filters=['B','V','R', 'I', 'J', 'H', 'K']
-our_ratios=[23, 9, 20, 40, 47, 45, 54]
-our_errors=[9, 2, 4, 15.5, 3, 4, 6]
+wavelengths_nm = [440, 550, 640, 790, 1250, 1650, 2200]
+our_ratios=[32, 45, 20, 31, 28, np.nan, np.nan]
+our_errors=[7, 5, 3, 9, 3, 4, 6]
 their_ratios=[np.nan, 11.8, 17, 22.5, np.nan, np.nan, 41]
 their_errors=[np.nan, 1.1, 2.,1.5, np.nan, np.nan,9]
 
@@ -22,4 +23,19 @@ plt.errorbar(filters, our_ratios, our_errors, fmt='.', capsize=2, alpha=0.75, la
 plt.errorbar(filters, their_ratios, their_errors, fmt='.', capsize=2, alpha=0.75, label='From lit.')
 plt.legend()
 plt.tight_layout()
+plt.show()
+
+plt.figure(figsize=(8,6))
+plt.xlabel('Wavelength (nm)')
+plt.ylabel('Aql Flux (percent)')
+
+plt.errorbar(wavelengths_nm, our_ratios, our_errors,
+             fmt='.', capsize=2, alpha=0.75, label='From stacked PSF')
+
+plt.errorbar(wavelengths_nm, their_ratios, their_errors,
+             fmt='.', capsize=2, alpha=0.75, label='From lit.')
+
+plt.legend()
+plt.tight_layout()
+plt.xscale('log')
 plt.show()

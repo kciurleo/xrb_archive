@@ -150,14 +150,14 @@ def plotstuff(phot, model, resid, data):
     plt.show()
 #%%
 res=2
+band='I'
 #load data
-####ignore this #stacked_trim_str='/home/kmc249/Downloads/NEWEST_aql_R_600.0_stack.fits'
-#stacked_trim_str='/home/kmc249/Downloads/hires_master.fits'
-stacked_trim_str='/neta/xrb/AqlX-1/temp/Aql_X-1_J_stack_aligned_to_opt.fits'
+#stacked_trim_str='/home/kmc249/Downloads/NEWEST_aql_R_600.0_stack.fits'
+stacked_trim_str=f'/neta/xrb/AqlX-1/temp/Aql_{band}_stack.fits'
 stacked_full = fits.getdata('/home/kmc249/Downloads/AqlX-1_R_600.0_stack.fits')
 stacked_trim_zoom = fits.getdata('/home/kmc249/Downloads/NEWEST_aql_R_600.0_stack.fits')
-#stacked_trim = fits.getdata('/home/kmc249/Downloads/hires_master.fits')
-stacked_trim = fits.getdata('/neta/xrb/AqlX-1/temp/Aql_X-1_J_stack_aligned_to_opt.fits')
+#stacked_trim = fits.getdata(f'/neta/xrb/AqlX-1/temp/Aql_{band}_stack.fits')
+stacked_trim = fits.getdata(f'/neta/xrb/AqlX-1/temp/Aql_{band}_stack.fits')
 hiresopt=fits.getdata('/home/kmc249/Downloads/hires_master.fits')
 
 w = WCS(fits.getheader('/home/kmc249/Downloads/AqlX-1_R_600.0_stack_NEWMASTER1.fits'))
@@ -226,32 +226,68 @@ fullbkg=Background2D(imdata, (20*res,20*res), filter_size=(3*res+1,3*res+1),sigm
 bkg_sub_full_data=imdata-fullbkg.background
 
 #get sources
+
 mean, median, std = sigma_clipped_stats(bkg_sub_full_data, sigma=3, maxiters=5)
 
-daofinder = DAOStarFinder(threshold=5. * std, fwhm=5.)
+daofinder = DAOStarFinder(threshold=6. * std, fwhm=5.)
 sources = daofinder(bkg_sub_full_data)
 
 
 #right here we need to get rid of any bad psf stars:
 #bad_ids = [231,228,213,227,202,221,219,194,183,180,178,176,371,177,171,165,174, 225, 173, 153]
 #bad_ids=[592,545,386,500,502]
-bad_ids=[524,514,507,491,420,494,460,467,462,470,455,477,436,552,551,456,517,525,521,549,547,479,485,422,418,325,310,397,393,400,329,450,457,472,464,468,460,478,487,479,495,385,372,543,3379,360,352,340,346,337,358,349,295,291,329,335,326,336,110,325,544,528,498,490,504,518,519,523,520,501,505,489,410,402,473,376,378,398,395,343,347,332,341,295,292,298,367,369,357,361,355,285,254,252,265,217,211,204,215,203,138,139,190,206,224,219,200,196,173,112,68,58,59,1,9,7,2,23,90,80,65,78,66,75,101,107,105,23,25,28,29,37,38,66,78,70,75,63,64,90,80,73,71,69,65,60,55,181,43,111,87,118,56,48,26,17,41,32,54,52,19,16,36,22,35,24,11,10,20,177,169,210,213,172,175,155,160,146,264,251,289,279,267,284,261,91,97,100]
+#bad_ids=[524,514,507,491,420,494,460,467,462,470,455,477,436,552,551,456,517,525,521,549,547,479,485,422,418,325,310,397,393,400,329,450,457,472,464,468,460,478,487,479,495,385,372,543,3379,360,352,340,346,337,358,349,295,291,329,335,326,336,110,325,544,528,498,490,504,518,519,523,520,501,505,489,410,402,473,376,378,398,395,343,347,332,341,295,292,298,367,369,357,361,355,285,254,252,265,217,211,204,215,203,138,139,190,206,224,219,200,196,173,112,68,58,59,1,9,7,2,23,90,80,65,78,66,75,101,107,105,23,25,28,29,37,38,66,78,70,75,63,64,90,80,73,71,69,65,60,55,181,43,111,87,118,56,48,26,17,41,32,54,52,19,16,36,22,35,24,11,10,20,177,169,210,213,172,175,155,160,146,264,251,289,279,267,284,261,91,97,100]
+#bad_ids=[719,714,709,685,639,663,653,703,712,713,673,674,650,658,645,661,611,610,622,629,599,543,533,549,577,553,558,502,497,446,431,373,391,387,388,453,454,429,535,441,458,632,634,688,619,620,629,623,636,648,669,629,641,631,638,659,667,666,668,684,693,715,721,643,636,635,637,630,707,706,711,614,575,571,573,602,582,585,564,559,555,556,551,545,514,523,540,532,518,516,542,554,474,467,490,482,420,421,448,435,380,353,368,370,404,407,346,435,340,337,330,308,297,316,288,286,283,284,327,329,336,304,302,258,263,298,310,270,266,255,243,233,221,217,229,231,188,174,165,164,153,38,51,54,44,33,43,20,63,80,85,139,138,114,123,120,115,19,34,62,70,61,104,151,229,258,373,333,334,328,325,282,267,280,275,295,335,338,300,299,306,321,244,211,216,229,207,215,208,213,200,187,189,192,179,173,160,172,161,158,150,118,132,135,124,122,106,119,101,94,65,68,26,24,35,72,82,76,37,45,96,59,60,29,55,53,62,90,93,97,128,91,83]
+bad_ids=[]
 # --- Edge mask ---
-'''
+
 mask_edges = (
-    (sources['xcentroid'] >= 300) &
-    (sources['xcentroid'] < 950) &
-    (sources['ycentroid'] >= 200) &
-    (sources['ycentroid'] < 780)
+    (sources['xcentroid'] >= 30) &
+    (sources['xcentroid'] < 1024-30) &
+    (sources['ycentroid'] >= 30) &
+    (sources['ycentroid'] < 1024-30)
 )
-'''
+
+
+sources = sources[mask_edges]
+
 # --- ID mask ---
 mask_ids = ~np.isin(sources['id'], bad_ids)
 
 # --- Filtered sources ---
 sources = sources[mask_ids]
+'''
 
-    
+sources=Table.read('/home/kmc249/Downloads/good_sources.vot')
+
+#put in correct x-y and get rid of epsf guys we won't use
+sources["xcentroid"]=sources["xcentroid"]-301
+sources["ycentroid"]=sources["ycentroid"]-301
+sources["x"]=sources["x"]-301
+sources["y"]=sources["y"]-301
+mask=((sources['xcentroid']>= 0) &
+    (sources['xcentroid']< 512) &
+    (sources['ycentroid']>= 0) &
+    (sources['ycentroid']< 512))
+sources=sources[mask]
+
+sources["xcentroid"]=sources["xcentroid"]*res
+sources["ycentroid"]=sources["ycentroid"]*res
+sources["x"]=sources["x"]*res
+sources["y"]=sources["y"]*res
+mask_edges = (
+    (sources['xcentroid'] >= 30) &
+    (sources['xcentroid'] < 1024-30) &
+    (sources['ycentroid'] >= 30) &
+    (sources['ycentroid'] < 1024-30)
+)
+
+
+ids_to_remove_from_epsf = [566,618,634,626,687,53,571,625,621,515,584,467,388,466,450,385,347,280,245,203,185,240,175,168,285,277,382,313,365,404]
+epsfmask = ~np.isin(sources['id'], ids_to_remove_from_epsf)
+sources = sources[epsfmask]  
+
+'''    
 sources['x'] = sources['xcentroid']
 sources['y'] = sources['ycentroid']
 
@@ -274,7 +310,6 @@ for row in sources:
         color='red'
     )
 plt.show()
-
 
 
 #use the given positions of the good PSF stars to generate a new EPSF
@@ -302,6 +337,7 @@ norm=simple_norm(epsf.data, 'log', percent=99.0)
 
 plt.imshow(epsf.data, norm=norm, origin='lower', cmap='gray')
 plt.show()
+
 
 #%%
 ##testing testing testing
@@ -503,7 +539,7 @@ def compute_chi2(data, model, resid, phot_table, radius=10, read_noise=5.0):
 sep_lit = 0.46      # arcsec (example)
 sep_err_lit = 0.01
 
-##we don't know flux_lit for J so ignore
+##we don't know flux_lit for B so ignore
 #flux_lit = 0.17     # e / (a+e)
 #flux_err_lit = 0.02
 
@@ -725,6 +761,9 @@ plt.show()
 # Extract the photometry table from the best model
 best_phot_table = best['phot_table']
 
+# Keep only the columns you need for initialization
+init_params_to_save = best_phot_table[['x_fit', 'y_fit', 'flux_fit', 'name', 'group_id','id', 'group_size']].to_pandas()
+init_params_to_save.to_csv(f'/home/kmc249/current_best_{band}_grid_fit.csv', index=False)
 
 #%%
 
@@ -739,13 +778,10 @@ plt.show()
 
 #%%
 
-best_result= run_fit(17, 13, 7, return_full=True)
+best_result= run_fit(19, 14, 3, return_full=True)
 phot = best_result["phot_table"]
 model = best_result["model"]
 resid = best_result["resid"]
-
-init_params_to_save = phot[['x_fit','x_err', 'y_fit','y_err', 'flux_fit','flux_err', 'name', 'group_id','id', 'group_size']].to_pandas()
-init_params_to_save.to_csv('/home/kmc249/current_best_J_grid_fit.csv', index=False)
 
 # reuse your plotting function
 vmin, vmax = interval.get_limits(bkg_sub_full_data)

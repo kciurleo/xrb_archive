@@ -9,7 +9,8 @@ import matplotlib.dates as mdates
 #table=pd.read_csv('/Users/katieciurleo/Downloads/yalestuff/psf_fluxes.csv', low_memory=False)
 #table=pd.read_csv('/home/kmc249/Downloads/newest_psf_fluxes_neighborhood_2008_apphot.csv', low_memory=False)
 #table=pd.read_csv('/home/kmc249/Downloads/1m_psf_fluxes_all.csv', low_memory=False)
-table=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_08.csv', low_memory=False)
+table=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_smaller_ap.csv', low_memory=False)
+#table=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_08.csv', low_memory=False)
 #extratable=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv', low_memory=False)
 #extratable2=pd.read_csv('/home/kmc249/Downloads/psf_fluxes_2011.csv', low_memory=False)
 #table = pd.concat([table, extratable], ignore_index=True)
@@ -17,8 +18,9 @@ table=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_08.csv', low_memory=False)
 table['nice time'] = pd.to_datetime(table['time'])
 #table2=pd.read_csv('/home/kmc249/Downloads/1m_wideR_psf_fluxes.csv', low_memory=False)
 table2=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv', low_memory=False)
+#table2=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_smaller_ap.csv', low_memory=False)
 table2['nice time'] = pd.to_datetime(table2['time'])
-table2= table2[table2['nice time'].dt.year == 2008]
+#table2= table2[table2['nice time'].dt.year == 2008]
 standards=pd.read_csv('/home/kmc249/Downloads/BEST_ens_stds_info.csv')
 #table=table2
 print(table.head)
@@ -33,7 +35,7 @@ threshold = 1e4
 bad_ids = []
 mag_dict = {} 
 for e in table.columns:
-    if e not in ['nice time', 'time', 'filename', '1418','1069','1105','1320', 'a','b','c','d',]:
+    if e not in ['nice time', 'time', 'filename', '1320', '413']:#, '1418','1069','1105','1320', 'a','b','c','d',]:
         flux = table[e].values
         # Only use positive fluxes
         flux_safe = flux[flux > 0]
@@ -307,7 +309,7 @@ merged = table.merge(table2, on='nice time', suffixes=('_ap', '_psf'))
 merged['resid'] = merged['aql mag_ap'] - merged['aql mag_psf']
 
 fig, (ax1, ax_resid) = plt.subplots(
-    2, 1, figsize=(10,5),
+    2, 1, figsize=(20,5),
     sharex=True,
     gridspec_kw={'height_ratios': [3, 1]}
 )
