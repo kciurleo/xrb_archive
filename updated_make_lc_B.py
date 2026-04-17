@@ -16,12 +16,22 @@ import glob
 from collections import OrderedDict
 
 #read in dfs
-filelist=glob.glob('/home/kmc249/Downloads/phot_fluxes_13m_yr*')
+#filelist=glob.glob('/home/kmc249/Downloads/phot_fluxes_13m_yr*')
+filelist=glob.glob('/home/kmc249/Downloads/phot_fluxes_13m_yr*_apsize_8.0.csv')
+
 dflist=[pd.read_csv(i) for i in filelist]
 table1 = pd.concat(dflist, ignore_index=True)
+bband=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_B_apsize_8.0.csv')
+vband=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_V_apsize_8.0.csv')
+iband=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_I_apsize_8.0.csv')
+onev=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_1m_V_apsize_8.0.csv')
+onei=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_1m_I_apsize_8.0.csv')
 
-wideR = pd.read_csv('/home/kmc249/Downloads/phot_fluxes_wideR_apr_07.csv', low_memory=False)
-onem=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_1m_apr_07.csv', low_memory=False)
+#wideR = pd.read_csv('/home/kmc249/Downloads/phot_fluxes_wideR_apr_07.csv', low_memory=False)
+wideR = pd.read_csv('/home/kmc249/Downloads/phot_fluxes_wideR_apr_17_rap_8.csv', low_memory=False)
+
+#onem=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_1m_apr_07.csv', low_memory=False)
+onem=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_1m_apr_17_rap_8.csv', low_memory=False)
 
 #psf fluxes are table2
 table2=pd.read_csv('/home/kmc249/Downloads/psf_fluxes.csv', low_memory=False)
@@ -53,13 +63,18 @@ lco['nice time'] = t.to_datetime()
 
 #dict of tables
 tables = {
-    'PSF':   {'df': table2, 'color':'blue'},
-    'PSF 1m': {'df': onempsf, 'color':'royalblue'},
-    'PSF Wide': {'df': widepsf, 'color':'lightseagreen'},
-    'AP':    {'df': table1, 'color':'crimson'},
-    'AP 1m': {'df': onem, 'color':'violet'},
-    'AP Wide': {'df': wideR, 'color':'mediumpurple'},
-    'LCO':   {'df': lco, 'color':'green'}
+    #'PSF':   {'df': table2, 'color':'blue'},
+    #'PSF 1m': {'df': onempsf, 'color':'royalblue'},
+    #'PSF Wide': {'df': widepsf, 'color':'lightseagreen'},
+    'R band':    {'df': table1, 'color':'crimson'},
+    'R 1m': {'df': onem, 'color':'violet'},
+    'R Wide': {'df': wideR, 'color':'mediumpurple'},
+    'LCO':   {'df': lco, 'color':'black'},
+    'B band': {'df': bband, 'color':'blue'},
+    'V band': {'df': vband, 'color':'green'},
+    'I band': {'df': iband, 'color':'saddlebrown'},
+    'V 1m': {'df': onev, 'color':'yellowgreen'},
+    'I 1m': {'df': onei, 'color':'chocolate'}
 }
 
 #read in list of bad files and get rid of them
@@ -145,7 +160,14 @@ for tbname, info in tables.items():
                     continue
                 if len(row)<1:
                     continue
-                y=row['r'].iloc[0]
+                if tbname=='B band':
+                    y=row['BP'].iloc[0]
+                elif tbname=='V band':
+                    y=row['Gaia'].iloc[0]
+                elif tbname=='I band':
+                    y=row['i'].iloc[0]
+                else:
+                    y=row['r'].iloc[0]
                 flux = table[e].values.astype(float)
     
                 #if there's a bad flux
@@ -203,10 +225,27 @@ for tbname, info in tables.items():
         print(ensemble_cols)
         
         ensemble_ids = [int(c) for c in ensemble_cols]
-
-        ensemble_r = standards.loc[
-            standards['num int'].isin(ensemble_ids), 'r'
-        ]
+        
+        if tbname=='B band':
+            ensemble_r = standards.loc[
+                standards['num int'].isin(ensemble_ids), 'BP'
+            ]
+            sidelabel='Gaia BP'
+        elif tbname=='V band':
+            ensemble_r = standards.loc[
+                standards['num int'].isin(ensemble_ids), 'Gaia'
+            ]
+            sidelabel='Gaia'
+        elif tbname=='I band':
+            ensemble_r = standards.loc[
+                standards['num int'].isin(ensemble_ids), 'i'
+            ]
+            sidelabel='PanSTARRS i'
+        else:
+            ensemble_r = standards.loc[
+                standards['num int'].isin(ensemble_ids), 'r'
+            ]
+            sidelabel='PanSTARRS r'
         #panstarrs r mag of ensemble
         ensemble_r_mean=ensemble_r.mean()
         
@@ -239,7 +278,7 @@ for tbname, info in tables.items():
         #handles = [h2, h3]
         #labels = ['aql', 'ens (offset)']
         #plt.legend(handles=handles, labels=labels)
-        plt.ylabel('Pan-STARRS r')
+        plt.ylabel(sidelabel)
         #plt.ylim(20,16.5)
         plt.gca().invert_yaxis()
         
@@ -405,12 +444,12 @@ for tbname, info in tables.items():
 #do any of the math to get r wide on the same scale?
 #quiescent wideR mean
 
-wideRmask = tables['AP Wide']['quiescence_mask']
-q_wide=np.nanmedian(tables['AP Wide']['df'].loc[wideRmask, 'aql mag'])
+wideRmask = tables['R Wide']['quiescence_mask']
+q_wide=np.nanmedian(tables['R Wide']['df'].loc[wideRmask, 'aql mag'])
 
 #quiescent 1m R mean
-oneRmask = tables['AP 1m']['quiescence_mask']
-q_one=np.nanmedian(tables['AP 1m']['df'].loc[oneRmask, 'aql mag'])
+oneRmask = tables['R 1m']['quiescence_mask']
+q_one=np.nanmedian(tables['R 1m']['df'].loc[oneRmask, 'aql mag'])
 
 #get difference and shift wideR
 print(q_wide)
@@ -419,7 +458,7 @@ print(q_one)
 diff=q_one-q_wide
 print(diff)
 
-tables['AP Wide']['df']['aql mag']=tables['AP Wide']['df']['aql mag']+diff
+tables['R Wide']['df']['aql mag']=tables['R Wide']['df']['aql mag']+diff
 
 #%%
 plt.figure(figsize=(12,3))
@@ -524,7 +563,7 @@ unique = OrderedDict(zip(labels, handles))
 axes[-1].legend(unique.values(), unique.keys())
 
 plt.tight_layout()
-plt.savefig('/home/kmc249/Downloads/full_lccomp.png', dpi=300)
+plt.savefig('/home/kmc249/Downloads/full_lccomp_with_B.png', dpi=300)
 plt.show()
 
 
@@ -534,7 +573,7 @@ plt.show()
 final_R = pd.concat([tables['AP']['df'], tables['AP 1m']['df'], tables['AP Wide']['df']], ignore_index=True)
 final_R = final_R.sort_values('nice time')
 final_R[['nice time', 'Rmag','e_Rmag', 'filename']] = final_R[['nice time','aql mag', 'error', 'filename']]
-final_R[['nice time', 'Rmag','e_Rmag', 'filename']].to_csv('/home/kmc249/Downloads/full_aphot_lc_04_08.csv', index=False)
+#final_R[['nice time', 'Rmag','e_Rmag', 'filename']].to_csv('/home/kmc249/Downloads/full_aphot_lc_04_08.csv', index=False)
 
 
 #%%

@@ -312,6 +312,27 @@ for row in sources:
 plt.show()
 
 
+'''
+#looping over stars
+for i, star in enumerate(good_stars):
+    star_id = sources['id'][i]   # match star to its ID
+    
+    # Skip invalid stars if you want
+    if not (np.isfinite(np.sum(star.data)) and np.sum(star.data) > 0):
+        continue
+
+    plt.figure(figsize=(4,4))
+    
+    norm = simple_norm(star.data, 'log', percent=99.0)
+    plt.imshow(star.data, origin='lower', cmap='gray', norm=norm)
+    
+    plt.title(f"Star ID: {star_id}")
+    plt.colorbar()
+    plt.show()
+'''
+
+sources.write('/home/kmc249/Downloads/good_sources_I.vot', overwrite=True, format='votable')
+
 #use the given positions of the good PSF stars to generate a new EPSF
 size=19*res+1
 #size=21*res+1
@@ -778,7 +799,8 @@ plt.show()
 
 #%%
 
-best_result= run_fit(19, 14, 3, return_full=True)
+best_result= run_fit(17, 11, 9, return_full=True)
+
 phot = best_result["phot_table"]
 model = best_result["model"]
 resid = best_result["resid"]
@@ -823,3 +845,70 @@ for row in opticalinits:
     )
 
 plt.show()
+
+#%%
+
+#info about the ensemble
+stacked_ensemble=Table.read('/home/kmc249/Downloads/ensemble_info.vot')
+eids = list(stacked_ensemble['id'])
+### Getting rid of the two stars that are not going to be useful (one is 'negative', one is variable):
+ids_to_remove = [1320, 413, 410]
+ensmask = ~np.isin(stacked_ensemble['id'], ids_to_remove)
+stacked_ensemble = stacked_ensemble[ensmask]    
+
+
+#put all the vots in the smaller x-y system
+stacked_ensemble["x_init"]=stacked_ensemble["x_init"]-301
+stacked_ensemble["y_init"]=stacked_ensemble["y_init"]-301
+stacked_ensemble["x_init"]=stacked_ensemble["x_init"]*res
+stacked_ensemble["y_init"]=stacked_ensemble["y_init"]*res
+stacked_ensemble["x_fit"]=stacked_ensemble["x_fit"]*res
+stacked_ensemble["y_fit"]=stacked_ensemble["y_fit"]*res
+
+
+#init params to fit the ensemble
+init_params=stacked_ensemble['id','group_id','x_fit','y_fit',]
+
+#do the actual ensemble fit with the best result too
+#fit to the ensemble stars; fit_shape has been tested to be the best
+psf_model = epsf_cache[17]
+fitnum=11
+fit_shape=(fitnum*res+1,fitnum*res+1)
+#fit_shape=(int(size/2-0.5),int(size/2-0.5))
+psfphot=PSFPhotometry(psf_model, fit_shape, aperture_radius=9*res)
+ensphot=psfphot(bkg_sub_full_data, init_params=init_params)
+ensresid=psfphot.make_residual_image(bkg_sub_full_data)
+ensmodel=psfphot.make_model_image(np.shape(bkg_sub_full_data))
+
+label=True
+interval = ZScaleInterval()
+vmin, vmax = interval.get_limits(bkg_sub_full_data)
+norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
+fig, axes=plt.subplots(1,3, figsize=(20,10))
+axes[0].imshow(bkg_sub_full_data, cmap='gray', origin='lower', norm=norm)
+axes[0].scatter(ensphot['x_fit'], ensphot['y_fit'], marker='x')
+axes[1].imshow(ensmodel, cmap='gray', origin='lower', norm=norm)
+axes[2].imshow(ensresid, cmap='gray', origin='lower', norm=norm)
+if label:
+    for row in ensphot:
+        axes[0].annotate(
+            str(row['id']), 
+            (row['x_fit'], row['y_fit']),
+            textcoords="offset points",
+            xytext=(5,5),
+            fontsize=8,
+            color='red'
+        )
+
+plt.show()
+ensphot.write("/home/kmc249/best_I_ensemble.csv", format="csv", overwrite=True)
+#get ave ens flux:
+ave_ens_flux=np.nanmean(ensphot['flux_fit'])
+#%%
+print(ave_ens_flux)
+
+#getting reletavie fluxes to the ave ensemble and then saving
+best_phot_table['stacked_flux_factor']=best_phot_table['flux_fit']/ave_ens_flux
+# Keep only the columns you need for initialization
+init_params_to_save = best_phot_table[['x_fit','x_err', 'y_fit','y_err', 'flux_fit','flux_err', 'name', 'group_id','id', 'group_size', 'stacked_flux_factor']].to_pandas()
+init_params_to_save.to_csv('/home/kmc249/current_best_I_grid_fit.csv', index=False)

@@ -19,39 +19,43 @@ import json
 import pandas as pd
 from astropy.time import Time
 
-#read in main df
-#read in main df
-filelist=glob.glob('/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_*.fits')
-#filelist=glob.glob('/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_*.fits')
+#read in file list
+band='V'
+telescope='1m'
+target='AqlX-1'
 
-stacked_trim = fits.getdata('/home/kmc249/Downloads/AqlX-1_R_600.0_stack_NEWMASTER.fits')
+filelist=glob.glob(f'/neta/xrb/{target}/{telescope}/opt/rccd/{band}_trimmed/trim_*')
 
-#load locations of good sources for ePSF
-sources=Table.read('/home/kmc249/Downloads/good_sources.vot')
+#ap phot size
+r_ap = 8.0
 
+#r band stack just for plotting purposes, this is a 512 x 512
+stacked_trim_str = f'/neta/xrb/AqlX-1/temp/Aql_{band}_stack.fits'
+
+#load locations of good sources for ePSF, specific to band
+sources=Table.read(f'/home/kmc249/Downloads/good_sources_{band}.vot')
+
+
+#for now, change to 2 when I get the 512 x 512 images
+res=2
 
 #put in correct x-y and get rid of epsf guys we won't use
-sources["xcentroid"]=sources["xcentroid"]-301
-sources["ycentroid"]=sources["ycentroid"]-301
-sources["x"]=sources["x"]-301
-sources["y"]=sources["y"]-301
-mask=((sources['xcentroid']>= 0) &
-    (sources['xcentroid']< 512) &
-    (sources['ycentroid']>= 0) &
-    (sources['ycentroid']< 512))
-sources=sources[mask]
+sources["xcentroid"]=sources["xcentroid"]/res
+sources["ycentroid"]=sources["ycentroid"]/res
+sources["x"]=sources["x"]/res
+sources["y"]=sources["y"]/res
 
 #info about the neighbor
-neighborhood=pd.read_csv('/home/kmc249/current_best_R_grid_fit.csv')
-stacked_ensemble=pd.read_csv("/home/kmc249/best_r_ensemble.csv")
+neighborhood=pd.read_csv(f'/home/kmc249/current_best_{band}_grid_fit.csv')
+stacked_ensemble=pd.read_csv(f"/home/kmc249/best_{band}_ensemble.csv")
 eids = list(stacked_ensemble['id'])
 
 #put all the vots in the smaller x-y system, from tthe resolution of x2
 #and the neighborhood from the really zoomed in to the normal 512 x 512
-neighborhood["x_fit"]=neighborhood["x_fit"]/2+231
-neighborhood["y_fit"]=neighborhood["y_fit"]/2+231
-stacked_ensemble["x_fit"]=stacked_ensemble["x_fit"]/2
-stacked_ensemble["y_fit"]=stacked_ensemble["y_fit"]/2
+neighborhood["x_fit"]=neighborhood["x_fit"]/res+231
+neighborhood["y_fit"]=neighborhood["y_fit"]/res+231
+stacked_ensemble["x_fit"]=stacked_ensemble["x_fit"]/res
+stacked_ensemble["y_fit"]=stacked_ensemble["y_fit"]/res
 
 #flux factor (and error eventually)
 stacked_b=neighborhood.loc[neighborhood['name']=='b']
@@ -91,13 +95,14 @@ for ind, row in big_df.iterrows():
     print('trying', file)
     try:
         imdata,hdr = fits.getdata(file,header=True)
+        from scipy.ndimage import zoom
+        #DELETE LATER KT
+        imdata=zoom(imdata, 0.5, order=3)
     except:
         nonexistent.append(file)
-    try:
-        big_df.at[ind, 'time']=Time(f"{hdr['DATE-OBS']}T{hdr['TIME-OBS']}")
-    except:
-        problems.append(file)
         continue
+    big_df.at[ind, 'time']=Time(f"{hdr['DATE-OBS']}T{hdr['TIME-OBS']}")
+
     
     #background subtract data
     sigma_clip=SigmaClip(sigma=3.0)
@@ -110,13 +115,14 @@ for ind, row in big_df.iterrows():
     '''
     interval = ZScaleInterval()
     vmin, vmax = interval.get_limits(bkg_sub_full_data)
-    vmin2, vmax2 = interval.get_limits(stacked_trim)
+    #vmin2, vmax2 = interval.get_limits(stacked_trim)
     norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
-    norm2 = ImageNormalize(vmin=vmin2, vmax=vmax2, stretch=SinhStretch())
+    #norm2 = ImageNormalize(vmin=vmin2, vmax=vmax2, stretch=SinhStretch())
     plt.figure(figsize=(10,12))
     plt.imshow(bkg_sub_full_data, cmap='gray', origin='lower', norm=norm)
-    #plt.imshow(stacked_trim, cmap='viridis', origin='lower', norm=norm2, alpha=0.5)
+    #plt.imshow(stacked_trim, cmap='gray', origin='lower', norm=norm2, alpha=0.5)
     plt.scatter(init_params['x_fit'], init_params['y_fit'], marker='x')
+    plt.scatter(neighborhood['x_fit'], neighborhood['y_fit'], marker='x')
     plt.scatter(sources['xcentroid'], sources['ycentroid'], marker='+', c='gold')
 
     for row in init_params:
@@ -130,7 +136,6 @@ for ind, row in big_df.iterrows():
         )
     plt.show()
     '''
-
     #we need to get rid of the guys that are outside of this image if it's majorly shifted!! Some buffer around,
     #the edges are wonky....or we just trim everything to max shift. temp fix noted below
 
@@ -159,18 +164,18 @@ for ind, row in big_df.iterrows():
     
 
     #plot epsf just to see if it worked
-    '''
-    norm=simple_norm(epsf.data, 'log', percent=99.0)
 
+    norm=simple_norm(epsf.data, 'log', percent=99.0)
+    '''
     plt.imshow(epsf.data, norm=norm, origin='lower', cmap='gray')
     plt.show()
     '''
 
     #psf fitting, using init params
     psf_model = epsf
-    fit_shape=(13,13)
+    fit_shape=(15,15)
     #grouper=SourceGrouper(min_separation=8)
-    psfphot=PSFPhotometry(psf_model, fit_shape, aperture_radius=10, xy_bounds=0.5)
+    psfphot=PSFPhotometry(psf_model, fit_shape, aperture_radius=5, xy_bounds=0.5)
     
     
     #make the xy pixel fit dist. 0.1, avg error in original fit so it doesn't move
@@ -203,8 +208,8 @@ for ind, row in big_df.iterrows():
             )
 
     plt.show()
-    '''
 
+    '''
 
     #just double checking there's no extra stars. from an earlier version when I psf fit the neighborhood too
     ens = phot[np.isin(phot['id'], eids)]
@@ -247,8 +252,6 @@ for ind, row in big_df.iterrows():
     final_data = bkg_sub_full_data - test
     
     #aperture photometry instead
-    #r_ap = 5.0
-    r_ap  =8.0
     
     #using fitted positions from PSF photometry
     positions = np.transpose((phot['x_fit'], phot['y_fit']))
@@ -326,12 +329,11 @@ for ind, row in big_df.iterrows():
     big_df.at[ind, 'aql']=aql_table['flux_fit'].value[0]
     '''
 
-    savefits=True
+    savefits=False
     #showplot=False
     if savefits:
         hdr['SUBTR']=True
-        fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/sub_{file.split("/")[-1]}',final_data_unbkg, hdr, overwrite=True)
-        #fits.writeto(f'/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/sub_{file.split("/")[-1]}',final_data_unbkg, hdr, overwrite=True)
+        fits.writeto(f'/neta/xrb/{target}/{telescope}/opt/rccd/{band}_trimmed/sub_{file.split("/")[-1]}',final_data_unbkg, hdr, overwrite=True)
     if showplot:
         showyn=input('continue to show plots?')
         if 'y' in showyn:
@@ -340,7 +342,7 @@ for ind, row in big_df.iterrows():
             showplot=False
     
 
-big_df.to_csv('/home/kmc249/Downloads/phot_fluxes_1m_apr_17_rap_8.csv', index=False)
+big_df.to_csv(f'/home/kmc249/Downloads/phot_fluxes_{telescope}_{band}_apsize_{r_ap}.csv', index=False)
 
 print('nonexistent: ', nonexistent)
 print('problems: ', problems)

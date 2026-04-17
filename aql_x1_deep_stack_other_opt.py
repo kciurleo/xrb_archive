@@ -17,6 +17,7 @@ import astroalign as aa
 from scipy.ndimage import zoom
 warnings.filterwarnings('ignore')
 
+tele='1m'
 
 ###USER DEFINED PARAMETERS
 quiescence=pd.read_csv('/home/kmc249/Downloads/quiescence_mjd_ranges_v5.csv')
@@ -102,8 +103,8 @@ plt.show()
 
 #%%
 
-for band in ['I']:
-    basedir=f"/neta/xrb/AqlX-1/1.3m/opt/rccd/{band}/"
+for band in ['V','I']:
+    basedir=f"/neta/xrb/AqlX-1/{tele}/opt/rccd/{band}/"
     filelist=glob.glob(f'{basedir}*.fits')
     
     #align and trim, find fwhm of a handful of stars
@@ -134,6 +135,7 @@ for band in ['I']:
             img_aligned, footprint = register_with_flips(inp_img, img, detection_sigma=2.0, max_control_points=75)
         except:
             print('bad file :(')
+            continue
 
         # now, apply the saved transform to master
         trimimg=img_aligned[2*301:2*813,2*301:2*813]
@@ -170,7 +172,7 @@ for band in ['I']:
         #save to trim:
         hdr['TRIM']=True
         filename=file.split('/')[-1]
-        fits.writeto(f"/neta/xrb/AqlX-1/1.3m/opt/rccd/{band}_trimmed/trim_{filename}", trimimg, hdr, overwrite=True, output_verify='ignore')
+        fits.writeto(f"/neta/xrb/AqlX-1/{tele}/opt/rccd/{band}_trimmed/trim_{filename}", trimimg, hdr, overwrite=True, output_verify='ignore')
 
         #check if in quiescence, skip those that aren't
         mask = (quiescence["q_start_mjd"] <= mjd) & (quiescence["q_end_mjd"] >= mjd)
@@ -202,10 +204,10 @@ for band in ['I']:
             fwhms.at[id, name]=count/exposure
     
        
-    fwhms.to_csv(f'{savedir}{band}_countrates.csv', index=False)
+    #fwhms.to_csv(f'{savedir}{band}_countrates.csv', index=False)
     
 #%%
-
+print(aksjhdasj)
 for band in ['I']:
     fwhms=pd.read_csv(f'{savedir}{band}_countrates.csv', low_memory=False)
     
@@ -253,8 +255,8 @@ for band in ['I']:
     #add key word to nw HDR
     HDR['STACK']=True
     #save image and also save log of which fits files we threw into this image
-    fits.writeto(f'{savedir}Aql_{band}_stack.fits',median_image,header=HDR, overwrite=True)
-    winners.to_csv(f'{savedir}Aql_{band}_stack.csv', index=False)
+    #fits.writeto(f'{savedir}Aql_{band}_stack.fits',median_image,header=HDR, overwrite=True)
+    #winners.to_csv(f'{savedir}Aql_{band}_stack.csv', index=False)
     
     #Plotting just to tell
     interval = ZScaleInterval()

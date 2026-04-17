@@ -238,6 +238,9 @@ sources = daofinder(bkg_sub_full_data)
 #bad_ids=[524,514,507,491,420,494,460,467,462,470,455,477,436,552,551,456,517,525,521,549,547,479,485,422,418,325,310,397,393,400,329,450,457,472,464,468,460,478,487,479,495,385,372,543,3379,360,352,340,346,337,358,349,295,291,329,335,326,336,110,325,544,528,498,490,504,518,519,523,520,501,505,489,410,402,473,376,378,398,395,343,347,332,341,295,292,298,367,369,357,361,355,285,254,252,265,217,211,204,215,203,138,139,190,206,224,219,200,196,173,112,68,58,59,1,9,7,2,23,90,80,65,78,66,75,101,107,105,23,25,28,29,37,38,66,78,70,75,63,64,90,80,73,71,69,65,60,55,181,43,111,87,118,56,48,26,17,41,32,54,52,19,16,36,22,35,24,11,10,20,177,169,210,213,172,175,155,160,146,264,251,289,279,267,284,261,91,97,100]
 bad_ids=[719,714,709,685,639,663,653,703,712,713,673,674,650,658,645,661,611,610,622,629,599,543,533,549,577,553,558,502,497,446,431,373,391,387,388,453,454,429,535,441,458,632,634,688,619,620,629,623,636,648,669,629,641,631,638,659,667,666,668,684,693,715,721,643,636,635,637,630,707,706,711,614,575,571,573,602,582,585,564,559,555,556,551,545,514,523,540,532,518,516,542,554,474,467,490,482,420,421,448,435,380,353,368,370,404,407,346,435,340,337,330,308,297,316,288,286,283,284,327,329,336,304,302,258,263,298,310,270,266,255,243,233,221,217,229,231,188,174,165,164,153,38,51,54,44,33,43,20,63,80,85,139,138,114,123,120,115,19,34,62,70,61,104,151,229,258,373,333,334,328,325,282,267,280,275,295,335,338,300,299,306,321,244,211,216,229,207,215,208,213,200,187,189,192,179,173,160,172,161,158,150,118,132,135,124,122,106,119,101,94,65,68,26,24,35,72,82,76,37,45,96,59,60,29,55,53,62,90,93,97,128,91,83]
 # --- Edge mask ---
+more_bad_ids=[64,103,169,178,196,209,287,303,367,385,425,443,457,484,489,547,61222,27,31,32,39,46,49,50,56,57,58,67,77,79,81,84,86,88,89,95,98,99,100,102,105,107,108,109,116,129,130,131,134,136,140,141,142,143,144,203,201,193,191,185,182,181,180,170,175,176,177,147,148,149,152,154,155,157,162,163,166,168,210, 212, 222, 223, 237, 238, 239, 241, 242, 245, 247, 250, 251, 252,253, 256, 262, 265, 269, 273, 277, 278, 285, 289, 291, 296, 301, 307, 312, 317, 318, 319, 320, 322,323,326,331,339,341,343,344,345,348,349,351,357,360,365, 357,372,374,376, 377, 381,383,386, 392, 397, 398, 400, 402,406,408,409, 412, 416, 418, 423, 424, 424, 426, 432, 434, 436, 437, 438, 439, 449, 450, 451, 455, 459, 462, 463, 465, 469, 473, 475, 476, 479, 480, 483, 485, 486, 487, 488, 498, 491, 493, 495, 498, 499, 500, 503, 509, 510, 511, 513, 515, 517, 519, 522, 524, 525, 527, 528, 537, 539, 541, 544, 546, 552, 560, 561, 562, 563, 566, 567, 568, 574, 576, 579, 583, 584, 586, 587, 589, 590, 592, 593, 597, 601, 605, 606, 609, 613, 616, 621, 625, 627, 633, 640, 644, 647, 654, 656, 657, 660, 664, 665, 671, 672, 675, 679, 691, 692, 695, 696, 701, 702, 708, 710, 723, 727, 730, 731]
+
+bad_ids=list(set(bad_ids)|set(more_bad_ids))
 
 mask_edges = (
     (sources['xcentroid'] >= 30) &
@@ -258,7 +261,8 @@ sources = sources[mask_ids]
     
 sources['x'] = sources['xcentroid']
 sources['y'] = sources['ycentroid']
-
+print(sources)
+sources.write('/home/kmc249/Downloads/good_sources_B.vot', overwrite=True, format='votable')
 #plot just to check
 
 interval = ZScaleInterval()
@@ -279,12 +283,33 @@ for row in sources:
     )
 plt.show()
 
-
+ 
 #use the given positions of the good PSF stars to generate a new EPSF
 size=19*res+1
 #size=21*res+1
 nddata=NDData(data=bkg_sub_full_data)
 good_stars=extract_stars(nddata, sources, size=size)
+'''
+#looping over stars
+for i, star in enumerate(good_stars):
+    star_id = sources['id'][i]   # match star to its ID
+    
+    # Skip invalid stars if you want
+    if not (np.isfinite(np.sum(star.data)) and np.sum(star.data) > 0):
+        continue
+
+    plt.figure(figsize=(4,4))
+    
+    norm = simple_norm(star.data, 'log', percent=99.0)
+    plt.imshow(star.data, origin='lower', cmap='gray', norm=norm)
+    
+    plt.title(f"Star ID: {star_id}")
+    plt.colorbar()
+    plt.show()
+
+'''
+
+
 
 #temp fix:
 # Filter out stars with invalid or zero flux
@@ -542,7 +567,8 @@ def run_fit(size, fitnum, ap_radius, return_full=False):
         psf_model,
         fit_shape,
         aperture_radius=ap_radius*res,
-        grouper=SourceGrouper(min_separation=16)
+        grouper=SourceGrouper(min_separation=16),
+        xy_bounds=0.4 #BOUNDING THIS BECAUSE R DEFINITELY HAS THE BEST LOCATIONS
     )
     
     result = psfphot(zoomdata, init_params=whatiputin)
@@ -730,8 +756,8 @@ plt.show()
 best_phot_table = best['phot_table']
 
 # Keep only the columns you need for initialization
-init_params_to_save = best_phot_table[['x_fit', 'y_fit', 'flux_fit', 'name', 'group_id','id', 'group_size']].to_pandas()
-init_params_to_save.to_csv(f'/home/kmc249/current_best_{band}_grid_fit.csv', index=False)
+#init_params_to_save = best_phot_table[['x_fit', 'y_fit', 'flux_fit', 'name', 'group_id','id', 'group_size']].to_pandas()
+#init_params_to_save.to_csv(f'/home/kmc249/current_best_{band}_grid_fit.csv', index=False)
 
 #%%
 
@@ -743,3 +769,81 @@ cols = ['size', 'fitnum', 'ap_radius', 'score', 'sep', 'flux']
 sns.pairplot(df[cols], corner=True, diag_kind='hist', plot_kws={'alpha':0.7})
 plt.suptitle("Parameter correlations and clustering", y=1.02)
 plt.show()
+#%%
+
+best_result= run_fit(21, 15, 5, return_full=True)
+phot = best_result["phot_table"]
+model = best_result["model"]
+resid = best_result["resid"]
+
+# reuse your plotting function
+label=True
+plotstuff(phot, model, resid, zoomdata)
+
+
+#%%
+
+#info about the ensemble
+stacked_ensemble=Table.read('/home/kmc249/Downloads/ensemble_info.vot')
+eids = list(stacked_ensemble['id'])
+### Getting rid of the two stars that are not going to be useful (one is 'negative', one is variable):
+ids_to_remove = [1320, 413, 410]
+ensmask = ~np.isin(stacked_ensemble['id'], ids_to_remove)
+stacked_ensemble = stacked_ensemble[ensmask]    
+
+
+#put all the vots in the smaller x-y system
+stacked_ensemble["x_init"]=stacked_ensemble["x_init"]-301
+stacked_ensemble["y_init"]=stacked_ensemble["y_init"]-301
+stacked_ensemble["x_init"]=stacked_ensemble["x_init"]*res
+stacked_ensemble["y_init"]=stacked_ensemble["y_init"]*res
+stacked_ensemble["x_fit"]=stacked_ensemble["x_fit"]*res
+stacked_ensemble["y_fit"]=stacked_ensemble["y_fit"]*res
+
+
+#init params to fit the ensemble
+init_params=stacked_ensemble['id','group_id','x_fit','y_fit',]
+
+#do the actual ensemble fit with the best result too
+#fit to the ensemble stars; fit_shape has been tested to be the best
+psf_model = epsf_cache[21]
+fitnum=15
+fit_shape=(fitnum*res+1,fitnum*res+1)
+#fit_shape=(int(size/2-0.5),int(size/2-0.5))
+psfphot=PSFPhotometry(psf_model, fit_shape, aperture_radius=5*res)
+ensphot=psfphot(bkg_sub_full_data, init_params=init_params)
+ensresid=psfphot.make_residual_image(bkg_sub_full_data)
+ensmodel=psfphot.make_model_image(np.shape(bkg_sub_full_data))
+
+label=True
+interval = ZScaleInterval()
+vmin, vmax = interval.get_limits(bkg_sub_full_data)
+norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
+fig, axes=plt.subplots(1,3, figsize=(20,10))
+axes[0].imshow(bkg_sub_full_data, cmap='gray', origin='lower', norm=norm)
+axes[0].scatter(ensphot['x_fit'], ensphot['y_fit'], marker='x')
+axes[1].imshow(ensmodel, cmap='gray', origin='lower', norm=norm)
+axes[2].imshow(ensresid, cmap='gray', origin='lower', norm=norm)
+if label:
+    for row in ensphot:
+        axes[0].annotate(
+            str(row['id']), 
+            (row['x_fit'], row['y_fit']),
+            textcoords="offset points",
+            xytext=(5,5),
+            fontsize=8,
+            color='red'
+        )
+
+plt.show()
+ensphot.write("/home/kmc249/best_B_ensemble.csv", format="csv", overwrite=True)
+#get ave ens flux:
+ave_ens_flux=np.nanmean(ensphot['flux_fit'])
+#%%
+print(ave_ens_flux)
+
+#getting reletavie fluxes to the ave ensemble and then saving
+best_phot_table['stacked_flux_factor']=best_phot_table['flux_fit']/ave_ens_flux
+# Keep only the columns you need for initialization
+init_params_to_save = best_phot_table[['x_fit','x_err', 'y_fit','y_err', 'flux_fit','flux_err', 'name', 'group_id','id', 'group_size', 'stacked_flux_factor']].to_pandas()
+init_params_to_save.to_csv('/home/kmc249/current_best_B_grid_fit.csv', index=False)

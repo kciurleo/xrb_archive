@@ -32,14 +32,15 @@ bad_list='rccd'+bad_list+'.fits'
 input_df=fwhms.loc[~fwhms['filename'].isin(bad_list)]
 
 #for just 2008 purposes
-yearfornow='08'
+yearfornow='18'
 input_df = fwhms.loc[
     (~fwhms['filename'].isin(bad_list)) &
     (fwhms['filename'].str.startswith(f'rccd{yearfornow}'))
 ]
 
 #ap phot size
-r_ap = 5.0
+#r_ap = 5.0
+r_ap = 8.0
 
 
 filelist='/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_'+np.array(input_df['filename'])

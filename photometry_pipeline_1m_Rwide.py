@@ -247,7 +247,8 @@ for ind, row in big_df.iterrows():
     final_data = bkg_sub_full_data - test
     
     #aperture photometry instead
-    r_ap = 5.0
+    #r_ap = 5.0
+    r_ap = 8.0
     
     #using fitted positions from PSF photometry
     positions = np.transpose((phot['x_fit'], phot['y_fit']))
@@ -339,7 +340,7 @@ for ind, row in big_df.iterrows():
             showplot=False
     
 
-big_df.to_csv('/home/kmc249/Downloads/phot_fluxes_wideR_apr_07.csv', index=False)
+big_df.to_csv('/home/kmc249/Downloads/phot_fluxes_wideR_apr_17_rap_8.csv', index=False)
 
 print('nonexistent: ', nonexistent)
 print('problems: ', problems)
