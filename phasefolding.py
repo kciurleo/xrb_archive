@@ -21,7 +21,7 @@ from astropy.timeseries import LombScargle
 #read in 1.3 and 1 m stuff
 file1 = "/neta/xrb/AqlX-1/1m/ir/proc/J/AqlX1_Jband_lightcurve_mjd_fixed.ecsv"
 file2 = "/neta/xrb/AqlX-1/1.3m/ir/proc/J/AqlX1_Jband_lightcurve_mjd_fixed.ecsv"
-rtable = pd.read_csv('/neta/xrb/AqlX-1/product/AqlX-1_R_corrected_lc.csv', low_memory=False)
+rtable = pd.read_csv('/neta/xrb/AqlX-1/product/AqlX-1_R_corrected_lc_4_27.csv', low_memory=False) #change this girl
 t1 = Table.read(file1, format="ascii.ecsv")
 t2 = Table.read(file2, format="ascii.ecsv")
 df1 = t1.to_pandas()
@@ -29,34 +29,60 @@ df2 = t2.to_pandas()
 table = pd.concat([df1, df2], ignore_index=True)
 
 #corrected
-table=pd.read_csv('/neta/xrb/AqlX-1/product/AqlX-1_J_corrected_lc_min.csv', low_memory=False)
-mask = np.zeros(len(table), dtype=bool)
+oldtable=pd.read_csv('/neta/xrb/AqlX-1/product/AqlX-1_J_corrected_lc_4_27.csv', low_memory=False)
+mask = np.zeros(len(oldtable), dtype=bool)
 mask2 = np.zeros(len(rtable), dtype=bool)
 
 #getting nice time
-t = Time(table['MJD'], format='mjd')
-table['nice time'] = t.to_datetime()
+t = Time(oldtable['MJD'], format='mjd')
+oldtable['nice time'] = t.to_datetime()
 rtable['nice time'] = pd.to_datetime(rtable['nice time'])
 rtable['MJD'] = Time(rtable['nice time']).mjd
-mjd = np.asarray(table['MJD'], dtype=float)
+mjd = np.asarray(oldtable['MJD'], dtype=float)
 mjd2 = np.asarray(rtable['MJD'], dtype=float)
 
 
 #only get stuff in quiescence
-quiescence=pd.read_csv('/home/kmc249/Downloads/quiescence_mjd_ranges_v5.csv')
-for start, end in zip(quiescence['q_start_mjd'], quiescence['q_end_mjd']):
-    mask |= (mjd >= start) & (mjd <= end)
-table = table[mask]
 
-for start, end in zip(quiescence['q_start_mjd'], quiescence['q_end_mjd']):
-    mask2 |= (mjd2 >= start) & (mjd2 <= end)
-rtable=rtable[mask2]
+#Outburst list
+full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
+mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
+
+#Mask out quiescence
+intervals = list(zip(full["Start MJD"], full["End MJD"])) + \
+            list(zip(mini["Start MJD"], mini["End MJD"]))
+
+#Call everything quiescent, then remove anything inside the outbursts/mini outbursts
+mask = np.ones(len(oldtable), dtype=bool)
+mask2 = np.ones(len(rtable), dtype=bool)
+
+for start, end in intervals:
+    mask &= ~((oldtable["MJD"] >= start) & (oldtable["MJD"] <= end))
+oldtable = oldtable[mask]
+
+for start, end in intervals:
+    mask2 &= ~((rtable["MJD"] >= start) & (rtable["MJD"] <= end))
+rtable = rtable[mask2]
+
+#%%
+table=rtable
+magstring='Rmag_corr'
+maglabel='R mag'
+
+
+
 #%%
 ###J band stuff
 ####HEY KATIE????
 #mask anything sneaking in from outbursts?? or lower stuff?
-table=table.loc[(table['Jmag']>15.6) & (table['Jmag']<17.3)]
-
+if magstring=='Jmag_corr':
+    table=table.loc[(table[magstring]>15.6) & (table[magstring]<19)]
+elif magstring=='Jmag Divided Version':
+    table=table.loc[(table[magstring]>17.3) & (table[magstring]<18.7)]
+elif magstring=='Rmag_corr':
+    table=table.loc[(table[magstring]>19.5) & (table[magstring]<21)]
+elif magstring=='Rmag Divided Version':
+    table=table.loc[(table[magstring]>20) & (table[magstring]<20.5)]
 
 #periodogramming things
 baseline=table['nice time'].max()-table['nice time'].min()
@@ -80,8 +106,8 @@ print(np.abs(min_frequency-max_frequency)/10000)
 
 frequency = np.arange(min_frequency, max_frequency, deltaf)
 
-fall, pall = LombScargle(times, table['Jmag']-np.nanmean(table['Jmag'])).autopower(maximum_frequency=2)
-power = LombScargle(times, table['Jmag']-np.nanmean(table['Jmag'])).power(frequency)
+fall, pall = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).autopower(maximum_frequency=2)
+power = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).power(frequency)
 
 # Convert frequency to period in hours
 period_hours = 24 / frequency
@@ -131,7 +157,7 @@ phase2 = ((times - t0) / P2) % 1
 table['our phase']=phase2
 
 # Number of bins
-nbins = 25
+nbins = 16
 bins = np.linspace(0, 1, nbins + 1)
 bin_centers = 0.5 * (bins[:-1] + bins[1:])
 
@@ -140,15 +166,15 @@ table['our phase bin'] = pd.cut(table['our phase'], bins=bins, include_lowest=Tr
 table['their phase bin'] = pd.cut(table['their phase'], bins=bins, include_lowest=True, labels=bin_centers)
 
 # Compute mean and std per bin
-binned = table.groupby('our phase bin')['Jmag'].agg(['mean','std']).reset_index()
-binned_them = table.groupby('their phase bin')['Jmag'].agg(['mean','std']).reset_index()
+binned = table.groupby('our phase bin')[magstring].agg(['mean','std']).reset_index()
+binned_them = table.groupby('their phase bin')[magstring].agg(['mean','std']).reset_index()
 
 yerr_up_us = []
 yerr_down_us = []
 
 for center in binned['our phase bin']:
     # Get all points in this phase bin
-    points = table.loc[table['our phase bin'] == center, 'Jmag'].values
+    points = table.loc[table['our phase bin'] == center, magstring].values
     if len(points) == 0:
         yerr_up_us.append(0)
         yerr_down_us.append(0)
@@ -175,7 +201,7 @@ yerr_down_them = []
 
 for center in binned['our phase bin']:
     # Get all points in this phase bin
-    points = table.loc[table['our phase bin'] == center, 'Jmag'].values
+    points = table.loc[table['our phase bin'] == center, magstring].values
     if len(points) == 0:
         yerr_up_them.append(0)
         yerr_down_them.append(0)
@@ -199,14 +225,14 @@ yerr_asym_them = np.array([yerr_down_them, yerr_up_them])
 
 # Plot with asymmetric error bars
 plt.figure(figsize=(8,4))
-plt.scatter(phase2, table['Jmag'], s=15, color='gray', label='Data')
-plt.scatter(phase2 + 1, table['Jmag'], s=15, color='gray', alpha=0.5)
+plt.scatter(phase2, table[magstring], s=15, color='gray', label='Data')
+plt.scatter(phase2 + 1, table[magstring], s=15, color='gray', alpha=0.5)
 plt.errorbar(binned['our phase bin'].astype(float), binned['mean'], yerr=yerr_asym_us,
              fmt='o', color='red', label='Binned Avg')
 plt.errorbar(binned['our phase bin'].astype(float)+1, binned['mean'], yerr=yerr_asym_us,
              fmt='o', color='red', alpha=0.5)
 plt.xlabel('Orbital Phase')
-plt.ylabel('J mag')
+plt.ylabel(maglabel)
 plt.gca().invert_yaxis()
 plt.title(f'Our Period: {best_period_hours} hrs')
 plt.legend()
@@ -217,8 +243,8 @@ plt.show(block=False)
 
 # Plot
 plt.figure(figsize=(8,4))
-plt.scatter(phase, table['Jmag'], s=15, color='gray', label='Data')
-plt.scatter(phase + 1, table['Jmag'], s=15, color='gray', alpha=0.5)
+plt.scatter(phase, table[magstring], s=15, color='gray', label='Data')
+plt.scatter(phase + 1, table[magstring], s=15, color='gray', alpha=0.5)
 
 plt.errorbar(binned_them['their phase bin'].astype(float), binned_them['mean'], yerr=yerr_asym_them,
              fmt='o', color='red', label='Binned Avg')
@@ -226,7 +252,7 @@ plt.errorbar(binned_them['their phase bin'].astype(float)+1, binned_them['mean']
              fmt='o', color='red', alpha=0.5)
 
 plt.xlabel('Orbital Phase')
-plt.ylabel('J mag')
+plt.ylabel(maglabel)
 plt.gca().invert_yaxis()
 plt.legend()
 plt.title(f'Their Period: {P*24} hrs')
@@ -270,7 +296,7 @@ plt.figure(figsize=(8,4))
 plt.errorbar(xdata, ydata, yerr=yerr, fmt='o', color='red', label='Binned data')
 plt.plot(phase_fit, mag_fit, color='blue', label='Ellipsoidal fit')
 plt.xlabel('Orbital Phase')
-plt.ylabel('J mag')
+plt.ylabel(maglabel)
 plt.gca().invert_yaxis()
 plt.legend()
 plt.title('us')
@@ -298,9 +324,11 @@ plt.figure(figsize=(8,4))
 plt.errorbar(xdata, ydata, yerr=yerr, fmt='o', color='red', label='Binned data')
 plt.plot(phase_fit, mag_fit, color='blue', label='Ellipsoidal fit')
 plt.xlabel('Orbital Phase')
-plt.ylabel('J mag')
+plt.ylabel(maglabel)
 plt.gca().invert_yaxis()
 plt.legend()
 plt.title('them')
 plt.tight_layout()
 plt.show()
+
+

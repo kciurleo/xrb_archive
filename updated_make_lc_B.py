@@ -549,7 +549,8 @@ for i, ax_main in enumerate(axes):
             )
     
     ax_main.set_xlim(chunk_start, chunk_end)
-    ax_main.invert_yaxis()
+    ax_main.set_ylim(21.5,14.5)
+    #ax_main.invert_yaxis()
     ax_main.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
 #legend shenanigans
@@ -570,10 +571,27 @@ plt.show()
 #%%
 #save
 
-final_R = pd.concat([tables['AP']['df'], tables['AP 1m']['df'], tables['AP Wide']['df']], ignore_index=True)
+final_R = pd.concat([tables['R band']['df'], tables['R 1m']['df'], tables['R Wide']['df']], ignore_index=True)
 final_R = final_R.sort_values('nice time')
 final_R[['nice time', 'Rmag','e_Rmag', 'filename']] = final_R[['nice time','aql mag', 'error', 'filename']]
-#final_R[['nice time', 'Rmag','e_Rmag', 'filename']].to_csv('/home/kmc249/Downloads/full_aphot_lc_04_08.csv', index=False)
+final_R[['nice time', 'Rmag','e_Rmag', 'filename']].to_csv('/home/kmc249/Downloads/full_aphot_lc_04_20.csv', index=False)
+
+final_B = tables['B band']['df'].sort_values('nice time')
+final_B[['nice time', 'Rmag','e_Rmag', 'filename']] = final_B[['nice time','aql mag', 'error', 'filename']]
+final_B[['nice time', 'Rmag','e_Rmag', 'filename']].to_csv('/home/kmc249/Downloads/full_aphot_B_lc_04_20.csv', index=False)
+
+
+final_V = pd.concat([tables['V band']['df'], tables['V 1m']['df']], ignore_index=True)
+final_V = final_V.sort_values('nice time')
+final_V[['nice time', 'Rmag','e_Rmag', 'filename']] = final_V[['nice time','aql mag', 'error', 'filename']]
+final_V[['nice time', 'Rmag','e_Rmag', 'filename']].to_csv('/home/kmc249/Downloads/full_aphot_V_lc_04_20.csv', index=False)
+
+
+final_I = pd.concat([tables['I band']['df'], tables['I 1m']['df']], ignore_index=True)
+final_I = final_I.sort_values('nice time')
+final_I[['nice time', 'Rmag','e_Rmag', 'filename']] = final_I[['nice time','aql mag', 'error', 'filename']]
+final_I[['nice time', 'Rmag','e_Rmag', 'filename']].to_csv('/home/kmc249/Downloads/full_aphot_I_lc_04_20.csv', index=False)
+
 
 
 #%%
@@ -632,3 +650,679 @@ plt.legend()
 plt.grid(alpha=0.3)
 plt.show()
 '''
+#%%
+#bigplot
+import matplotlib.pyplot as plt
+
+for table in [final_R, final_V, final_I, final_B]:
+    table['nice time'] = pd.to_datetime(table['time'], errors='coerce')
+    
+for table in [final_R, final_V, final_I, final_B]:
+    table.dropna(subset=['nice time'], inplace=True)
+
+fig, ax = plt.subplots(figsize=(14, 4))
+
+ax.errorbar(final_R['nice time'], final_R['Rmag'],
+            yerr=final_R['e_Rmag'],
+            fmt='.', color='crimson', label='R', alpha=0.8)
+
+ax.errorbar(final_V['nice time'], final_V['Rmag'],
+            yerr=final_V['e_Rmag'],
+            fmt='.', color='green', label='V', alpha=0.8)
+
+ax.errorbar(final_I['nice time'], final_I['Rmag'],
+            yerr=final_I['e_Rmag'],
+            fmt='.', color='chocolate', label='I', alpha=0.8)
+
+ax.errorbar(final_B['nice time'], final_B['Rmag'],
+            yerr=final_B['e_Rmag'],
+            fmt='.', color='blue', label='B', alpha=0.8)
+
+ax.invert_yaxis()
+ax.set_ylabel("Magnitude")
+ax.set_xlabel("Time")
+ax.legend()
+
+plt.tight_layout()
+plt.show()
+
+fig, axes = plt.subplots(4, 1, figsize=(14, 10), sharex=True)
+
+bands = [
+    ("B", final_B, "blue"),
+    ("V", final_V, "green"),
+    ("R", final_R, "crimson"),
+    ("I", final_I, "chocolate"),
+]
+
+for ax, (label, df, color) in zip(axes, bands):
+    ax.errorbar(
+        df['nice time'],
+        df['Rmag'],
+        yerr=df['e_Rmag'],
+        fmt='.',
+        color=color,
+        alpha=0.8,
+        elinewidth=0.8,
+        capsize=0
+    )
+
+    ax.set_ylabel(f"{label} mag")
+    ax.invert_yaxis()
+    ax.set_title(f"{label} band")
+
+axes[-1].set_xlabel("Time")
+
+plt.tight_layout()
+plt.show()
+
+
+#%%
+#reading in lco files
+def read_uncorrected_txt(path):
+    df = pd.read_csv(
+        path,
+        sep=r"\s+",
+        comment="#",
+        names=["MJD", "mag", "mag_err", "flag"]
+    )
+    
+    df["nice time"] = pd.to_datetime(Time(df["MJD"], format="mjd").to_datetime())
+    return df
+
+def read_corrected_txt(path):
+    df = pd.read_csv(
+        path,
+        sep=r"\s+",
+        comment="#",
+        names=[
+            "MJD",
+            "mag_corr",
+            "mag_corr_err",
+            "flag",
+            "mag",
+            "mag_err",
+            "alt_mag_corr"
+        ]
+    )
+    
+    df["nice time"] = pd.to_datetime(Time(df["MJD"], format="mjd").to_datetime())
+    return df
+
+#%%
+corrected = {}
+
+for band in ['V', 'R', 'I']:
+    df = pd.read_csv(f'/neta/xrb/AqlX-1/product/AqlX-1_{band}_corrected_lc_4_27.csv')
+    df['nice time'] = pd.to_datetime(df['nice time'], errors='coerce')
+    df = df.dropna(subset=['nice time'])
+    corrected[band] = df
+    
+import matplotlib.pyplot as plt
+
+fig, axes = plt.subplots(4, 2, figsize=(20, 10), sharex=True)#, sharey='row')
+
+bands = [
+    ("B", final_B, "blue"),
+    ("V", final_V, "green"),
+    ("R", final_R, "crimson"),
+    ("I", final_I, "chocolate"),
+]
+
+for i, (label, df_old, color) in enumerate(bands):
+    
+
+    df_new = corrected.get(label)
+        
+
+
+    # ---- LEFT: original ----
+    axes[i, 0].errorbar(
+        df_old['nice time'],
+        df_old['Rmag'],
+        yerr=df_old['e_Rmag'],
+        fmt='.',
+        color=color,
+        alpha=0.8
+    )
+
+    axes[i, 0].set_ylabel(f"{label} mag")
+
+    if df_new is None:
+        print(f"Skipping corrected {label} (not found)")
+        continue
+    # ---- RIGHT: corrected ----
+    axes[i, 1].errorbar(
+        df_new['nice time'],
+        df_new['Rmag_corr'],
+        yerr=df_new['e_Rmag'],
+        fmt='.',
+        color=color,
+        alpha=0.8
+    )
+# ---- invert ONCE per row ----
+for i in range(4):
+    ax_left = axes[i, 0]
+    ax_right = axes[i, 1]
+
+    # get current limits after plotting
+    ymin, ymax = ax_left.get_ylim()
+    if i>0:
+        ymin2, ymax = ax_right.get_ylim()
+
+
+    # flip them manually (this is the key)
+    ax_left.set_ylim(ymax, ymin)
+    ax_right.set_ylim(ymax, ymin)
+axes[0, 1].set_title("Corrected")
+axes[0, 0].set_title("Original")
+axes[-1, 0].set_xlabel("Time")
+axes[-1, 1].set_xlabel("Time")
+
+plt.tight_layout()
+plt.show()
+
+
+#%%
+
+#R band
+R_LCO_banzai = read_uncorrected_txt('/home/kmc249/Downloads/R_usable_banzai.txt')  
+R_LCO_orac = read_uncorrected_txt('/home/kmc249/Downloads/R_usable_orac.txt')
+R_LCO=pd.concat([R_LCO_banzai, R_LCO_orac], ignore_index=True)
+Rp_LCO = read_uncorrected_txt('/home/kmc249/Downloads/rp_usable_banzai.txt')     
+
+#R band corr
+R_LCO_banzai_corr = read_corrected_txt('/home/kmc249/Downloads/R_usable_banzai_corrected.txt')  
+R_LCO_orac_corr = read_corrected_txt('/home/kmc249/Downloads/R_usable_orac_corrected.txt')
+R_LCO_corr=pd.concat([R_LCO_banzai_corr, R_LCO_orac_corr], ignore_index=True)
+Rp_LCO_corr = read_corrected_txt('/home/kmc249/Downloads/rp_usable_banzai_corrected.txt') 
+
+#ip band
+ip_LCO_banzai = read_uncorrected_txt('/home/kmc249/Downloads/ip_usable_banzai.txt')  
+ip_LCO_orac = read_uncorrected_txt('/home/kmc249/Downloads/ip_usable_orac.txt')
+ip_LCO=pd.concat([ip_LCO_banzai, ip_LCO_orac], ignore_index=True)  
+
+#ip band corr
+ip_LCO_banzai_corr = read_corrected_txt('/home/kmc249/Downloads/ip_usable_banzai_corrected.txt')  
+ip_LCO_orac_corr = read_corrected_txt('/home/kmc249/Downloads/ip_usable_orac_corrected.txt')
+ip_LCO_corr=pd.concat([ip_LCO_banzai_corr, ip_LCO_orac_corr], ignore_index=True)
+
+
+#v band
+v_LCO_banzai = read_uncorrected_txt('/home/kmc249/Downloads/V_usable_banzai.txt')  
+v_LCO_orac = read_uncorrected_txt('/home/kmc249/Downloads/V_usable_orac.txt')
+v_LCO=pd.concat([v_LCO_banzai, v_LCO_orac], ignore_index=True)  
+
+#v band corr
+v_LCO_banzai_corr = read_corrected_txt('/home/kmc249/Downloads/V_usable_banzai_corrected.txt')  
+v_LCO_orac_corr = read_corrected_txt('/home/kmc249/Downloads/V_usable_orac_corrected.txt')
+v_LCO_corr=pd.concat([v_LCO_banzai_corr, v_LCO_orac_corr], ignore_index=True)
+
+
+#%%
+
+#R band
+fig, axes = plt.subplots(2, 1, figsize=(20, 10), sharex=True)#, sharey='row')
+
+R_new = corrected.get("R")
+    # ---- LEFT: original ----
+axes[0].errorbar(
+    final_R['nice time'],
+    final_R['Rmag'],
+    yerr=final_R['e_Rmag'],
+    fmt='.',
+    color='crimson',
+    alpha=0.8,
+    label='SMARTS'
+)
+
+#LCO stuff
+axes[0].errorbar(
+    R_LCO['nice time'],
+    R_LCO['mag'],
+    yerr=R_LCO['mag_err'],
+    fmt='.',
+    color='black',
+    alpha=0.8,
+    label='LCO R'
+)
+
+axes[0].errorbar(
+    Rp_LCO['nice time'],
+    Rp_LCO['mag'],
+    yerr=Rp_LCO['mag_err'],
+    fmt='.',
+    color='gray',
+    alpha=0.8,
+    label='LCO rp'
+)
+
+
+axes[0].set_ylabel("R mag")
+axes[1].set_ylabel("R mag")
+
+
+# ---- RIGHT: corrected ----
+axes[1].errorbar(
+    R_new['nice time'],
+    R_new['Rmag_corr'],
+    yerr=R_new['e_Rmag'],
+    fmt='.',
+    color='crimson',
+    alpha=0.8,
+    label='SMARTS'
+)
+
+#LCO stuff
+axes[1].errorbar(
+    R_LCO_corr['nice time'],
+    R_LCO_corr['mag_corr'],
+    yerr=R_LCO_corr['mag_corr_err'],
+    fmt='.',
+    color='black',
+    alpha=0.8,
+    label='LCO R'
+)
+
+axes[1].errorbar(
+    Rp_LCO_corr['nice time'],
+    Rp_LCO_corr['mag_corr'],
+    yerr=Rp_LCO_corr['mag_corr_err'],
+    fmt='.',
+    color='gray',
+    alpha=0.8,
+    label='LCO rp'
+)
+
+# ---- invert ONCE per row ----
+
+ax_left = axes[0]
+ax_right = axes[1]
+
+# get current limits after plotting
+ymin, ymax = ax_left.get_ylim()
+ymin2, ymax = ax_right.get_ylim()
+
+
+# flip them manually (this is the key)
+ax_left.set_ylim(ymax, ymin)
+ax_right.set_ylim(ymax, ymin)
+axes[1].set_title("Corrected")
+axes[0].set_title("Original")
+axes[1].set_xlabel("Time")
+
+plt.tight_layout()
+plt.legend()
+plt.show()
+
+
+#%%
+
+
+#V band
+fig, axes = plt.subplots(2, 1, figsize=(20, 10), sharex=True)#, sharey='row')
+
+V_new = corrected.get("V")
+    # ---- LEFT: original ----
+axes[0].errorbar(
+    final_V['nice time'],
+    final_V['Rmag'],
+    yerr=final_V['e_Rmag'],
+    fmt='.',
+    color='green',
+    alpha=0.8,
+    label='SMARTS'
+)
+
+#LCO stuff
+axes[0].errorbar(
+    v_LCO['nice time'],
+    v_LCO['mag'],
+    yerr=v_LCO['mag_err'],
+    fmt='.',
+    color='black',
+    alpha=0.8,
+    label='LCO V'
+)
+
+
+axes[0].set_ylabel("V mag")
+axes[1].set_ylabel("V mag")
+
+
+# ---- RIGHT: corrected ----
+axes[1].errorbar(
+    V_new['nice time'],
+    V_new['Rmag_corr'],
+    yerr=V_new['e_Rmag'],
+    fmt='.',
+    color='green',
+    alpha=0.8,
+    label='SMARTS'
+)
+
+#LCO stuff
+axes[1].errorbar(
+    v_LCO_corr['nice time'],
+    v_LCO_corr['mag_corr'],
+    yerr=v_LCO_corr['mag_corr_err'],
+    fmt='.',
+    color='black',
+    alpha=0.8,
+    label='LCO V'
+)
+
+
+# ---- invert ONCE per row ----
+
+ax_left = axes[0]
+ax_right = axes[1]
+
+# get current limits after plotting
+ymin, ymax = ax_left.get_ylim()
+ymin2, ymax = ax_right.get_ylim()
+
+
+# flip them manually (this is the key)
+ax_left.set_ylim(ymax, ymin)
+ax_right.set_ylim(ymax, ymin)
+axes[1].set_title("Corrected")
+axes[0].set_title("Original")
+axes[1].set_xlabel("Time")
+
+plt.tight_layout()
+plt.legend()
+plt.show()
+
+
+#%%
+
+
+#I band
+fig, axes = plt.subplots(2, 1, figsize=(20, 10), sharex=True)#, sharey='row')
+
+I_new = corrected.get("I")
+    # ---- LEFT: original ----
+axes[0].errorbar(
+    final_I['nice time'],
+    final_I['Rmag'],
+    yerr=final_I['e_Rmag'],
+    fmt='.',
+    color='chocolate',
+    alpha=0.8,
+    label='SMARTS'
+)
+
+#LCO stuff
+axes[0].errorbar(
+    ip_LCO['nice time'],
+    ip_LCO['mag'],
+    yerr=ip_LCO['mag_err'],
+    fmt='.',
+    color='black',
+    alpha=0.8,
+    label='LCO ip'
+)
+
+
+axes[0].set_ylabel("I mag")
+axes[1].set_ylabel("I mag")
+
+
+# ---- RIGHT: corrected ----
+axes[1].errorbar(
+    I_new['nice time'],
+    I_new['Rmag_corr'],
+    yerr=I_new['e_Rmag'],
+    fmt='.',
+    color='chocolate',
+    alpha=0.8,
+    label='SMARTS'#v band
+
+)
+
+#LCO stuff
+axes[1].errorbar(
+    ip_LCO_corr['nice time'],
+    ip_LCO_corr['mag_corr'],
+    yerr=ip_LCO_corr['mag_corr_err'],
+    fmt='.',
+    color='black',
+    alpha=0.8,
+    label='LCO ip'
+)
+
+
+# ---- invert ONCE per row ----
+
+ax_left = axes[0]
+ax_right = axes[1]
+
+# get current limits after plotting
+ymin, ymax = ax_left.get_ylim()
+ymin2, ymax = ax_right.get_ylim()
+
+
+# flip them manually (this is the key)
+ax_left.set_ylim(ymax, ymin)
+ax_right.set_ylim(ymax, ymin)
+axes[1].set_title("Corrected")
+axes[0].set_title("Original")
+axes[1].set_xlabel("Time")
+
+plt.tight_layout()
+plt.legend()
+plt.show()
+
+#%%
+#only get stuff in quiescence
+
+#Outburst list
+full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
+mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
+
+#Mask out quiescence
+intervals = list(zip(full["Start MJD"], full["End MJD"])) + \
+            list(zip(mini["Start MJD"], mini["End MJD"]))
+
+def get_quiescent(df, intervals):
+    mask = np.ones(len(df), dtype=bool)
+    
+    for start, end in intervals:
+        mask &= ~((df["MJD"] >= start) & (df["MJD"] <= end))
+    
+    return df[mask].copy()
+
+#find quiescence values for all tables
+quiescent_tables = {}
+
+for name, table in {
+    "final_R": final_R,
+    "final_V": final_V,
+    "final_I": final_I
+}.items():
+
+    table = table.copy()
+    table["MJD"] = Time(table["nice time"]).mjd
+
+    quiescent_tables[name] = get_quiescent(table, intervals)
+
+#find quiescence values for all tables which have MJD already
+extra_tables = {
+    "R_new": R_new,
+    "V_new": V_new,
+    "I_new": I_new,
+    "Rp_LCO": Rp_LCO,
+    "Rp_LCO_corr": Rp_LCO_corr,
+    "R_LCO": R_LCO,
+    "R_LCO_corr": R_LCO_corr,
+    "ip_LCO": ip_LCO,
+    "ip_LCO_corr": ip_LCO_corr,
+    "v_LCO": v_LCO,
+    "v_LCO_corr": v_LCO_corr,
+}
+
+for name, table in extra_tables.items():
+    quiescent_tables[name] = get_quiescent(table, intervals)
+    
+#%%
+
+#get mean quiescent values and comparisons
+#uncorrected
+uncoorr_R_SMARTS=quiescent_tables['final_R']['Rmag'].mean()
+uncoorr_R_LCO=quiescent_tables['R_LCO']['mag'].mean()
+uncoorr_Rp_LCO=quiescent_tables['Rp_LCO']['mag'].mean()
+
+uncoorr_V_SMARTS=quiescent_tables['final_V']['Rmag'].mean()
+uncoorr_V_LCO=quiescent_tables['v_LCO']['mag'].mean()
+
+uncoorr_I_SMARTS=quiescent_tables['final_I']['Rmag'].mean()
+uncoorr_ip_LCO=quiescent_tables['ip_LCO']['mag'].mean()
+
+#corrected
+coorr_R_SMARTS=quiescent_tables['R_new']['Rmag'].mean()
+coorr_R_LCO=quiescent_tables['R_LCO_corr']['mag'].mean()
+coorr_Rp_LCO=quiescent_tables['Rp_LCO_corr']['mag'].mean()
+
+coorr_V_SMARTS=quiescent_tables['V_new']['Rmag'].mean()
+coorr_V_LCO=quiescent_tables['v_LCO_corr']['mag'].mean()
+
+coorr_I_SMARTS=quiescent_tables['I_new']['Rmag'].mean()
+coorr_ip_LCO=quiescent_tables['ip_LCO_corr']['mag'].mean()
+
+
+#print differences
+print('--- R BAND ---')
+print(uncoorr_R_SMARTS)
+print(uncoorr_R_LCO)
+print(uncoorr_Rp_LCO)
+print('us-lco')
+print(uncoorr_R_SMARTS-uncoorr_R_LCO)
+print(uncoorr_R_SMARTS-uncoorr_Rp_LCO)
+print('rp-lco')
+print(uncoorr_Rp_LCO-uncoorr_R_LCO)
+print('')
+
+print('--- I BAND ---')
+print(uncoorr_I_SMARTS)
+print(uncoorr_ip_LCO)
+print('us-lco')
+print(uncoorr_I_SMARTS-uncoorr_ip_LCO)
+print('')
+
+print('--- V BAND ---')
+print(uncoorr_V_SMARTS)
+print(uncoorr_V_LCO)
+print('us-lco')
+print(uncoorr_V_SMARTS-uncoorr_V_LCO)
+print('')
+
+#%%
+
+#correct the LCO band
+offsets = {
+    "R_LCO": uncoorr_R_SMARTS - uncoorr_R_LCO,
+    "Rp_LCO": uncoorr_R_SMARTS - uncoorr_Rp_LCO,
+    "v_LCO": uncoorr_V_SMARTS - uncoorr_V_LCO,
+    "ip_LCO": uncoorr_I_SMARTS - uncoorr_ip_LCO,
+}
+
+R_LCO_corr["mag_shifted"] = R_LCO_corr["mag"] - offsets['R_LCO']
+Rp_LCO_corr["mag_shifted"] = Rp_LCO_corr["mag"] - offsets['Rp_LCO']
+v_LCO_corr["mag_shifted"] = v_LCO_corr["mag"] - offsets['v_LCO']
+ip_LCO_corr["mag_shifted"] = ip_LCO_corr["mag"] - offsets['ip_LCO']
+
+
+#R band
+fig, axes = plt.subplots(2, 1, figsize=(20, 10), sharex=True)#, sharey='row')
+
+R_new = corrected.get("R")
+    # ---- LEFT: original ----
+axes[0].errorbar(
+    final_R['nice time'],
+    final_R['Rmag'],
+    yerr=final_R['e_Rmag'],
+    fmt='.',
+    color='crimson',
+    alpha=0.8,
+    label='SMARTS'
+)
+
+#LCO stuff
+axes[0].errorbar(
+    R_LCO['nice time'],
+    R_LCO['mag'],
+    yerr=R_LCO['mag_err'],
+    fmt='.',
+    color='black',
+    alpha=0.8,
+    label='LCO R'
+)
+
+axes[0].errorbar(
+    Rp_LCO['nice time'],
+    Rp_LCO['mag'],
+    yerr=Rp_LCO['mag_err'],
+    fmt='.',
+    color='gray',
+    alpha=0.8,
+    label='LCO rp'
+)
+
+
+axes[0].set_ylabel("R mag")
+axes[1].set_ylabel("R mag")
+
+
+# ---- RIGHT: corrected ----
+axes[1].errorbar(
+    R_new['nice time'],
+    R_new['Rmag_corr'],
+    yerr=R_new['e_Rmag'],
+    fmt='.',
+    color='crimson',
+    alpha=0.8,
+    label='SMARTS'
+)
+
+#LCO stuff
+axes[1].errorbar(
+    R_LCO_corr['nice time'],
+    R_LCO_corr['mag_shifted'],
+    yerr=R_LCO_corr['mag_corr_err'],
+    fmt='.',
+    color='black',
+    alpha=0.8,
+    label='LCO R'
+)
+
+axes[1].errorbar(
+    Rp_LCO_corr['nice time'],
+    Rp_LCO_corr['mag_shifted'],
+    yerr=Rp_LCO_corr['mag_corr_err'],
+    fmt='.',
+    color='gray',
+    alpha=0.8,
+    label='LCO rp'
+)
+
+# ---- invert ONCE per row ----
+
+ax_left = axes[0]
+ax_right = axes[1]
+
+# get current limits after plotting
+ymin, ymax = ax_left.get_ylim()
+ymin2, ymax = ax_right.get_ylim()
+
+
+# flip them manually (this is the key)
+ax_left.set_ylim(ymax, ymin)
+ax_right.set_ylim(ymax, ymin)
+axes[1].set_title("Corrected")
+axes[0].set_title("Original")
+axes[1].set_xlabel("Time")
+
+plt.tight_layout()
+plt.legend()
+plt.show()
