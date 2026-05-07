@@ -949,7 +949,7 @@ for i, row in top10.iterrows():
 '''
 #%%
 top10 = df.sort_values("score").head(10)
-data = df#top10  # or df
+data = top10  # or df
 
 fig, axes = plt.subplots(3, 2, figsize=(12, 10))
 axes = axes.ravel()  # flatten for easy indexing
@@ -1063,7 +1063,7 @@ print(ave_ens_flux)
 best_phot_table['stacked_flux_factor']=best_phot_table['flux_fit']/ave_ens_flux
 # Keep only the columns you need for initialization
 init_params_to_save = best_phot_table[['x_fit','x_err', 'y_fit','y_err', 'flux_fit','flux_err', 'name', 'group_id','id', 'group_size', 'stacked_flux_factor']].to_pandas()
-#init_params_to_save.to_csv('/home/kmc249/current_best_R_grid_fit.csv', index=False)
+init_params_to_save.to_csv('/home/kmc249/current_best_R_grid_fit.csv', index=False)
 
 
 

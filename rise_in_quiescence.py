@@ -46,8 +46,8 @@ def get_quiescent(df, intervals):
     return df[mask].copy()
 
 #read in 1.3 and 1 m stuff
-Rtable = pd.read_csv('/neta/xrb/AqlX-1/product/AqlX-1_R_corrected_lc_4_27.csv', low_memory=False) #change this girl
-Jtable=pd.read_csv('/neta/xrb/AqlX-1/product/AqlX-1_J_corrected_lc_4_27.csv', low_memory=False)
+Rtable = pd.read_csv('/neta/xrb/AqlX-1/product/combo_subtracted_shifted/AqlX-1_R_corrected_lc_4_27.csv', low_memory=False) #change this girl
+Jtable=pd.read_csv('/neta/xrb/AqlX-1/product/combo_subtracted_shifted/AqlX-1_J_corrected_lc_4_27.csv', low_memory=False)
 
 #rename columns to be consistent
 Rtable = Rtable.rename(columns={
@@ -88,8 +88,13 @@ full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
 #Mask out quiescence
-intervals = list(zip(full["Start MJD"], full["End MJD"])) + \
+count_mini=False
+full_intervals=list(zip(full["Start MJD"], full["End MJD"])) + \
             list(zip(mini["Start MJD"], mini["End MJD"]))
+if count_mini:
+    intervals = full_intervals
+else:
+    intervals = list(zip(full["Start MJD"], full["End MJD"]))
 
 #find quiescence values for all tables which have MJD already
 quiescent_tables={}
@@ -104,7 +109,7 @@ tables = {
 }
 
 for name, table in tables.items():
-    quiescent_tables[name] = get_quiescent(table, intervals)
+    quiescent_tables[name] = get_quiescent(table, full_intervals)
 
 
 
@@ -683,14 +688,22 @@ plt.show()
 #buffer on quiescence
 buffer = 5  # days
 
-buffered_intervals = [
+
+full_buffered_intervals = [
     (start - buffer, end + buffer)
-    for start, end in intervals
+    for start, end in full_intervals
 ]
+if count_mini:
+    buffered_intervals=full_buffered_intervals
+else:
+    buffered_intervals = [
+        (start - buffer, end + buffer)
+        for start, end in intervals
+    ]
 
 buffered_quiescent_tables={}
 for name, table in tables.items():
-    buffered_quiescent_tables[name] = get_quiescent(table, buffered_intervals)
+    buffered_quiescent_tables[name] = get_quiescent(table, full_buffered_intervals)
 
 # Build quiescent intervals (gaps between outbursts)
 buffered_quiescent_intervals = []
@@ -950,7 +963,19 @@ for i in range(4):
             table.loc[mask, "MJD"],
             table.loc[mask, "mag_corr"],
             s=2,
-            alpha=0.8,
+            alpha=0.2,
+            color=colors.get(name, "gray"),
+            label=name
+        )
+        
+    for name, table in quiescent_tables.items():
+        mask = (table["MJD"] >= t_start) & (table["MJD"] < t_end)
+
+        ax.scatter(
+            table.loc[mask, "MJD"],
+            table.loc[mask, "mag_corr"],
+            s=2,
+            alpha=1,
             color=colors.get(name, "gray"),
             label=name
         )
@@ -1039,6 +1064,16 @@ for row_idx, mode in enumerate(row_names):
 
         # --- plot histogram ---
         ax.hist(slopes, bins=30, alpha=0.7)
+        
+        # --- median slope ---
+        if len(slopes) > 0:
+            med = np.median(slopes)
+            if med>=0:
+                c='crimson'
+            else:
+                c='black'
+            ax.axvline(med, color=c, linewidth=2,
+                       label=f"median={med:.4f}")
 
         # vertical line at 0
         ax.axvline(0, color='black', linestyle='--')
@@ -1050,6 +1085,7 @@ for row_idx, mode in enumerate(row_names):
             ax.set_ylabel(row_names[row_idx])
 
         ax.set_xlabel("Slope")
+        ax.legend()
 
 plt.tight_layout()
 plt.show()
@@ -1083,7 +1119,7 @@ for row_idx, (name, table) in enumerate(quiescent_tables.items()):
             if x is None:
                 continue
 
-            y = seg["mag_corr"].values
+            y = seg["alt_mag_corr"].values
 
             xv = x.values
             yv = y

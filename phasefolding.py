@@ -65,9 +65,9 @@ for start, end in intervals:
 rtable = rtable[mask2]
 
 #%%
-table=rtable
-magstring='Rmag_corr'
-maglabel='R mag'
+table=oldtable
+magstring='Jmag_corr'
+maglabel='J mag'
 
 
 
@@ -234,7 +234,7 @@ plt.errorbar(binned['our phase bin'].astype(float)+1, binned['mean'], yerr=yerr_
 plt.xlabel('Orbital Phase')
 plt.ylabel(maglabel)
 plt.gca().invert_yaxis()
-plt.title(f'Our Period: {best_period_hours} hrs')
+plt.title(f'{magstring} Our Period: {best_period_hours} hrs')
 plt.legend()
 plt.tight_layout()
 
@@ -255,7 +255,7 @@ plt.xlabel('Orbital Phase')
 plt.ylabel(maglabel)
 plt.gca().invert_yaxis()
 plt.legend()
-plt.title(f'Their Period: {P*24} hrs')
+plt.title(f'{magstring} Their Period: {P*24} hrs')
 plt.tight_layout()
 plt.show()
 

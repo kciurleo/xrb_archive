@@ -678,7 +678,7 @@ for i, row in top10.iterrows():
 '''
 #%%
 top10 = df.sort_values("score").head(10)
-data = df#top10  # or df
+data = top10  # or df
 
 fig, axes = plt.subplots(3, 2, figsize=(12, 10))
 axes = axes.ravel()  # flatten for easy indexing

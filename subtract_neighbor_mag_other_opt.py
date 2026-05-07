@@ -17,7 +17,7 @@ from astropy.time import Time
 full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
-band='I'
+band='V'
 #R BAND
 file1 = f'/home/kmc249/Downloads/full_aphot_{band}_lc_04_20.csv'
 
@@ -113,7 +113,10 @@ J_corrected['F_corr_orig'] = J_corrected['J_flux'] - F_a
 J_corrected['F_corr_alt'] = frac_e * J_corrected['J_flux']
 
 #Now, make the real F_corr whichever of the two is higher
-J_corrected['F_corr'] = np.maximum(J_corrected['F_corr_orig'],J_corrected['F_corr_alt'])
+#J_corrected['F_corr'] = np.maximum(J_corrected['F_corr_orig'],J_corrected['F_corr_alt'])
+
+#Actually go back to the old way of doing just subtraction
+J_corrected['F_corr']=J_corrected['F_corr_orig']
 
 #Convert back to magnitudes just to print the averages
 m_a = -2.5 * np.log10(F_a)
@@ -125,9 +128,15 @@ print(f"J magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
 print(f"J magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
 
 
+#new way of magnitude errors
+J_corrected['flux_err'] = J_corrected['J_flux'] * np.log(10) * 0.4 * J_corrected['e_Rmag']
+J_corrected['e_Rmag_shifted']=(2.5 / np.log(10)) * (J_corrected['flux_err'] / J_corrected['F_corr'])
+
+
+
 #Convert back to magnitude, with associated errors
 J_corrected["Rmag_corr"] = -2.5 * np.log10(J_corrected['F_corr'])
-J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag']**2)
+J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag_shifted']**2)
 print(J_corrected.head(10)[['Rmag', 'e_Rmag', 'Rmag_corr', 'e_Rmag_corr', 'J_flux']])
 print('flux of a: ', F_a)
 print('number of nan values: ', J_corrected["Rmag_corr"].isna().sum())
@@ -171,7 +180,7 @@ for i, chunk in enumerate(time_chunks):
     # --- MAIN LIGHT CURVE ---
     ax_main.errorbar(J_corrected.loc[mask1, 'nice time'],
                     J_corrected.loc[mask1,  'Rmag_corr'], yerr=np.abs(J_corrected.loc[mask1,  'e_Rmag_corr']), 
-                    fmt='.', color='sienna', markersize=3, label='Corrected')
+                    fmt='.', color='green', markersize=3, label='Corrected')
     
     ax_main.errorbar(J_corrected.loc[mask1, 'nice time'],
                     J_corrected.loc[mask1,  'Rmag'], yerr=J_corrected.loc[mask1,  'e_Rmag'],
@@ -194,7 +203,7 @@ plt.tight_layout()
 #plt.savefig('/home/kmc249/Downloads/J_corrected.png', dpi=300)
 plt.show()
 
-J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
+J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
 #%%
 
 fig, axes = plt.subplots(

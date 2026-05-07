@@ -70,7 +70,7 @@ J_quiescent['flux']=10**(-0.4 * J_quiescent["Rmag"].values)
 #Convert that to flux space
 F_tot = J_quiescent['flux'].mean()
 J_quiescent['flux_err'] = J_quiescent['flux'] * np.log(10) * 0.4 * J_quiescent['e_Rmag']
-sigma_F_tot = J_quiescent['flux_err'].std() / np.sqrt(len(J_quiescent))
+sigma_F_tot = J_quiescent['flux'].std()  / np.sqrt(len(J_quiescent))
 
 #Find fluxes of a and e that contribute to the mean quiescent J mag
 F_a = frac_a * F_tot
@@ -102,7 +102,10 @@ J_corrected['F_corr_orig'] = J_corrected['J_flux'] - F_a
 J_corrected['F_corr_alt'] = frac_e * J_corrected['J_flux']
 
 #Now, make the real F_corr whichever of the two is higher
-J_corrected['F_corr'] = np.maximum(J_corrected['F_corr_orig'],J_corrected['F_corr_alt'])
+#J_corrected['F_corr'] = np.maximum(J_corrected['F_corr_orig'],J_corrected['F_corr_alt'])
+
+#Actually go back to the old way of doing just subtraction
+J_corrected['F_corr']=J_corrected['F_corr_orig']
 
 #Convert back to magnitudes just to print the averages
 m_a = -2.5 * np.log10(F_a)
@@ -113,10 +116,20 @@ sigma_m_e = (2.5 / np.log(10)) * (sigma_F_e / F_e)
 print(f"J magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
 print(f"J magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
 
+#new way of magnitude errors
+J_corrected['flux_err'] = J_corrected['J_flux'] * np.log(10) * 0.4 * J_corrected['e_Rmag']
+J_corrected['e_Rmag_shifted']=(2.5 / np.log(10)) * (J_corrected['flux_err'] / J_corrected['F_corr'])
+sigmafluxescorr=np.sqrt(J_corrected['flux_err']**2+sigma_F_a**2)
+
+#FOURTH and maybe final way of doing it
+charlessigmafluxes=np.sqrt(J_corrected['flux_err']**2+sigma_F_a**2)
 
 #Convert back to magnitude, with associated errors
 J_corrected["Rmag_corr"] = -2.5 * np.log10(J_corrected['F_corr'])
-J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag']**2)
+J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag'])#J_corrected['e_Rmag_shifted']**2)
+#J_corrected['e_Rmag_corr']=2.5/np.log(10)*sigmafluxescorr/J_corrected['F_corr']
+#J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag_shifted']**2)
+#J_corrected['e_Rmag_corr']=2.5/np.log(10)*charlessigmafluxes/J_corrected['F_corr']
 J_corrected["Rmag Divided Version"] = -2.5 * np.log10(J_corrected['F_corr_alt'])
 print(J_corrected.head(10)[['Rmag', 'e_Rmag', 'Rmag_corr', 'e_Rmag_corr', 'J_flux']])
 print('flux of a: ', F_a)
@@ -182,7 +195,7 @@ plt.tight_layout()
 #plt.savefig('/home/kmc249/Downloads/J_corrected.png', dpi=300)
 plt.show()
 
-J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename', "Rmag Divided Version"]].to_csv('/neta/xrb/AqlX-1/product/AqlX-1_R_corrected_lc_4_27.csv', index=False)
+J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename', "Rmag Divided Version"]].to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_R_corrected_lc.csv', index=False)
 #%%
 
 fig, axes = plt.subplots(

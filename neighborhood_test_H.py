@@ -136,6 +136,7 @@ def plotstuff(phot, model, resid, data):
     axes[0].set_xlim(0,100)
     axes[0].set_ylim(0,100)
     axes[2].imshow(resid, cmap='gray', origin='lower', norm=norm)
+    label=True
     if label:
         for row in phot:
             axes[0].annotate(
@@ -153,11 +154,11 @@ res=2
 #load data
 ####ignore this #stacked_trim_str='/home/kmc249/Downloads/NEWEST_aql_R_600.0_stack.fits'
 #stacked_trim_str='/home/kmc249/Downloads/hires_master.fits'
-stacked_trim_str='/neta/xrb/AqlX-1/temp/Aql_X-1_K_stack_aligned_to_opt.fits'
+stacked_trim_str='/neta/xrb/AqlX-1/temp/Aql_X-1_H_stack_aligned_to_opt.fits'
 stacked_full = fits.getdata('/home/kmc249/Downloads/AqlX-1_R_600.0_stack.fits')
 stacked_trim_zoom = fits.getdata('/home/kmc249/Downloads/NEWEST_aql_R_600.0_stack.fits')
 #stacked_trim = fits.getdata('/home/kmc249/Downloads/hires_master.fits')
-stacked_trim = fits.getdata('/neta/xrb/AqlX-1/temp/Aql_X-1_K_stack_aligned_to_opt.fits')
+stacked_trim = fits.getdata('/neta/xrb/AqlX-1/temp/Aql_X-1_H_stack_aligned_to_opt.fits')
 hiresopt=fits.getdata('/home/kmc249/Downloads/hires_master.fits')
 
 w = WCS(fits.getheader('/home/kmc249/Downloads/AqlX-1_R_600.0_stack_NEWMASTER1.fits'))
@@ -235,7 +236,9 @@ sources = daofinder(bkg_sub_full_data)
 #right here we need to get rid of any bad psf stars:
 #bad_ids = [231,228,213,227,202,221,219,194,183,180,178,176,371,177,171,165,174, 225, 173, 153]
 #bad_ids=[592,545,386,500,502]
-bad_ids=[1, 9, 10, 11, 22, 23, 25, 26, 28, 32, 35, 37, 38, 41, 43, 48, 50, 52, 54, 58, 63, 64, 68,69,70, 76, 87, 89, 90, 101, 110, 111, 118, 128, 146, 155, 169, 175,177, 181, 196, 200, 203, 217, 251, 264, 267, 284, 285, 289, 291, 292, 295, 325, 326, 329,332,337,3,4,5,12,13,27,30,33,31,34,42,44,46,49,51,57,61,72,77,81,82,83,88,93,94,98,103,104,113,119,120,123,125,126,127,129,130,132,133,135,140,141,143, 145, 148, 149,151,156,157,158,159,162,163,164,165,166,167,168,171,178,180,183,185,186,187,189,191,193,194,197,198,201,208,216,218,222,229,230,231,233,234,235,236,237, 239,242, 244,245,250,253,256,257,258,263,266, 269,270,271, 272,274,275, 278, 281, 282, 286, 287, 290, 294,296,297, 302,303,306, 307, 309,312, 313, 314, 315, 316, 317, 322, 323, 330, 331,338, 345, 350,351,354]
+#bad_ids=[1, 9, 10, 11, 22, 23, 25, 26, 28, 32, 35, 37, 38, 41, 43, 48, 50, 52, 54, 58, 63, 64, 68,69,70, 76, 87, 89, 90, 101, 110, 111, 118, 128, 146, 155, 169, 175,177, 181, 196, 200, 203, 217, 251, 264, 267, 284, 285, 289, 291, 292, 295, 325, 326, 329,332,337,3,4,5,12,13,27,30,33,31,34,42,44,46,49,51,57,61,72,77,81,82,83,88,93,94,98,103,104,113,119,120,123,125,126,127,129,130,132,133,135,140,141,143, 145, 148, 149,151,156,157,158,159,162,163,164,165,166,167,168,171,178,180,183,185,186,187,189,191,193,194,197,198,201,208,216,218,222,229,230,231,233,234,235,236,237, 239,242, 244,245,250,253,256,257,258,263,266, 269,270,271, 272,274,275, 278, 281, 282, 286, 287, 290, 294,296,297, 302,303,306, 307, 309,312, 313, 314, 315, 316, 317, 322, 323, 330, 331,338, 345, 350,351,354]
+#hband bad ids:
+bad_ids=[]
 # --- Edge mask ---
 '''
 mask_edges = (
@@ -282,9 +285,8 @@ size=19*res+1
 #size=21*res+1
 nddata=NDData(data=bkg_sub_full_data)
 good_stars=extract_stars(nddata, sources, size=size)
-
-
 '''
+
 #looping over stars
 for i, star in enumerate(good_stars):
     star_id = sources['id'][i]   # match star to its ID
@@ -302,6 +304,7 @@ for i, star in enumerate(good_stars):
     plt.colorbar()
     plt.show()
 '''
+#print(aksjhdasjhd)
 
 #temp fix:
 # Filter out stars with invalid or zero flux
@@ -449,8 +452,7 @@ plt.show()
 epsf_cache={}
 
 #%% dumb cha thin
-whatiputin=opticalinits[opticalinits['name']!='b'] #opticalinits
-
+whatiputin=opticalinits
 
 def get_epsf(size):
     """
@@ -534,7 +536,7 @@ def compute_score(chi2_img, n_pix, n_params,
                   flux, flux_err,
                   n_negative,
                   w_sep=1.0,
-                  w_neg=0,):#100.0,):
+                  w_neg=100.0,):
 
     # reduced chi2
     chi2_red = chi2_img / (n_pix - n_params)
@@ -567,8 +569,7 @@ def run_fit(size, fitnum, ap_radius, return_full=False):
         psf_model,
         fit_shape,
         aperture_radius=ap_radius*res,
-        grouper=SourceGrouper(min_separation=16),
-        xy_bounds=0.1
+        grouper=SourceGrouper(min_separation=16)
     )
     
     result = psfphot(zoomdata, init_params=whatiputin)
@@ -774,13 +775,13 @@ plt.show()
 
 #%%
 
-best_result= run_fit(13, 10, 10, return_full=True)
+best_result= run_fit(13, 15, 9, return_full=True)
 phot = best_result["phot_table"]
 model = best_result["model"]
 resid = best_result["resid"]
 
 init_params_to_save = phot[['x_fit','x_err', 'y_fit','y_err', 'flux_fit','flux_err', 'name', 'group_id','id', 'group_size']].to_pandas()
-init_params_to_save.to_csv('/home/kmc249/current_best_K_grid_fit.csv', index=False)
+init_params_to_save.to_csv('/home/kmc249/current_best_H_grid_fit.csv', index=False)
 
 # reuse your plotting function
 vmin, vmax = interval.get_limits(bkg_sub_full_data)
@@ -789,7 +790,7 @@ vminhr, vmaxhr = interval.get_limits(imdatazoom)
 normhires = ImageNormalize(vmin=vminhr, vmax=vmaxhr, stretch=SinhStretch())
 fig, axes=plt.subplots(1,3, figsize=(20,10))
 axes[0].imshow(zoomdata, cmap='gray', origin='lower', norm=norm)
-#axes[0].imshow(imdatazoom,  origin='lower', norm=normhires, alpha=0.5, cmap='viridis')
+axes[0].imshow(imdatazoom,  origin='lower', norm=normhires, alpha=0.5, cmap='viridis')
 axes[0].scatter(phot['x_fit'], phot['y_fit'], marker='x')
 #axes[0].scatter(aql['x_fit'], aql['y_fit'], marker='.', c='green', label='aql')
 #for name, group in neighborhood.groupby('name'):
