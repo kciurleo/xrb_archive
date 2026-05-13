@@ -13,27 +13,30 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from astropy.time import Time
 
-#Outburst list
-full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
-mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
+basedir='/home/kmc249/Downloads'
+basedir='/Users/katieciurleo/Downloads'
 
-band='V'
+quiescence=pd.read_csv(f'{basedir}/quiescence_mjd_ranges_v5.csv')
+
 #R BAND
-file1 = f'/home/kmc249/Downloads/full_aphot_{band}_lc_04_20.csv'
+#file1 = f'{basedir}/kmc249/Downloads/full_aphot_lc_04_08.csv'
+file1 = f'{basedir}/R_usable_orac.txt'
 
 #Read files
-J_df =pd.read_csv(file1, low_memory=False)
-J_df['nice time'] = pd.to_datetime(J_df['nice time'], errors='coerce')  # NaT for invalid
+#J_df =pd.read_csv(file1, low_memory=False)
+J_df=pd.read_csv(file1, sep=r"\s+",   skiprows=1)
+J_df.columns = ["MJD", "R_mag", "uncertainty", "upperlimitflag"]
+J_df['filetype']='orac'
 
-# Convert to MJD using astropy
-mjds = Time(J_df['nice time'].values).mjd
+df2=pd.read_csv(f'{basedir}/R_usable_banzai.txt', sep=r"\s+",   skiprows=1)
+df2.columns = ["MJD", "R_mag", "uncertainty", "upperlimitflag"]
+df2['filetype']='banzai'
+J_df = pd.concat([J_df, df2], ignore_index=True)
 
-# Add as a new column
-J_df['MJD'] = mjds
+
 
 #Get stacked flux info
-'''
-J_fit=pd.read_csv('/home/kmc249/current_best_R_grid_fit.csv')
+J_fit=pd.read_csv(f'{basedir}/current_best_R_grid_fit.csv')
 f_a=J_fit.loc[J_fit['name']=='a']['flux_fit'].values[0]
 err_a=J_fit.loc[J_fit['name']=='a']['flux_err'].values[0]
 f_e=J_fit.loc[J_fit['name']=='e']['flux_fit'].values[0]
@@ -50,39 +53,29 @@ sigma_frac_a = np.sqrt(
     (f_a / stacked_f**2)**2 * err_e**2
 )
 sigma_frac_e = sigma_frac_a 
+
 '''
 
-#I
-if band=='I':
-    frac_e= 0.225#0.118
-    sigma_frac_e= 0.015#0.011
-
-#V
-
-if band=='V':
-    frac_e= 0.118
-    sigma_frac_e=0.011
-
+#for V band:
+frac_e=0.118
 frac_a=1-frac_e
-sigma_frac_a= sigma_frac_e
+sigma_frac_e=0.011
+sigma_frac_a=sigma_frac_e
+'''
 #Mask out quiescence
-intervals = list(zip(full["Start MJD"], full["End MJD"])) + \
-            list(zip(mini["Start MJD"], mini["End MJD"]))
+mask = np.zeros(len(J_df), dtype=bool)
 
-#Call everything quiescent, then remove anything inside the outbursts/mini outbursts
-mask = np.ones(len(J_df), dtype=bool)
-
-for start, end in intervals:
-    mask &= ~((J_df["MJD"] >= start) & (J_df["MJD"] <= end))
+for start, end in zip(quiescence["q_start_mjd"], quiescence["q_end_mjd"]):
+    mask |= (J_df["MJD"] >= start) & (J_df["MJD"] <= end)
 
 J_quiescent = J_df[mask].copy()
 
-#Convert all magnitudes to flux so I can take an average
-J_quiescent['flux']=10**(-0.4 * J_quiescent["Rmag"].values)
+#Convert all magnitudes to flux so V can take an average
+J_quiescent['flux']=10**(-0.4 * J_quiescent["R_mag"].values)
 
 #Convert that to flux space
-F_tot = J_quiescent['flux'].median() #J_quiescent['flux'].mean() 
-J_quiescent['flux_err'] = J_quiescent['flux'] * np.log(10) * 0.4 * J_quiescent['e_Rmag']
+F_tot = J_quiescent['flux'].mean()
+J_quiescent['flux_err'] = J_quiescent['flux'] * np.log(10) * 0.4 * J_quiescent['uncertainty']
 sigma_F_tot = J_quiescent['flux_err'].std() / np.sqrt(len(J_quiescent))
 
 #Find fluxes of a and e that contribute to the mean quiescent J mag
@@ -106,19 +99,10 @@ t = Time(J_corrected['MJD'].values, format='mjd')
 J_corrected['nice time'] = t.to_datetime()
 
 #Convert to flux space, with error propogation
-J_corrected['J_flux']= 10**(-0.4 * J_df["Rmag"].values)
+J_corrected['J_flux']= 10**(-0.4 * J_df["R_mag"].values)
 
 #Subtract the constant in flux space, with errors
-J_corrected['F_corr_orig'] = J_corrected['J_flux'] - F_a
-
-#Alternate version where we assume that the flux of e (aql) is some constant fraction. True in quiescence.
-J_corrected['F_corr_alt'] = frac_e * J_corrected['J_flux']
-
-#Now, make the real F_corr whichever of the two is higher
-#J_corrected['F_corr'] = np.maximum(J_corrected['F_corr_orig'],J_corrected['F_corr_alt'])
-
-#Actually go back to the old way of doing just subtraction
-J_corrected['F_corr']=J_corrected['F_corr_orig']
+J_corrected['F_corr'] = J_corrected['J_flux'] - F_a
 
 #Convert back to magnitudes just to print the averages
 m_a = -2.5 * np.log10(F_a)
@@ -130,25 +114,18 @@ print(f"J magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
 print(f"J magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
 
 
-#new way of magnitude errors
-J_corrected['flux_err'] = J_corrected['J_flux'] * np.log(10) * 0.4 * J_corrected['e_Rmag']
-J_corrected['e_Rmag_shifted']=(2.5 / np.log(10)) * (J_corrected['flux_err'] / J_corrected['F_corr'])
-sigmafluxescorr=np.sqrt(J_corrected['flux_err']**2+sigma_F_a**2)
-
-
 #Convert back to magnitude, with associated errors
-J_corrected["Rmag_corr"] = -2.5 * np.log10(J_corrected['F_corr'])
-#J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag_shifted']**2)
-J_corrected['e_Rmag_corr']=2.5/np.log(10)*sigmafluxescorr/J_corrected['F_corr']
-print(J_corrected.head(10)[['Rmag', 'e_Rmag', 'Rmag_corr', 'e_Rmag_corr', 'J_flux']])
+J_corrected["R_mag_corr"] = -2.5 * np.log10(J_corrected['F_corr'])
+J_corrected['uncertainty_corr']=np.sqrt(sigma_m_a**2+J_corrected['uncertainty']**2)
+print(J_corrected.head(10)[['R_mag', 'uncertainty', 'R_mag_corr', 'uncertainty_corr', 'J_flux']])
 print('flux of a: ', F_a)
-print('number of nan values: ', J_corrected["Rmag_corr"].isna().sum())
+print('number of nan values: ', J_corrected["R_mag_corr"].isna().sum())
 
 #%%
 ###Plotting
 J_corrected = J_corrected.sort_values('nice time')
-ymin = min(J_corrected['Rmag_corr'].min(), J_corrected['Rmag'].min())
-ymax = max(J_corrected['Rmag_corr'].max(), J_corrected['Rmag'].max())
+ymin = min(J_corrected['R_mag_corr'].min(), J_corrected['R_mag'].min())
+ymax = max(J_corrected['R_mag_corr'].max(), J_corrected['R_mag'].max())
 
 fig, axes = plt.subplots(
     8, 1, figsize=(16, 24),
@@ -170,8 +147,6 @@ time_chunks = [J_corrected[(J_corrected['nice time'] >= edges[i]) & (J_corrected
 time_chunks[-1] = J_corrected[(J_corrected['nice time'] >= edges[-2]) & (J_corrected['nice time'] <= edges[-1])]
 
 for i, chunk in enumerate(time_chunks):
-    if chunk.empty:
-        continue
     ax_main = axes[i]
         
     tmin = chunk['nice time'].min()
@@ -180,13 +155,13 @@ for i, chunk in enumerate(time_chunks):
     # masks
     mask1 = (J_corrected['nice time'] >= tmin) & (J_corrected['nice time'] <= tmax)
     
-    # --- MAIN LIGHT CURVE ---
+    # --- MAVN LIGHT CURVE ---
     ax_main.errorbar(J_corrected.loc[mask1, 'nice time'],
-                    J_corrected.loc[mask1,  'Rmag_corr'], yerr=np.abs(J_corrected.loc[mask1,  'e_Rmag_corr']), 
-                    fmt='.', color='green', markersize=3, label='Corrected')
+                    J_corrected.loc[mask1,  'R_mag_corr'], yerr=np.abs(J_corrected.loc[mask1,  'uncertainty_corr']), 
+                    fmt='.', color='red', markersize=3, label='Corrected')
     
     ax_main.errorbar(J_corrected.loc[mask1, 'nice time'],
-                    J_corrected.loc[mask1,  'Rmag'], yerr=J_corrected.loc[mask1,  'e_Rmag'],
+                    J_corrected.loc[mask1,  'R_mag'], yerr=J_corrected.loc[mask1,  'uncertainty'],
                     fmt='.', color='black', markersize=3, label='Uncorrected')
     
     
@@ -205,11 +180,10 @@ axes[0].legend(loc='upper right')
 plt.tight_layout()
 #plt.savefig('/home/kmc249/Downloads/J_corrected.png', dpi=300)
 plt.show()
-
-if band=='I':
-    J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
-if band=='V':
-    J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/unshifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
+orac=J_corrected.loc[J_corrected['filetype']=='orac']
+banzai=J_corrected.loc[J_corrected['filetype']=='banzai']
+orac[['MJD', 'R_mag', 'uncertainty', 'upperlimitflag', 'R_mag_corr', 'uncertainty_corr']].to_csv(f'{basedir}/R_usable_orac_corrected.txt',sep='\t', index=False)
+banzai[['MJD', 'R_mag', 'uncertainty', 'upperlimitflag', 'R_mag_corr', 'uncertainty_corr']].to_csv(f'{basedir}/R_usable_banzai_corrected.txt',sep='\t', index=False)
 #%%
 
 fig, axes = plt.subplots(
@@ -232,8 +206,6 @@ time_chunks = [J_corrected[(J_corrected['nice time'] >= edges[i]) & (J_corrected
 time_chunks[-1] = J_corrected[(J_corrected['nice time'] >= edges[-2]) & (J_corrected['nice time'] <= edges[-1])]
 
 for i, chunk in enumerate(time_chunks):
-    if chunk.empty:
-        continue
     ax_main = axes[i]
         
     tmin = chunk['nice time'].min()
@@ -244,7 +216,7 @@ for i, chunk in enumerate(time_chunks):
     
     # --- MAIN LIGHT CURVE ---
     ax_main.errorbar(J_corrected.loc[mask1, 'nice time'],
-                    J_corrected.loc[mask1,  'F_corr'], yerr=0.,#yerr=np.abs(J_corrected.loc[mask1,  'e_Rmag_corr']), 
+                    J_corrected.loc[mask1,  'F_corr'], yerr=0.,#yerr=np.abs(J_corrected.loc[mask1,  'uncertainty_corr']), 
                     fmt='.', color='red', markersize=3, label='Corrected')
     
     ax_main.errorbar(J_corrected.loc[mask1, 'nice time'],
@@ -269,7 +241,7 @@ plt.show()
 
 #%%
 plt.figure(figsize=(10,10))
-plt.errorbar(J_corrected['Rmag'], J_corrected['Rmag_corr'], xerr=J_corrected['e_Rmag'], yerr=J_corrected['e_Rmag_corr'], fmt='.')
+plt.errorbar(J_corrected['R_mag'], J_corrected['R_mag_corr'], xerr=J_corrected['uncertainty'], yerr=J_corrected['uncertainty_corr'], fmt='.')
 plt.xlabel('R mag')
 plt.ylabel('R mag corrected')
 #plt.gca().invert_yaxis()
