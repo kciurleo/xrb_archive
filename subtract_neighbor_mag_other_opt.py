@@ -53,14 +53,16 @@ sigma_frac_e = sigma_frac_a
 '''
 
 #I
-frac_e= 0.225#0.118
-sigma_frac_e= 0.015#0.011
+if band=='I':
+    frac_e= 0.225#0.118
+    sigma_frac_e= 0.015#0.011
 
 #V
-'''
-frac_e= 0.118
-sigma_frac_e=0.011
-'''
+
+if band=='V':
+    frac_e= 0.118
+    sigma_frac_e=0.011
+
 frac_a=1-frac_e
 sigma_frac_a= sigma_frac_e
 #Mask out quiescence
@@ -131,12 +133,13 @@ print(f"J magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
 #new way of magnitude errors
 J_corrected['flux_err'] = J_corrected['J_flux'] * np.log(10) * 0.4 * J_corrected['e_Rmag']
 J_corrected['e_Rmag_shifted']=(2.5 / np.log(10)) * (J_corrected['flux_err'] / J_corrected['F_corr'])
-
+sigmafluxescorr=np.sqrt(J_corrected['flux_err']**2+sigma_F_a**2)
 
 
 #Convert back to magnitude, with associated errors
 J_corrected["Rmag_corr"] = -2.5 * np.log10(J_corrected['F_corr'])
-J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag_shifted']**2)
+#J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag_shifted']**2)
+J_corrected['e_Rmag_corr']=2.5/np.log(10)*sigmafluxescorr/J_corrected['F_corr']
 print(J_corrected.head(10)[['Rmag', 'e_Rmag', 'Rmag_corr', 'e_Rmag_corr', 'J_flux']])
 print('flux of a: ', F_a)
 print('number of nan values: ', J_corrected["Rmag_corr"].isna().sum())
@@ -203,7 +206,10 @@ plt.tight_layout()
 #plt.savefig('/home/kmc249/Downloads/J_corrected.png', dpi=300)
 plt.show()
 
-J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
+if band=='I':
+    J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
+if band=='V':
+    J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/unshifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
 #%%
 
 fig, axes = plt.subplots(

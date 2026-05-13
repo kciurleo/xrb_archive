@@ -106,6 +106,7 @@ J_corrected['F_corr_alt'] = frac_e * J_corrected['J_flux']
 
 #Actually go back to the old way of doing just subtraction
 J_corrected['F_corr']=J_corrected['F_corr_orig']
+J_corrected.loc[J_corrected['F_corr'] < 0, 'F_corr'] = np.nan
 
 #Convert back to magnitudes just to print the averages
 m_a = -2.5 * np.log10(F_a)
@@ -126,8 +127,8 @@ charlessigmafluxes=np.sqrt(J_corrected['flux_err']**2+sigma_F_a**2)
 
 #Convert back to magnitude, with associated errors
 J_corrected["Rmag_corr"] = -2.5 * np.log10(J_corrected['F_corr'])
-J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag'])#J_corrected['e_Rmag_shifted']**2)
-#J_corrected['e_Rmag_corr']=2.5/np.log(10)*sigmafluxescorr/J_corrected['F_corr']
+#J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag'])#J_corrected['e_Rmag_shifted']**2)
+J_corrected['e_Rmag_corr']=2.5/np.log(10)*sigmafluxescorr/J_corrected['F_corr']
 #J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag_shifted']**2)
 #J_corrected['e_Rmag_corr']=2.5/np.log(10)*charlessigmafluxes/J_corrected['F_corr']
 J_corrected["Rmag Divided Version"] = -2.5 * np.log10(J_corrected['F_corr_alt'])

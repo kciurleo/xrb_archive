@@ -17,8 +17,8 @@ from astropy.time import Time
 full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
-band='R'
-ftype='orac'
+band='Rp'
+ftype='banzai'
 #R BAND
 file1 = f'/home/kmc249/Downloads/{band}_usable_{ftype}.txt'
 J_df=pd.read_csv(
@@ -121,6 +121,7 @@ J_corrected['F_corr_alt'] = frac_e * J_corrected['J_flux']
 
 #Actually go back to the old way of doing just subtraction
 J_corrected['F_corr']=J_corrected['F_corr_orig']
+J_corrected.loc[J_corrected['F_corr'] < 0, 'F_corr'] = np.nan
 
 #Convert back to magnitudes just to print the averages
 m_a = -2.5 * np.log10(F_a)
@@ -141,9 +142,9 @@ J_corrected['charles suggested flux err']=sigmafluxescorr
 
 #Convert back to magnitude, with associated errors
 J_corrected["mag_corr"] = -2.5 * np.log10(J_corrected['F_corr'])
-J_corrected['mag_err_corr']=np.sqrt(sigma_m_a**2+J_corrected['mag_err'])#J_corrected['mag_err_shifted']**2)
-J_corrected['mag_err_corr_2']=2.5/np.log(10)*sigmafluxescorr/J_corrected['F_corr']
-J_corrected['mag_err_corr_3']=np.sqrt(sigma_m_a**2+J_corrected['mag_err_shifted']**2)
+#J_corrected['mag_err_corr']=np.sqrt(sigma_m_a**2+J_corrected['mag_err'])#J_corrected['mag_err_shifted']**2)
+J_corrected['mag_err_corr']=2.5/np.log(10)*sigmafluxescorr/J_corrected['F_corr']
+#J_corrected['mag_err_corr']=np.sqrt(sigma_m_a**2+J_corrected['mag_err_shifted']**2)
 
 '''
 #Convert back to magnitude, with associated errors
@@ -194,7 +195,7 @@ for i, chunk in enumerate(time_chunks):
     
     # --- MAIN LIGHT CURVE ---
     ax_main.errorbar(J_corrected.loc[mask1, 'nice time'],
-                    J_corrected.loc[mask1,  'mag_corr'], yerr=np.abs(J_corrected.loc[mask1,  'mag_err_corr_3']), 
+                    J_corrected.loc[mask1,  'mag_corr'], yerr=np.abs(J_corrected.loc[mask1,  'mag_err_corr']), 
                     fmt='.', color='sienna', markersize=3, label='Corrected')
     
     ax_main.errorbar(J_corrected.loc[mask1, 'nice time'],
@@ -290,11 +291,14 @@ plt.show()
 
 #%%
 plt.figure(figsize=(10,10))
+plt.axvline(m_a, label='mean quiescent neighbor magnitude', color='r', linestyle='--')
 plt.errorbar(J_corrected['mag'], J_corrected['mag_corr'], xerr=J_corrected['mag_err'], yerr=J_corrected['mag_err_corr'], fmt='.')
 plt.xlabel('R mag')
 plt.ylabel('R mag corrected')
 #plt.gca().invert_yaxis()
 #plt.gca().invert_xaxis()
-plt.ylim(29,14.2)
-plt.xlim(29,14.2)
+
+plt.legend()
+plt.ylim(25,15)
+plt.xlim(25,15)
 plt.show()

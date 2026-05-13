@@ -134,9 +134,9 @@ def plotstuff(phot, model, resid, data):
     axes[0].imshow(data, cmap='gray', origin='lower', norm=norm)
     axes[0].scatter(phot['x_fit'], phot['y_fit'], marker='x')
     axes[1].imshow(model, cmap='gray', origin='lower', norm=norm)
-    for i in [0,1,2]:
-        axes[i].plot(x_vals, y_vals, color='orange')
-        axes[i].plot(x_vals2, y_vals2, color='g')
+    #for i in [0,1,2]:
+        #axes[i].plot(x_vals, y_vals, color='orange')
+        #axes[i].plot(x_vals2, y_vals2, color='g')
     axes[0].set_xlim(0,100)
     axes[0].set_ylim(0,100)
     axes[2].imshow(resid, cmap='gray', origin='lower', norm=norm)
@@ -1014,8 +1014,42 @@ phot = best_result["phot_table"]
 model = best_result["model"]
 resid = best_result["resid"]
 
+neighbors=phot[phot['name']=='e']
+
+test_params=neighbors[['id','group_id', 'group_size', 'name']]
+test_params['x_0'], test_params['y_0'], test_params['flux']=neighbors['x_fit'], neighbors['y_fit'],neighbors['flux_fit']
+print(test_params)
+test=make_model_image(np.shape(zoomdata), psf_model, test_params)
+
+
 # reuse your plotting function
-plotstuff(phot, model, resid, zoomdata)
+#plotstuff(phot, model, resid, zoomdata)
+interval = ZScaleInterval()
+vmin, vmax = interval.get_limits(zoomdata)
+norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
+fig, axes=plt.subplots(1,3, figsize=(20,10))
+axes[0].imshow(zoomdata, cmap='gray', origin='lower', norm=norm)
+axes[0].scatter(phot['x_fit'], phot['y_fit'], marker='x')
+#axes[1].imshow(model, cmap='gray', origin='lower', norm=norm)
+axes[1].imshow(test, cmap='gray', origin='lower', norm=norm)
+#for i in [0,1,2]:
+    #axes[i].plot(x_vals, y_vals, color='orange')
+    #axes[i].plot(x_vals2, y_vals2, color='g')
+axes[0].set_xlim(0,100)
+axes[0].set_ylim(0,100)
+axes[2].imshow(zoomdata-test, cmap='gray', origin='lower', norm=norm)
+if label:
+    for row in phot:
+        axes[0].annotate(
+            str(row['id']), 
+            (row['x_fit'], row['y_fit']),
+            textcoords="offset points",
+            xytext=(5,5),
+            fontsize=8,
+            color='red'
+        )
+
+plt.show()
 
 
 #%%
@@ -1031,6 +1065,9 @@ psfphot=PSFPhotometry(psf_model, fit_shape, aperture_radius=10*res)
 ensphot=psfphot(bkg_sub_full_data, init_params=init_params)
 ensresid=psfphot.make_residual_image(bkg_sub_full_data)
 ensmodel=psfphot.make_model_image(np.shape(bkg_sub_full_data))
+
+
+
 
 label=True
 interval = ZScaleInterval()

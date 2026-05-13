@@ -745,24 +745,34 @@ model = best_result["model"]
 resid = best_result["resid"]
 
 init_params_to_save = phot[['x_fit','x_err', 'y_fit','y_err', 'flux_fit','flux_err', 'name', 'group_id','id', 'group_size']].to_pandas()
-init_params_to_save.to_csv('/home/kmc249/current_best_J_grid_fit.csv', index=False)
+#init_params_to_save.to_csv('/home/kmc249/current_best_J_grid_fit.csv', index=False)
+
+
+neighbors=phot[phot['name']=='e']
+
+test_params=neighbors[['id','group_id', 'group_size', 'name']]
+test_params['x_0'], test_params['y_0'], test_params['flux']=neighbors['x_fit'], neighbors['y_fit'],neighbors['flux_fit']
+print(test_params)
+test=make_model_image(np.shape(zoomdata), psf_model, test_params)
+
+
 
 # reuse your plotting function
-vmin, vmax = interval.get_limits(bkg_sub_full_data)
-norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
+vmin, vmax = interval.get_limits(zoomdata)
+norm = ImageNormalize(vmin=vmin, vmax=vmax-10, stretch=SinhStretch())
 vminhr, vmaxhr = interval.get_limits(imdatazoom)
 normhires = ImageNormalize(vmin=vminhr, vmax=vmaxhr, stretch=SinhStretch())
 fig, axes=plt.subplots(1,3, figsize=(20,10))
 axes[0].imshow(zoomdata, cmap='gray', origin='lower', norm=norm)
-axes[0].imshow(imdatazoom,  origin='lower', norm=normhires, alpha=0.5, cmap='viridis')
+#axes[0].imshow(imdatazoom,  origin='lower', norm=normhires, alpha=0.5, cmap='viridis')
 axes[0].scatter(phot['x_fit'], phot['y_fit'], marker='x')
 #axes[0].scatter(aql['x_fit'], aql['y_fit'], marker='.', c='green', label='aql')
 #for name, group in neighborhood.groupby('name'):
 #    axes[0].scatter(group['x_0']-206, group['y_0']-206, marker='.',c='green', label=name)
 axes[0].set_xlim(0,100)
 axes[0].set_ylim(0,100)
-axes[1].imshow(model, cmap='gray', origin='lower', norm=norm)
-axes[2].imshow(resid, cmap='gray', origin='lower', norm=norm)
+axes[1].imshow(test, cmap='gray', origin='lower', norm=norm)
+axes[2].imshow(zoomdata-test, cmap='gray', origin='lower', norm=norm)
 axes[0].scatter(opticalinits['x_fit'], opticalinits['y_fit'], marker='.', c='cyan')
 #axes[2].imshow(hiresopt, cmap='gray', origin='lower', norm=normhires)
 
@@ -783,6 +793,46 @@ for row in opticalinits:
         textcoords="offset points",
         xytext=(5,-5),
         fontsize=8,
+        color='cyan'
+    )
+
+plt.show()
+
+vmin, vmax = interval.get_limits(bkg_sub_full_data)
+norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
+vminhr, vmaxhr = interval.get_limits(imdatazoom)
+normhires = ImageNormalize(vmin=vminhr, vmax=vmaxhr, stretch=SinhStretch())
+fig, axes=plt.subplots(1,1, figsize=(10,10))
+axes.imshow(zoomdata, cmap='gray', origin='lower', norm=norm)
+axes.imshow(imdatazoom,  origin='lower', norm=normhires, alpha=0.5, cmap='viridis')
+axes.scatter(phot['x_fit'], phot['y_fit'], marker='x', color='red')
+#axes[0].scatter(aql['x_fit'], aql['y_fit'], marker='.', c='green', label='aql')
+#for name, group in neighborhood.groupby('name'):
+#    axes[0].scatter(group['x_0']-206, group['y_0']-206, marker='.',c='green', label=name)
+axes.set_xlim(0,100)
+axes.set_ylim(0,100)
+#axes[1].imshow(model, cmap='gray', origin='lower', norm=norm)
+#axes[2].imshow(resid, cmap='gray', origin='lower', norm=norm)
+axes.scatter(opticalinits['x_fit'], opticalinits['y_fit'], marker='.', c='cyan')
+#axes[2].imshow(hiresopt, cmap='gray', origin='lower', norm=normhires)
+
+for row in phot:
+    axes.annotate(
+        str(row['id']), 
+        (row['x_fit'], row['y_fit']),
+        textcoords="offset points",
+        xytext=(5,5),
+        fontsize=12,
+        color='red'
+    )
+    
+for row in opticalinits:
+    axes.annotate(
+        str(row['name']), 
+        (row['x_fit'], row['y_fit']),
+        textcoords="offset points",
+        xytext=(5,-5),
+        fontsize=12,
         color='cyan'
     )
 

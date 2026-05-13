@@ -217,7 +217,7 @@ for tbname, info in tables.items():
         info['intercept'] = intercept
         
         #make lc
-        exclude_cols = ['nice time','time', 'filename', 'aql','neighbor','a','b','c','d','1418','1069','1105', '1320', 'aql mag','ave mag', '413', '410']
+        exclude_cols = ['ave instr mag','zeropoint','nice time','time', 'filename', 'aql','neighbor','a','b','c','d','1418','1069','1105', '1320', 'aql mag','ave mag', '413', '410']
         ensemble_cols = [
             c for c in table.columns
             if c not in exclude_cols and c.isdigit()
@@ -251,6 +251,8 @@ for tbname, info in tables.items():
         
         table['aql mag'] = np.nan       # pre-create column
         table['ave mag'] = np.nan      # if needed for table2
+        table['ave instr mag'] = np.nan
+        table['zeropoint'] = np.nan
         plt.figure(figsize=(12,3))
 
         for id, row in table.iterrows():
@@ -258,10 +260,12 @@ for tbname, info in tables.items():
             to_sum = np.array([row[name] for name in table.columns if name not in exclude_cols])
             
             avgmag=np.nanmean(-2.5*np.log10(to_sum))
-            table.at[id, 'ave mag']=slope*avgmag+intercept
+            table.at[id, 'ave instr mag']=avgmag
             #h1=plt.scatter(row['nice time'], -2.5*np.log10(avg), s=15, color='gray',label='mean ens mag')
             #delta between panstarrs r mag and ensemble average magnitude
             delta=ensemble_r_mean-avgmag
+            table.at[id, 'zeropoint']=delta
+            table.at[id, 'ave mag']=avgmag+delta
         
             for name in table.columns:
                 if name  in ['aql']:#['nice time','time','filename']:
@@ -314,8 +318,8 @@ for tbname, info in tables.items():
 #getting errors
 errors_for_now=[]
 for tbname, info in tables.items():
-    if tbname=='LCO':
-    #if tbname!='AP 1m':
+    #if tbname=='LCO':
+    if tbname!='R band':
         continue
     table=info['df']
     #get rid of any inf values
@@ -336,12 +340,14 @@ for tbname, info in tables.items():
     cols_used = []
 
     for col in table.columns:
-        if col not in ['filename', 'time',  'neighbor', '413', '1320', 'nice time', 'aql mag', 'ave mag', 'error', '410']:
+        if col not in ['ave instr mag','zeropoint','filename', 'time',  'neighbor', '413', '1320', 'nice time', 'aql mag', 'ave mag', 'error', '410']:
             if col == 'aql':
                 # use quiescence mask to select only rows in quiescence
                 flux_safe = table.loc[mask, col].values.copy()
                 flux_safe[flux_safe <= 0] = np.nan
                 ave_mag = table.loc[mask, 'ave mag'].values
+                ave_instr_mag = table.loc[mask, 'ave instr mag'].values
+                zeropoints=table.loc[mask, 'zeropoint'].values
             else:
                 # for other columns, use positive fluxes or replace with the average
                 flux = table[col].values.astype(float)
@@ -350,16 +356,106 @@ for tbname, info in tables.items():
                 flux_safe = flux.copy()
                 flux_safe[~valid] = mean_flux
                 ave_mag = table['ave mag'].values
+                ave_instr_mag = table['ave instr mag'].values
+                zeropoints=table['zeropoint'].values
                 
-            mag_safe=info['slope']*(-2.5 * np.log10(flux_safe))+info['intercept']
+            #mag_safe=info['slope']*(-2.5 * np.log10(flux_safe))+info['intercept']
+            mag_safe=(-2.5 * np.log10(flux_safe))+zeropoints
             #print(np.nanmean(mag_safe))
-            residuals = ave_mag - mag_safe
+            #residuals = ave_mag - mag_safe
+            residuals = ave_instr_mag - (-2.5 * np.log10(flux_safe))
             x = np.nanstd(residuals)
             #x = np.std(mag_safe)#/np.sqrt(len(mag_safe))
             y = np.nanmean(-2.5 * np.log10(flux_safe))+info['intercept']
             x_vals.append(x)
             y_vals.append(y)
             cols_used.append(col)
+            if col!='aql':
+
+                # mask of replaced points
+                replaced_mask = ~valid
+            
+                # remove NaN residuals for plotting
+                finite = np.isfinite(residuals)
+            
+                times = table.loc[finite, 'nice time']
+                residuals_plot = residuals[finite]
+                replaced_plot = replaced_mask[finite]
+            
+                # make figure with side histogram
+                fig, (ax1, ax2) = plt.subplots(
+                    1, 2,
+                    figsize=(14,3),
+                    gridspec_kw={'width_ratios':[4,1]}
+                )
+            
+                # --------------------------
+                # LEFT PANEL: residuals vs time
+                # --------------------------
+            
+                # normal points
+                ax1.scatter(
+                    times[~replaced_plot],
+                    residuals_plot[~replaced_plot],
+                    color='k',
+                    s=15,
+                    label='Measured flux'
+                )
+            
+                # replaced points
+                ax1.scatter(
+                    times[replaced_plot],
+                    residuals_plot[replaced_plot],
+                    color='red',
+                    s=25,
+                    label='Replaced with mean flux'
+                )
+            
+                ax1.set_ylabel('Differential magnitude (ensemble - star)')
+                ax1.set_title(f'Star: {col}')
+                ax1.invert_yaxis()
+            
+                ax1.legend(loc='best', fontsize=8)
+            
+                # format dates
+                ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+            
+                # secondary MJD axis
+                ax_top = ax1.twiny()
+                ax_top.set_xlim(ax1.get_xlim())
+            
+                tick_locs = ax1.get_xticks()
+                tick_dates = mdates.num2date(tick_locs)
+                tick_mjds = Time(tick_dates).mjd
+            
+                ax_top.set_xticks(tick_locs)
+                ax_top.set_xticklabels([f'{mjd:.1f}' for mjd in tick_mjds])
+            
+                ax_top.xaxis.set_ticks_position('bottom')
+                ax1.xaxis.set_ticks_position('top')
+                ax_top.xaxis.set_label_position('bottom')
+            
+                # --------------------------
+                # RIGHT PANEL: histogram
+                # --------------------------
+            
+                ax2.hist(
+                    residuals[np.isfinite(residuals)],
+                    bins=30,
+                    orientation='horizontal',
+                    color='gray',
+                    alpha=0.7
+                )
+            
+                ax2.set_xlabel('N')
+                ax2.set_title(r'$\sigma =$' + f' {np.nanstd(residuals):.3f}')
+            
+                # match y-axis range
+                ax2.set_ylim(ax1.get_ylim())
+            
+                plt.tight_layout()
+                plt.savefig(f'/home/kmc249/Downloads/ens_star_diff_mags/{col}.png', dpi=200)
+                plt.show()
 
     x_vals = np.array(x_vals)
     y_vals = np.array(y_vals)

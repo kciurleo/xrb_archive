@@ -238,21 +238,26 @@ sources = daofinder(bkg_sub_full_data)
 #bad_ids=[592,545,386,500,502]
 #bad_ids=[1, 9, 10, 11, 22, 23, 25, 26, 28, 32, 35, 37, 38, 41, 43, 48, 50, 52, 54, 58, 63, 64, 68,69,70, 76, 87, 89, 90, 101, 110, 111, 118, 128, 146, 155, 169, 175,177, 181, 196, 200, 203, 217, 251, 264, 267, 284, 285, 289, 291, 292, 295, 325, 326, 329,332,337,3,4,5,12,13,27,30,33,31,34,42,44,46,49,51,57,61,72,77,81,82,83,88,93,94,98,103,104,113,119,120,123,125,126,127,129,130,132,133,135,140,141,143, 145, 148, 149,151,156,157,158,159,162,163,164,165,166,167,168,171,178,180,183,185,186,187,189,191,193,194,197,198,201,208,216,218,222,229,230,231,233,234,235,236,237, 239,242, 244,245,250,253,256,257,258,263,266, 269,270,271, 272,274,275, 278, 281, 282, 286, 287, 290, 294,296,297, 302,303,306, 307, 309,312, 313, 314, 315, 316, 317, 322, 323, 330, 331,338, 345, 350,351,354]
 #hband bad ids:
-bad_ids=[]
+bad_ids=[9, 10, 11, 12, 13, 17, 19, 20, 28, 29, 30, 31, 35, 36, 37, 38 ,39, 40, 41,42, 45, 46, 49, 50, 52, 53, 55, 57, 58, 59, 60, 62, 63, 66, 67, 69, 71, 72, 73, 74, 75,76,77,78,79, 80, 81, 83, 84,85, 86, 87, 90,91, 93, 94, 95, 98,100, 101, 103, 104, 109, 110, 111, 112, 116, 118, 119, 121, 122, 123, 129, 131, 135, 138, 140, 145, 146, 147, 148, 155, 158, 164, 165, 171, 174, 175, 178, 185, 193, 217, 221, 223, 229, 239, 242, 250, 281, 282, 284, 290, 295, 298, 311, 314, 322, 345, 351, 354, 364, 395,402, 425, 426, 427, 438, 444, 452, 457, 463, 465, 468, 469, 470, 474, 475, 479,480, 482,483,485, 486, 487, 488, 489, 490, 491,492, 496, 500, 503, 504, 505,506,508, 513, 515, 524, 527, 528, 529, 531,532, 535, 536, 538, 539, 540, 545,547, 548, 551, 552, 556, 557, 558, 559, 560, 562,563,564,567,568,569, 570,571,572,573,574,576,577,579, 583, 584, 587, 588, 591, 592, 596, 597, 599, 600,603,604, 605, 607, 608, 612, 613, 614, 615, 616, 617, 618, 619, 621, 622, 624, 625, 626, 627, 631, 634, 635, 637, 638, 640,641,642,643]
 # --- Edge mask ---
-'''
-mask_edges = (
-    (sources['xcentroid'] >= 300) &
-    (sources['xcentroid'] < 950) &
-    (sources['ycentroid'] >= 200) &
-    (sources['ycentroid'] < 780)
+
+mask_bad_region = (
+    (sources['xcentroid'] >= 725) &
+    (sources['xcentroid'] <= 914) &
+    (sources['ycentroid'] >= 274) &
+    (sources['ycentroid'] <= 539)
 )
-'''
+
+# Keep everything NOT in the bad region
+mask_edges = ~mask_bad_region
+
 # --- ID mask ---
 mask_ids = ~np.isin(sources['id'], bad_ids)
 
+mask = mask_edges & mask_ids
+
 # --- Filtered sources ---
-sources = sources[mask_ids]
+sources = sources[mask]
 
     
 sources['x'] = sources['xcentroid']
@@ -285,8 +290,8 @@ size=19*res+1
 #size=21*res+1
 nddata=NDData(data=bkg_sub_full_data)
 good_stars=extract_stars(nddata, sources, size=size)
-'''
 
+'''
 #looping over stars
 for i, star in enumerate(good_stars):
     star_id = sources['id'][i]   # match star to its ID
@@ -304,7 +309,6 @@ for i, star in enumerate(good_stars):
     plt.colorbar()
     plt.show()
 '''
-#print(aksjhdasjhd)
 
 #temp fix:
 # Filter out stars with invalid or zero flux
@@ -775,7 +779,7 @@ plt.show()
 
 #%%
 
-best_result= run_fit(13, 15, 9, return_full=True)
+best_result= run_fit(17, 10, 9, return_full=True)
 phot = best_result["phot_table"]
 model = best_result["model"]
 resid = best_result["resid"]
@@ -790,7 +794,7 @@ vminhr, vmaxhr = interval.get_limits(imdatazoom)
 normhires = ImageNormalize(vmin=vminhr, vmax=vmaxhr, stretch=SinhStretch())
 fig, axes=plt.subplots(1,3, figsize=(20,10))
 axes[0].imshow(zoomdata, cmap='gray', origin='lower', norm=norm)
-axes[0].imshow(imdatazoom,  origin='lower', norm=normhires, alpha=0.5, cmap='viridis')
+#axes[0].imshow(imdatazoom,  origin='lower', norm=normhires, alpha=0.5, cmap='viridis')
 axes[0].scatter(phot['x_fit'], phot['y_fit'], marker='x')
 #axes[0].scatter(aql['x_fit'], aql['y_fit'], marker='.', c='green', label='aql')
 #for name, group in neighborhood.groupby('name'):

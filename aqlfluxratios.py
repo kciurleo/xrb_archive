@@ -14,8 +14,8 @@ filters=['B','V','R', 'I', 'J', 'H', 'K']
 wavelengths_nm = np.array([440, 550, 640, 790, 1250, 1650, 2200])
 #our_ratios=[26, 17, 21, 31, 28, np.nan, 52]
 #our_errors=[17, 6, 3, 9, 3, 4, 4]
-our_ratios=[np.nan, 17, 21, 31, 28, np.nan, 52]
-our_errors=[np.nan, 6, 3, 9, 2, 4, 4]
+our_ratios=[np.nan, 17, 21, 31, 28, 35, 52]
+our_errors=[np.nan, 6, 3, 9, 2, 2, 4]
 their_ratios=np.array([np.nan, 11.8, 17, 22.5, np.nan, np.nan, 41])
 their_errors=np.array([np.nan, 1.1, 2.,1.5, np.nan, np.nan,9])
 
@@ -110,7 +110,7 @@ plt.errorbar(wavelengths_nm, their_ratios, their_errors,
 plt.plot(
     xfit_nm,
     yfit,
-    label=fr'Fit to lit.'
+    label='Fit to lit.'
 )
 
 plt.xscale('log')
