@@ -166,7 +166,7 @@ for i, (label, df_old, color) in enumerate(bands):
     axes[i, 1].errorbar(
         df_new['nice time'],
         df_new['Rmag_corr'],
-        yerr=df_new['e_Rmag_corr'],
+        yerr=0.,#df_new['e_Rmag_corr'],
         fmt='.',
         color=color,
         alpha=0.8
