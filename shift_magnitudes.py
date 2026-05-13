@@ -653,18 +653,18 @@ plt.show()
 offsets = {
     "R_LCO": coorr_R_SMARTS - coorr_R_LCO,
     "Rp_LCO": coorr_R_SMARTS - coorr_Rp_LCO,
-    "v_LCO": coorr_V_SMARTS - coorr_V_LCO,
+    "V_SMARTS": coorr_V_LCO - coorr_V_SMARTS,
     "ip_LCO": coorr_I_SMARTS - coorr_ip_LCO,
 }
 
 R_LCO_corr["mag_shifted"] = R_LCO_corr["mag_corr"] + offsets['R_LCO']
 Rp_LCO_corr["mag_shifted"] = Rp_LCO_corr["mag_corr"] + offsets['Rp_LCO']
-v_LCO_corr["mag_shifted"] = v_LCO_corr["mag_corr"] + offsets['v_LCO']
+V_new["Rmag_shifted"] = V_new["Rmag_corr"] + offsets['V_SMARTS']
 ip_LCO_corr["mag_shifted"] = ip_LCO_corr["mag_corr"] + offsets['ip_LCO']
 
 R_LCO_corr["alt_mag_shifted"] = R_LCO_corr["alt_mag_corr"] + offsets['R_LCO']
 Rp_LCO_corr["alt_mag_shifted"] = Rp_LCO_corr["alt_mag_corr"] + offsets['Rp_LCO']
-v_LCO_corr["alt_mag_shifted"] = v_LCO_corr["alt_mag_corr"] + offsets['v_LCO']
+V_new["alt_Rmag_shifted"] = V_new["Rmag Divided Version"] + offsets['V_SMARTS']
 ip_LCO_corr["alt_mag_shifted"] = ip_LCO_corr["alt_mag_corr"] + offsets['ip_LCO']
 
 
@@ -795,7 +795,7 @@ axes[1].set_ylabel("V mag")
 # ---- RIGHT: subtracted ----
 axes[1].errorbar(
     V_new['nice time'],
-    V_new['Rmag_corr'],
+    V_new['Rmag_shifted'],
     yerr=V_new['e_Rmag'],
     fmt='.',
     color='green',
@@ -806,7 +806,7 @@ axes[1].errorbar(
 #LCO stuff
 axes[1].errorbar(
     v_LCO_corr['nice time'],
-    v_LCO_corr['mag_shifted'],
+    v_LCO_corr['mag_corr'],
     yerr=v_LCO_corr['mag_corr_err'],
     fmt='.',
     color='black',
