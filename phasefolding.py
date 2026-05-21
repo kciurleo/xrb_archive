@@ -59,6 +59,7 @@ for key in data:
     
     df['flag']=np.nan
     df['error_flag']=np.nan
+    df['nice time']=pd.to_datetime(Time(df["MJD"], format="mjd").to_datetime())
 
 #assume we've gotten rid of the bad guys already.
 
