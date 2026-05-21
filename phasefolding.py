@@ -56,7 +56,6 @@ for key in data:
     
     df['flag']=np.nan
     df['error_flag']=np.nan
-    df['nice time']=pd.to_datetime(Time(df["MJD"], format="mjd").to_datetime())
 
 #assume we've gotten rid of the bad guys already.
 
@@ -87,9 +86,7 @@ def read_lco(banzai_path, orac_path):
 
 for band in ['V','gp','R','rp','ip']:
     data[f'{band} LCO']={'df':pd.read_csv(f'/home/kmc249/Downloads/{band}_LCO_shifted.csv')}
-    df['nice time'] = pd.to_datetime(
-        Time(df["MJD"], format="mjd").to_datetime()
-    )
+
 data['V LCO']['df']['mag_shifted']=data['V LCO']['df']['mag_corr']
 data['V LCO']['df']['alt_mag_shifted']=data['V LCO']['df']['alt_mag_corr']
 
@@ -113,6 +110,8 @@ def get_quiescent(df, intervals):
 
 for key in data:
     df = data[key]['df']
+    df['nice time']=pd.to_datetime(Time(df["MJD"], format="mjd").to_datetime())
+
     data[key]['quiescence'] = get_quiescent(df, intervals)
     data[key]['global med q mag'] = data[key]['quiescence']['mag_shifted'].median()
     data[key]['global mean q mag'] = data[key]['quiescence']['mag_shifted'].mean()
