@@ -15,7 +15,8 @@ from astropy.time import Time
 import matplotlib.dates as mdates
 from astropy.io import fits
 import datetime as dt
-
+from scipy.optimize import curve_fit
+import numpy as np
 from astropy.timeseries import LombScargle
 
 #read in all the dfs
@@ -122,14 +123,14 @@ for key in data:
 
 #%%
 for key in data:
-    if key!='J SMARTS':
-        continue
+    #if key!='J SMARTS':
+    #    continue
     table=data[key]['quiescence']
     maglabel=key
     magstring='mag_shifted'
-    upper=15.6
-    lower=19
-    table=table.loc[(table[magstring]>upper) & (table[magstring]<lower)]
+    #upper=15.6
+    #lower=19
+    #table=table.loc[(table[magstring]>upper) & (table[magstring]<lower)]
     
     
     #periodogramming things
@@ -170,6 +171,7 @@ for key in data:
     plt.ylabel('Power')
     plt.title('Lomb-Scargle Periodogram')
     plt.axvline(x=P*24,alpha=0.5, color='red')
+    plt.savefig(f'/home/kmc249/folded_curves/{key}_periodogram.png')
     plt.show(block=False)
     
     fig, ax = plt.subplots(figsize=(8,4))
@@ -183,6 +185,7 @@ for key in data:
     power_sortedall = pall[sorted_idxall]
     
     # Plot periodogram in period units
+    '''
     plt.figure(figsize=(8,4))
     plt.plot(period_hours_sortedall, power_sortedall)
     plt.xlabel('Period (hours)')
@@ -191,6 +194,7 @@ for key in data:
     plt.axvline(x=P*24,alpha=0.5, color='red')
     plt.xlim(12, 45)
     plt.show(block=False)
+    '''
     
     fig, ax = plt.subplots()
     ax.plot(fall, pall)
@@ -285,6 +289,7 @@ for key in data:
     plt.title(f'{magstring} Our Period: {best_period_hours} hrs')
     plt.legend()
     plt.tight_layout()
+    plt.savefig(f'/home/kmc249/folded_curves/{key}_our_period.png')
     
     plt.show(block=False)
     
@@ -305,78 +310,81 @@ for key in data:
     plt.legend()
     plt.title(f'{magstring} Their Period: {P*24} hrs')
     plt.tight_layout()
+    plt.savefig(f'/home/kmc249/folded_curves/{key}_their_period.png')
     plt.show()
 
-#%%
-#crappy 2-sin cruve fit
-from scipy.optimize import curve_fit
-import numpy as np
 
-# Our binned data
-xdata = binned['our phase bin'].astype(float).values
-ydata = binned['mean'].values
-yerr = binned['std'].values
-
-# Define a two-sine model
-def ellipsoidal_model(phase, A1, A2, delta, m0):
-    return A1*np.sin(2*np.pi*phase) + A2*np.sin(4*np.pi*phase + delta) + m0
-
-# Initial guesses
-A1_guess = 0.05  # small amplitude at orbital frequency
-A2_guess = 0.1   # ellipsoidal amplitude
-delta_guess = 0
-m0_guess = np.mean(ydata)
-
-p0 = [A1_guess, A2_guess, delta_guess, m0_guess]
-
-# Fit
-popt, pcov = curve_fit(ellipsoidal_model, xdata, ydata, sigma=yerr, p0=p0)
-
-# Extract parameters
-A1_fit, A2_fit, delta_fit, m0_fit = popt
-print(f"A1 = {A1_fit:.3f}, A2 = {A2_fit:.3f}, delta = {delta_fit:.3f}, mean mag = {m0_fit:.3f}")
-
-# Plot
-phase_fit = np.linspace(0, 1, 500)
-mag_fit = ellipsoidal_model(phase_fit, *popt)
-
-plt.figure(figsize=(8,4))
-plt.errorbar(xdata, ydata, yerr=yerr, fmt='o', color='red', label='Binned data')
-plt.plot(phase_fit, mag_fit, color='blue', label='Ellipsoidal fit')
-plt.xlabel('Orbital Phase')
-plt.ylabel(maglabel)
-plt.gca().invert_yaxis()
-plt.legend()
-plt.title('us')
-plt.tight_layout()
-plt.show(block=False)
-
-
-# their binned data
-xdata = binned_them['their phase bin'].astype(float).values
-ydata = binned_them['mean'].values
-yerr = binned_them['std'].values
-
-# Fit
-popt, pcov = curve_fit(ellipsoidal_model, xdata, ydata, sigma=yerr, p0=p0)
-
-# Extract parameters
-A1_fit, A2_fit, delta_fit, m0_fit = popt
-print(f"A1 = {A1_fit:.3f}, A2 = {A2_fit:.3f}, delta = {delta_fit:.3f}, mean mag = {m0_fit:.3f}")
-
-# Plot
-phase_fit = np.linspace(0, 1, 500)
-mag_fit = ellipsoidal_model(phase_fit, *popt)
-
-plt.figure(figsize=(8,4))
-plt.errorbar(xdata, ydata, yerr=yerr, fmt='o', color='red', label='Binned data')
-plt.plot(phase_fit, mag_fit, color='blue', label='Ellipsoidal fit')
-plt.xlabel('Orbital Phase')
-plt.ylabel(maglabel)
-plt.gca().invert_yaxis()
-plt.legend()
-plt.title('them')
-plt.tight_layout()
-plt.show()
+    #crappy 2-sin cruve fit
+    
+    
+    # Our binned data
+    xdata = binned['our phase bin'].astype(float).values
+    ydata = binned['mean'].values
+    yerr = binned['std'].values
+    
+    # Define a two-sine model
+    def ellipsoidal_model(phase, A1, A2, delta, m0):
+        return A1*np.sin(2*np.pi*phase) + A2*np.sin(4*np.pi*phase + delta) + m0
+    
+    # Initial guesses
+    A1_guess = 0.05  # small amplitude at orbital frequency
+    A2_guess = 0.1   # ellipsoidal amplitude
+    delta_guess = 0
+    m0_guess = np.mean(ydata)
+    
+    p0 = [A1_guess, A2_guess, delta_guess, m0_guess]
+    
+    # Fit
+    popt, pcov = curve_fit(ellipsoidal_model, xdata, ydata, sigma=yerr, p0=p0)
+    
+    # Extract parameters
+    A1_fit, A2_fit, delta_fit, m0_fit = popt
+    print(f"A1 = {A1_fit:.3f}, A2 = {A2_fit:.3f}, delta = {delta_fit:.3f}, mean mag = {m0_fit:.3f}")
+    
+    # Plot
+    phase_fit = np.linspace(0, 1, 500)
+    mag_fit = ellipsoidal_model(phase_fit, *popt)
+    
+    plt.figure(figsize=(8,4))
+    plt.errorbar(xdata, ydata, yerr=yerr, fmt='o', color='red', label='Binned data')
+    plt.plot(phase_fit, mag_fit, color='blue', label='Ellipsoidal fit')
+    plt.xlabel('Orbital Phase')
+    plt.ylabel(maglabel)
+    plt.gca().invert_yaxis()
+    plt.legend()
+    plt.title('us')
+    plt.tight_layout()
+    plt.savefig(f'/home/kmc249/folded_curves/{key}_our_2sin_fit.png')
+    plt.show(block=False)
+    
+    
+    # their binned data
+    xdata = binned_them['their phase bin'].astype(float).values
+    ydata = binned_them['mean'].values
+    yerr = binned_them['std'].values
+    
+    # Fit
+    popt, pcov = curve_fit(ellipsoidal_model, xdata, ydata, sigma=yerr, p0=p0)
+    
+    # Extract parameters
+    A1_fit, A2_fit, delta_fit, m0_fit = popt
+    print(f"A1 = {A1_fit:.3f}, A2 = {A2_fit:.3f}, delta = {delta_fit:.3f}, mean mag = {m0_fit:.3f}")
+    
+    # Plot
+    phase_fit = np.linspace(0, 1, 500)
+    mag_fit = ellipsoidal_model(phase_fit, *popt)
+    
+    plt.figure(figsize=(8,4))
+    plt.errorbar(xdata, ydata, yerr=yerr, fmt='o', color='red', label='Binned data')
+    plt.plot(phase_fit, mag_fit, color='blue', label='Ellipsoidal fit')
+    plt.xlabel('Orbital Phase')
+    plt.ylabel(maglabel)
+    plt.gca().invert_yaxis()
+    plt.legend()
+    plt.title('them')
+    plt.tight_layout()
+    plt.savefig(f'/home/kmc249/folded_curves/{key}_their_2sin_fit.png')
+    
+    plt.show()
 
 
