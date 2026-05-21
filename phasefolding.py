@@ -125,7 +125,7 @@ for key in data:
         continue
     table=data[key]['quiescence']
     maglabel=key
-    magstring='mag_corr'
+    magstring='mag_shifted'
     upper=15.6
     lower=19
     table=table.loc[(table[magstring]>upper) & (table[magstring]<lower)]
