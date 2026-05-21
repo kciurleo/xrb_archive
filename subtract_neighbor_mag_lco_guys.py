@@ -17,8 +17,8 @@ from astropy.time import Time
 full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
-band='Rp'
-ftype='banzai'
+band='V'
+ftype='orac'
 #R BAND
 file1 = f'/home/kmc249/Downloads/{band}_usable_{ftype}.txt'
 J_df=pd.read_csv(
@@ -83,7 +83,10 @@ J_quiescent = J_df[mask].copy()
 J_quiescent['flux']=10**(-0.4 * J_quiescent["mag"].values)
 
 #Convert that to flux space
-F_tot = J_quiescent['flux'].mean()
+F_tot = J_quiescent['flux'].median() #J_quiescent['flux'].mean()
+print('FTOT',F_tot)
+print('FMEAN', J_quiescent['flux'].mean())
+print('FMEDIAN',J_quiescent['flux'].median())
 J_quiescent['flux_err'] = J_quiescent['flux'] * np.log(10) * 0.4 * J_quiescent['mag_err']
 sigma_F_tot = J_quiescent['flux'].std() / np.sqrt(len(J_quiescent))
 
@@ -128,6 +131,8 @@ m_a = -2.5 * np.log10(F_a)
 m_e = -2.5 * np.log10(F_e)
 sigma_m_a = (2.5 / np.log(10)) * (sigma_F_a / F_a)
 sigma_m_e = (2.5 / np.log(10)) * (sigma_F_e / F_e)
+m_combined=-2.5 * np.log10(F_tot)
+
 
 print(f"J magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
 print(f"J magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
@@ -208,7 +213,7 @@ for i, chunk in enumerate(time_chunks):
     #ax_main.invert_yaxis()
     ax_main.set_ylim(ymax, ymin) 
     
-    
+    ax_main.axhline(m_combined, alpha=0.5, color='blue', linestyle='--')
     # formatting
     ax_main.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 

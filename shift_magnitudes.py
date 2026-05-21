@@ -203,6 +203,7 @@ R_LCO_orac = read_uncorrected_txt('/home/kmc249/Downloads/R_usable_orac.txt')
 R_LCO_orac["from"]='orac'  
 R_LCO=pd.concat([R_LCO_banzai, R_LCO_orac], ignore_index=True)
 Rp_LCO = read_uncorrected_txt('/home/kmc249/Downloads/rp_usable_banzai.txt')     
+Rp_LCO["from"]='banzai' 
 
 #R band corr
 R_LCO_banzai_corr = read_corrected_txt('/neta/xrb/AqlX-1/product/just_subtracted_shifted/unshifted/R_usable_banzai_corrected.txt')  
@@ -211,6 +212,7 @@ R_LCO_orac_corr = read_corrected_txt('/neta/xrb/AqlX-1/product/just_subtracted_s
 R_LCO_orac_corr["from"]='orac'  
 R_LCO_corr=pd.concat([R_LCO_banzai_corr, R_LCO_orac_corr], ignore_index=True)
 Rp_LCO_corr = read_corrected_txt('/neta/xrb/AqlX-1/product/just_subtracted_shifted/unshifted/rp_usable_banzai_corrected.txt') 
+Rp_LCO_corr["from"]='banzai' 
 
 #ip band
 ip_LCO_banzai = read_uncorrected_txt('/home/kmc249/Downloads/ip_usable_banzai.txt')  
@@ -240,6 +242,36 @@ v_LCO_banzai_corr["from"]='banzai'
 v_LCO_orac_corr = read_corrected_txt('/neta/xrb/AqlX-1/product/just_subtracted_shifted/V_usable_orac_corrected.txt')
 v_LCO_orac_corr["from"]='orac'  
 v_LCO_corr=pd.concat([v_LCO_banzai_corr, v_LCO_orac_corr], ignore_index=True)
+
+
+#gp band
+gp_LCO = read_uncorrected_txt('/home/kmc249/Downloads/gp_usable_banzai.txt')  
+gp_LCO["from"]='banzai'  
+
+#gp band corr
+gp_LCO_corr = read_corrected_txt('/neta/xrb/AqlX-1/product/just_subtracted_shifted/unshifted/gp_usable_banzai_corrected.txt')  
+gp_LCO_corr["from"]='banzai'  
+
+
+lcotables = {
+    'Rp_LCO_corr': Rp_LCO_corr,
+    'R_LCO_corr': R_LCO_corr,
+    'ip_LCO_corr': ip_LCO_corr,
+    'v_LCO_corr': v_LCO_corr,
+    'gp_LCO_corr': gp_LCO_corr,
+}
+
+for key in lcotables:
+    mask = lcotables[key]['mag_corr'] < 5
+    
+    lcotables[key].loc[mask, 'mag_corr'] = np.nan
+    lcotables[key].loc[mask, 'mag_corr_err'] = np.nan
+
+Rp_LCO_corr = lcotables['Rp_LCO_corr']
+R_LCO_corr  = lcotables['R_LCO_corr']
+ip_LCO_corr = lcotables['ip_LCO_corr']
+v_LCO_corr  = lcotables['v_LCO_corr']
+gp_LCO_corr  = lcotables['gp_LCO_corr']
 
 #%%
 #only get stuff in quiescence
@@ -290,11 +322,15 @@ extra_tables = {
     "ip_LCO_corr": ip_LCO_corr,
     "v_LCO": v_LCO,
     "v_LCO_corr": v_LCO_corr,
+    "gp_LCO": gp_LCO,
+    "gp_LCO_corr": gp_LCO_corr,
 }
 
 for name, table in extra_tables.items():
     quiescent_tables[name] = get_quiescent(table, intervals)
-    
+
+
+
 #%%
 
 #get mean quiescent values and comparisons
@@ -305,22 +341,24 @@ uncoorr_Rp_LCO=quiescent_tables['Rp_LCO']['mag'].mean()
 
 uncoorr_V_SMARTS=quiescent_tables['final_V']['Rmag'].mean()
 uncoorr_V_LCO=quiescent_tables['v_LCO']['mag'].mean()
+uncoorr_gp_LCO=quiescent_tables['gp_LCO']['mag'].mean()
 
 uncoorr_I_SMARTS=quiescent_tables['final_I']['Rmag'].mean()
 uncoorr_ip_LCO=quiescent_tables['ip_LCO']['mag'].mean()
 
 #corrected
-coorr_R_SMARTS=quiescent_tables['R_new']['Rmag'].mean()
-coorr_R_LCO=quiescent_tables['R_LCO_corr']['mag'].mean()
-coorr_Rp_LCO=quiescent_tables['Rp_LCO_corr']['mag'].mean()
+coorr_R_SMARTS=quiescent_tables['R_new']['Rmag_corr'].mean()
+coorr_R_LCO=quiescent_tables['R_LCO_corr']['mag_corr'].mean()
+coorr_Rp_LCO=quiescent_tables['Rp_LCO_corr']['mag_corr'].mean()
 
-coorr_V_SMARTS=quiescent_tables['V_new']['Rmag'].mean()
-coorr_V_LCO=quiescent_tables['v_LCO_corr']['mag'].mean()
+coorr_V_SMARTS=quiescent_tables['V_new']['Rmag_corr'].mean()
+coorr_V_LCO=quiescent_tables['v_LCO_corr']['mag_corr'].mean()
+coorr_gp_LCO=quiescent_tables['gp_LCO_corr']['mag_corr'].mean()
 
-coorr_I_SMARTS=quiescent_tables['I_new']['Rmag'].mean()
-coorr_ip_LCO=quiescent_tables['ip_LCO_corr']['mag'].mean()
+coorr_I_SMARTS=quiescent_tables['I_new']['Rmag_corr'].mean()
+coorr_ip_LCO=quiescent_tables['ip_LCO_corr']['mag_corr'].mean()
 
-
+'''
 #print differences
 print('--- R BAND ---')
 print(uncoorr_R_SMARTS)
@@ -346,7 +384,7 @@ print(uncoorr_V_LCO)
 print('us-lco')
 print(uncoorr_V_SMARTS-uncoorr_V_LCO)
 print('')
-
+'''
 print('corrected')
 
 print('--- R BAND ---')
@@ -372,6 +410,8 @@ print(coorr_V_SMARTS)
 print(coorr_V_LCO)
 print('us-lco')
 print(coorr_V_SMARTS-coorr_V_LCO)
+print('gp-lco')
+print(coorr_gp_LCO-coorr_V_LCO)
 print('')
 
 
@@ -507,6 +547,16 @@ axes[0].errorbar(
     label='LCO V'
 )
 
+axes[0].errorbar(
+    gp_LCO_corr['nice time'],
+    gp_LCO_corr['mag'],
+    yerr=gp_LCO_corr['mag_err'],
+    fmt='.',
+    color='gray',
+    alpha=0.8,
+    label='LCO gp'
+)
+
 
 axes[0].set_ylabel("V mag")
 axes[1].set_ylabel("V mag")
@@ -534,6 +584,16 @@ axes[1].errorbar(
     label='LCO V'
 )
 
+axes[1].errorbar(
+    gp_LCO_corr['nice time'],
+    gp_LCO_corr['mag_corr'],
+    yerr=gp_LCO_corr['mag_corr_err'],
+    fmt='.',
+    color='gray',
+    alpha=0.8,
+    label='LCO gp'
+)
+
 
 # ---- invert ONCE per row ----
 
@@ -554,8 +614,10 @@ axes[1].set_xlabel("Time")
 
 axes[0].axhline(y=uncoorr_V_SMARTS, color='green', linestyle='--', linewidth=3, alpha=0.5)
 axes[0].axhline(y=uncoorr_V_LCO, color='black', linestyle='--', linewidth=3, alpha=0.5)
+axes[0].axhline(y=uncoorr_gp_LCO, color='grey', linestyle='--', linewidth=3, alpha=0.5)
 axes[1].axhline(y=coorr_V_SMARTS, color='green', linestyle='--', linewidth=3, alpha=0.5)
 axes[1].axhline(y=coorr_V_LCO, color='black', linestyle='--', linewidth=3, alpha=0.5)
+axes[1].axhline(y=coorr_gp_LCO, color='gray', linestyle='--', linewidth=3, alpha=0.5)
 
 plt.tight_layout()
 plt.legend()
@@ -654,17 +716,20 @@ offsets = {
     "R_LCO": coorr_R_SMARTS - coorr_R_LCO,
     "Rp_LCO": coorr_R_SMARTS - coorr_Rp_LCO,
     "V_SMARTS": coorr_V_LCO - coorr_V_SMARTS,
+    "gp_LCO": coorr_V_LCO - coorr_gp_LCO,
     "ip_LCO": coorr_I_SMARTS - coorr_ip_LCO,
 }
 
 R_LCO_corr["mag_shifted"] = R_LCO_corr["mag_corr"] + offsets['R_LCO']
 Rp_LCO_corr["mag_shifted"] = Rp_LCO_corr["mag_corr"] + offsets['Rp_LCO']
 V_new["Rmag_shifted"] = V_new["Rmag_corr"] + offsets['V_SMARTS']
+gp_LCO_corr["mag_shifted"] = gp_LCO_corr["mag_corr"] + offsets['gp_LCO']
 ip_LCO_corr["mag_shifted"] = ip_LCO_corr["mag_corr"] + offsets['ip_LCO']
 
 R_LCO_corr["alt_mag_shifted"] = R_LCO_corr["alt_mag_corr"] + offsets['R_LCO']
 Rp_LCO_corr["alt_mag_shifted"] = Rp_LCO_corr["alt_mag_corr"] + offsets['Rp_LCO']
-V_new["alt_Rmag_shifted"] = V_new["Rmag Divided Version"] + offsets['V_SMARTS']
+#V_new["alt_Rmag_shifted"] = V_new["Rmag Divided Version"] + offsets['V_SMARTS']
+gp_LCO_corr["alt_mag_shifted"] = gp_LCO_corr["alt_mag_corr"] + offsets['gp_LCO']
 ip_LCO_corr["alt_mag_shifted"] = ip_LCO_corr["alt_mag_corr"] + offsets['ip_LCO']
 
 
@@ -687,7 +752,7 @@ axes[0].errorbar(
 axes[0].errorbar(
     R_LCO_corr['nice time'],
     R_LCO_corr['mag_corr'],
-    yerr=R_LCO_corr['mag_corr_err'],
+    #yerr=R_LCO_corr['mag_corr_err'],
     fmt='.',
     color='black',
     alpha=0.8,
@@ -697,7 +762,7 @@ axes[0].errorbar(
 axes[0].errorbar(
     Rp_LCO_corr['nice time'],
     Rp_LCO_corr['mag_corr'],
-    yerr=Rp_LCO_corr['mag_corr_err'],
+    #yerr=Rp_LCO_corr['mag_corr_err'],
     fmt='.',
     color='gray',
     alpha=0.8,
@@ -724,7 +789,7 @@ axes[1].errorbar(
 axes[1].errorbar(
     R_LCO_corr['nice time'],
     R_LCO_corr['mag_shifted'],
-    yerr=R_LCO_corr['mag_corr_err'],
+    #yerr=R_LCO_corr['mag_corr_err'],
     fmt='.',
     color='black',
     alpha=0.8,
@@ -734,7 +799,7 @@ axes[1].errorbar(
 axes[1].errorbar(
     Rp_LCO_corr['nice time'],
     Rp_LCO_corr['mag_shifted'],
-    yerr=Rp_LCO_corr['mag_corr_err'],
+    #yerr=Rp_LCO_corr['mag_corr_err'],
     fmt='.',
     color='gray',
     alpha=0.8,
@@ -780,13 +845,22 @@ axes[0].errorbar(
 axes[0].errorbar(
     v_LCO_corr['nice time'],
     v_LCO_corr['mag_corr'],
-    yerr=v_LCO_corr['mag_corr_err'],
+    #yerr=v_LCO_corr['mag_corr_err'],
     fmt='.',
     color='black',
     alpha=0.8,
     label='LCO V'
 )
 
+axes[0].errorbar(
+    gp_LCO_corr['nice time'],
+    gp_LCO_corr['mag_corr'],
+    #yerr=Rp_LCO_corr['mag_corr_err'],
+    fmt='.',
+    color='gray',
+    alpha=0.8,
+    label='LCO gp'
+)
 
 axes[0].set_ylabel("V mag")
 axes[1].set_ylabel("V mag")
@@ -807,13 +881,22 @@ axes[1].errorbar(
 axes[1].errorbar(
     v_LCO_corr['nice time'],
     v_LCO_corr['mag_corr'],
-    yerr=v_LCO_corr['mag_corr_err'],
+    #yerr=v_LCO_corr['mag_corr_err'],
     fmt='.',
     color='black',
     alpha=0.8,
     label='LCO V'
 )
 
+axes[1].errorbar(
+    gp_LCO_corr['nice time'],
+    gp_LCO_corr['mag_shifted'],
+    #yerr=Rp_LCO_corr['mag_corr_err'],
+    fmt='.',
+    color='gray',
+    alpha=0.8,
+    label='LCO gp'
+)
 
 # ---- invert ONCE per row ----
 
@@ -855,7 +938,7 @@ axes[0].errorbar(
 axes[0].errorbar(
     ip_LCO_corr['nice time'],
     ip_LCO_corr['mag_corr'],
-    yerr=ip_LCO_corr['mag_corr_err'],
+    #yerr=ip_LCO_corr['mag_corr_err'],
     fmt='.',
     color='black',
     alpha=0.8,
@@ -882,7 +965,7 @@ axes[1].errorbar(
 axes[1].errorbar(
     ip_LCO_corr['nice time'],
     ip_LCO_corr['mag_shifted'],
-    yerr=ip_LCO_corr['mag_corr_err'],
+    #yerr=ip_LCO_corr['mag_corr_err'],
     fmt='.',
     color='black',
     alpha=0.8,
@@ -910,28 +993,126 @@ axes[1].set_xlabel("Time")
 plt.tight_layout()
 plt.legend()
 plt.show()
+#%%
+
+# ============================================================
+# CHECK POST-SHIFT QUIESCENT VALUES
+# ============================================================
+
+print("\nPOST-SHIFT QUIESCENT COMPARISON")
+print("================================")
+
+
+# ---------- R BAND ----------
+R_smarts_med = quiescent_tables['R_new']['Rmag_corr'].mean()
+
+R_lco_med = get_quiescent(
+    R_LCO_corr,
+    intervals
+)['mag_shifted'].mean()
+
+Rp_lco_med = get_quiescent(
+    Rp_LCO_corr,
+    intervals
+)['mag_shifted'].mean()
+
+print("\n--- R BAND ---")
+print(f"SMARTS mean      : {R_smarts_med:.4f}")
+print(f"LCO R shifted      : {R_lco_med:.4f}")
+print(f"LCO rp shifted     : {Rp_lco_med:.4f}")
+
+print("\nDifferences")
+print(f"SMARTS - LCO R     : {R_smarts_med - R_lco_med:.6f}")
+print(f"SMARTS - LCO rp    : {R_smarts_med - Rp_lco_med:.6f}")
+print(f"LCO rp - LCO R     : {Rp_lco_med - R_lco_med:.6f}")
+
+
+# ---------- V BAND ----------
+# remember: SMARTS was shifted TO LCO
+
+V_smarts_med = get_quiescent(
+    V_new,
+    intervals
+)['Rmag_shifted'].mean()
+
+V_lco_med = quiescent_tables['v_LCO_corr']['mag_corr'].mean()
+gp_lco_med = get_quiescent(
+    gp_LCO_corr,
+    intervals
+)['mag_shifted'].mean()
+
+print("\n--- V BAND ---")
+print(f"SMARTS shifted     : {V_smarts_med:.4f}")
+print(f"LCO V              : {V_lco_med:.4f}")
+print(f"LCO gp shifted     : {gp_lco_med:.4f}")
+
+print("\nDifferences")
+print(f"SMARTS - LCO V     : {V_smarts_med - V_lco_med:.6f}")
+print(f"SMARTS - LCO gp    : {V_smarts_med - gp_lco_med:.6f}")
+print(f"LCO gp - LCO V     : {gp_lco_med - V_lco_med:.6f}")
+
+
+
+# ---------- I BAND ----------
+I_smarts_med = quiescent_tables['I_new']['Rmag_corr'].mean()
+
+I_lco_med = get_quiescent(
+    ip_LCO_corr,
+    intervals
+)['mag_shifted'].mean()
+
+print("\n--- I BAND ---")
+print(f"SMARTS mean      : {I_smarts_med:.4f}")
+print(f"LCO ip shifted     : {I_lco_med:.4f}")
+
+print("\nDifferences")
+print(f"SMARTS - LCO ip    : {I_smarts_med - I_lco_med:.6f}")
 
 #%%
+
+lco_corrected_tables = [
+    R_LCO_corr,
+    Rp_LCO_corr,
+    ip_LCO_corr,
+    v_LCO_corr,
+    gp_LCO_corr,
+]
+bands=['R', 'rp','ip','V','gp']
+
+for df in lco_corrected_tables:
+    df["error_flag"] = df["mag_corr_err"] > 0.25
+    
+for id, table in enumerate(lco_corrected_tables):
+    print(id)
+    if id!=3:
+        print(table['mag_shifted']-table['mag_corr'])
+    table.to_csv(f'/home/kmc249/Downloads/{bands[id]}_LCO_shifted.csv', index=False)
+    
+V_new.to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_V_corrected_lc_4_27.csv', index=False)
+#%%
 #save files
-
-
 '''
+###KATIE YOU NEED TO SAVE THE V BAND
 
-band='R'
-
-
-header = f"# MJD corrected {band} MAG corrected uncertainty upperlimitflag {band} MAG uncertainty alt corrected MAG"
-for ftype in ['banzai']:#['orac','banzai']:
-    tosave=Rp_LCO_corr#.loc[ip_LCO_corr['from']==ftype]
-    print(len(tosave))
-    tosave=tosave[['MJD', 'mag_shifted', 'mag_corr_err', 'flag', 'mag', 'mag_err','alt_mag_shifted']]
-    with open(f'/home/kmc249/Downloads/subtracted_shifted_LCO/rp_usable_{ftype}_corrected.txt', "w") as file:
-        file.write(header + "\n")
+for id, savetable in enumerate(lco_corrected_tables):
+    band=bands[id]
+    
+    header = f"# MJD corrected {band} MAG corrected uncertainty upperlimitflag {band} MAG uncertainty alt corrected MAG error_flag"
+    for ftype in list(set(savetable['from'])):
+        tosave=savetable.loc[savetable['from']==ftype]
+        print(len(tosave))
+        if band=='V':
+            tosave=tosave[['MJD', 'mag_corr', 'mag_corr_err', 'flag', 'mag', 'mag_err','alt_mag_corr', 'error_flag']]
         
-        tosave.to_csv(
-            file,
-            sep=" ",
-            index=False,
-            header=False,
-        )
+        else:
+            tosave=tosave[['MJD', 'mag_shifted', 'mag_corr_err', 'flag', 'mag', 'mag_err','alt_mag_shifted', 'error_flag']]
+        with open(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/{band}_usable_{ftype}_corrected.txt', "w") as file:
+            file.write(header + "\n")
+            
+            tosave.to_csv(
+                file,
+                sep=" ",
+                index=False,
+                header=False,
+            )
 '''

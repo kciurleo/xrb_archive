@@ -28,16 +28,22 @@ print(np.shape(data))
 '''
 #file='/scratch/temp_CD_data/AqlX-1/1m/rccd/rccd991108.0006.fits'
 import glob
-file='/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/sub_trim_rccd000405.0042.fits'
+#file='/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/sub_trim_rccd000405.0042.fits'
+filev='/neta/xrb/A0620-00/1.3m/opt/rccd/V/rccd131026.0181.fits'
+fileb='/neta/xrb/A0620-00/1.3m/opt/rccd/B/rccd051208.0015.fits'
+filei='/neta/xrb/A0620-00/1.3m/opt/rccd/I/rccd031117.0087.fits'
+fileh='/neta/xrb/A0620-00/1.3m/ir/raw/H/binir031029.0284.fits'
+filehbackup='/neta/xrb/A0620-00/1.3m/ir/raw/H/binir051127.0248.fits'
 
-for file in glob.glob('/scratch/temp_CD_data/AqlX-1/1.3m/rccd/*'):
+
+
+for file in glob.glob('/neta/xrb/A0620-00/1.3m/ir/raw/H/*'):
     print(f'now showing{file}')
     data=fits.getdata(file)
     hdr=fits.getheader(file)
     print(hdr)
     try:
         filt=hdr['CCDFLTID']
-        continue
     except:
         filt=hdr['FILTERID']
 
@@ -49,3 +55,4 @@ for file in glob.glob('/scratch/temp_CD_data/AqlX-1/1.3m/rccd/*'):
     plt.title(filt)
     print(file)
     plt.show()
+

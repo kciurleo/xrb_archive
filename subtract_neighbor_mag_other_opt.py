@@ -17,7 +17,7 @@ from astropy.time import Time
 full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
-band='V'
+band='I'
 #R BAND
 file1 = f'/home/kmc249/Downloads/full_aphot_{band}_lc_04_20.csv'
 
@@ -32,25 +32,25 @@ mjds = Time(J_df['nice time'].values).mjd
 J_df['MJD'] = mjds
 
 #Get stacked flux info
-'''
-J_fit=pd.read_csv('/home/kmc249/current_best_R_grid_fit.csv')
-f_a=J_fit.loc[J_fit['name']=='a']['flux_fit'].values[0]
-err_a=J_fit.loc[J_fit['name']=='a']['flux_err'].values[0]
-f_e=J_fit.loc[J_fit['name']=='e']['flux_fit'].values[0]
-err_e=J_fit.loc[J_fit['name']=='e']['flux_err'].values[0]
+if band=='B':
+	J_fit=pd.read_csv('/home/kmc249/current_best_B_grid_fit.csv')
+	f_a=J_fit.loc[J_fit['name']=='a']['flux_fit'].values[0]
+	err_a=J_fit.loc[J_fit['name']=='a']['flux_err'].values[0]
+	f_e=J_fit.loc[J_fit['name']=='e']['flux_fit'].values[0]
+	err_e=J_fit.loc[J_fit['name']=='e']['flux_err'].values[0]
 
 #fractions and error propogation of fractions
-stacked_f = (f_a + f_e)
-frac_a = f_a / stacked_f
-frac_e = f_e / stacked_f
+	stacked_f = (f_a + f_e)
+	frac_a = f_a / stacked_f
+	frac_e = f_e / stacked_f
 
 #Error propogation, they come out to be the same
-sigma_frac_a = np.sqrt(
-    (f_e / stacked_f**2)**2 * err_a**2 +
-    (f_a / stacked_f**2)**2 * err_e**2
-)
-sigma_frac_e = sigma_frac_a 
-'''
+	sigma_frac_a = np.sqrt(
+    		(f_e / stacked_f**2)**2 * err_a**2 +
+    		(f_a / stacked_f**2)**2 * err_e**2
+		)
+	sigma_frac_e = sigma_frac_a 
+
 
 #I
 if band=='I':
@@ -205,11 +205,12 @@ axes[0].legend(loc='upper right')
 plt.tight_layout()
 #plt.savefig('/home/kmc249/Downloads/J_corrected.png', dpi=300)
 plt.show()
-
-if band=='I':
+'''
+if band=='I' or band=='B':
     J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
 if band=='V':
     J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/unshifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
+'''
 #%%
 
 fig, axes = plt.subplots(

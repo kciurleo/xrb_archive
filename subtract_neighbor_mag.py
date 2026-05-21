@@ -69,6 +69,8 @@ J_quiescent['flux']=10**(-0.4 * J_quiescent["Rmag"].values)
 
 #Convert that to flux space
 F_tot = J_quiescent['flux'].mean()
+print('FMEAN', J_quiescent['flux'].mean())
+print('FMEDIAN', J_quiescent['flux'].median())
 J_quiescent['flux_err'] = J_quiescent['flux'] * np.log(10) * 0.4 * J_quiescent['e_Rmag']
 sigma_F_tot = J_quiescent['flux'].std()  / np.sqrt(len(J_quiescent))
 
@@ -196,7 +198,7 @@ plt.tight_layout()
 #plt.savefig('/home/kmc249/Downloads/J_corrected.png', dpi=300)
 plt.show()
 
-J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename', "Rmag Divided Version"]].to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_R_corrected_lc.csv', index=False)
+#J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename', "Rmag Divided Version"]].to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_R_corrected_lc.csv', index=False)
 #%%
 
 fig, axes = plt.subplots(

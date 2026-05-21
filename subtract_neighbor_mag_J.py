@@ -125,7 +125,7 @@ J_corrected["Jmag_corr"] = -2.5 * np.log10(J_corrected['F_corr'])
 J_corrected["Jmag Divided Version"] = -2.5 * np.log10(J_corrected['F_corr_alt'])
 #J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag'])
 J_corrected['e_Jmag_corr']=2.5/np.log(10)*sigmafluxescorr/J_corrected['F_corr']
-#J_corrected['e_Rmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Rmag_shifted']**2)
+#J_corrected['e_Jmag_corr']=np.sqrt(sigma_m_a**2+J_corrected['e_Jmag_shifted']**2)
 print(J_corrected.head(10)[['Jmag', 'e_Jmag', 'Jmag_corr', 'e_Jmag_corr', 'J_flux']])
 print('flux of a: ', F_a)
 print('number of nan values: ', J_corrected["Jmag_corr"].isna().sum())
@@ -190,7 +190,7 @@ plt.tight_layout()
 #plt.savefig('/home/kmc249/Downloads/J_corrected.png', dpi=300)
 plt.show()
 
-J_corrected[['Date', 'MJD', 'Jmag_corr', 'e_Jmag_corr', 'Jmag', 'e_Jmag', 'Ncomp', 'Nmatch', 'stack_median', "Jmag Divided Version"]].to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_J_corrected_lc.csv', index=False)
+#J_corrected[['Date', 'MJD', 'Jmag_corr', 'e_Jmag_corr', 'Jmag', 'e_Jmag', 'Ncomp', 'Nmatch', 'stack_median', "Jmag Divided Version"]].to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_J_corrected_lc.csv', index=False)
 #%%
 
 fig, axes = plt.subplots(
