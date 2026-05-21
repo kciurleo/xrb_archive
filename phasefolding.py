@@ -87,7 +87,9 @@ def read_lco(banzai_path, orac_path):
 
 for band in ['V','gp','R','rp','ip']:
     data[f'{band} LCO']={'df':pd.read_csv(f'/home/kmc249/Downloads/{band}_LCO_shifted.csv')}
-
+    df['nice time'] = pd.to_datetime(
+        Time(df["MJD"], format="mjd").to_datetime()
+    )
 data['V LCO']['df']['mag_shifted']=data['V LCO']['df']['mag_corr']
 data['V LCO']['df']['alt_mag_shifted']=data['V LCO']['df']['alt_mag_corr']
 
