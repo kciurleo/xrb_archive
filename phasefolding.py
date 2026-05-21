@@ -18,29 +18,80 @@ import datetime as dt
 
 from astropy.timeseries import LombScargle
 
-#read in 1.3 and 1 m stuff
-file1 = "/neta/xrb/AqlX-1/1m/ir/proc/J/AqlX1_Jband_lightcurve_mjd_fixed.ecsv"
-file2 = "/neta/xrb/AqlX-1/1.3m/ir/proc/J/AqlX1_Jband_lightcurve_mjd_fixed.ecsv"
-rtable = pd.read_csv('/neta/xrb/AqlX-1/product/AqlX-1_R_corrected_lc_4_27.csv', low_memory=False) #change this girl
-t1 = Table.read(file1, format="ascii.ecsv")
-t2 = Table.read(file2, format="ascii.ecsv")
-df1 = t1.to_pandas()
-df2 = t2.to_pandas()
-table = pd.concat([df1, df2], ignore_index=True)
+#read in all the dfs
 
-#corrected
-oldtable=pd.read_csv('/neta/xrb/AqlX-1/product/AqlX-1_J_corrected_lc_4_27.csv', low_memory=False)
-mask = np.zeros(len(oldtable), dtype=bool)
-mask2 = np.zeros(len(rtable), dtype=bool)
+data = {}
 
-#getting nice time
-t = Time(oldtable['MJD'], format='mjd')
-oldtable['nice time'] = t.to_datetime()
-rtable['nice time'] = pd.to_datetime(rtable['nice time'])
-rtable['MJD'] = Time(rtable['nice time']).mjd
-mjd = np.asarray(oldtable['MJD'], dtype=float)
-mjd2 = np.asarray(rtable['MJD'], dtype=float)
+data['B SMARTS'] = {
+    'df': pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_B_corrected_lc_4_27.csv')
+}
 
+data['V SMARTS'] = {
+    'df': pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_V_corrected_lc_4_27.csv')
+}
+
+data['R SMARTS'] = {
+    'df': pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_R_corrected_lc.csv')
+}
+
+data['I SMARTS'] = {
+    'df': pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_I_corrected_lc_4_27.csv')
+}
+
+data['J SMARTS'] = {
+    'df': pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_J_corrected_lc.csv')
+}
+
+
+for key in data:
+    df = data[key]['df']
+    if key=='J SMARTS':
+        nameband='J'
+    else:
+        nameband='R'
+    if key=='V SMARTS':
+        df['mag_shifted']=df[f'{nameband}mag_shifted']
+    else:
+        df['mag_shifted']=df[f'{nameband}mag_corr']
+    df['mag_corr_err']=df[f'e_{nameband}mag_corr']
+    df['mag_err']=df[f'e_{nameband}mag']
+    df['mag']=df[f'{nameband}mag']
+    
+    df['flag']=np.nan
+    df['error_flag']=np.nan
+
+#assume we've gotten rid of the bad guys already.
+
+def read_corrected_txt(path):
+    df = pd.read_csv(
+        path,
+        sep=r"\s+",
+        comment="#",
+        names=[
+            "MJD",
+            "mag_corr",
+            "mag_corr_err",
+            "flag",
+            "mag",
+            "mag_err",
+            "error_flag"
+        ]
+    )
+    
+    df["nice time"] = pd.to_datetime(Time(df["MJD"], format="mjd").to_datetime())
+    return df
+
+def read_lco(banzai_path, orac_path):
+    banzai = read_corrected_txt(banzai_path)
+    orac   = read_corrected_txt(orac_path)
+    return pd.concat([banzai, orac], ignore_index=True)
+
+
+for band in ['V','gp','R','rp','ip']:
+    data[f'{band} LCO']={'df':pd.read_csv(f'/home/kmc249/Downloads/{band}_LCO_shifted.csv')}
+
+data['V LCO']['df']['mag_shifted']=data['V LCO']['df']['mag_corr']
+data['V LCO']['df']['alt_mag_shifted']=data['V LCO']['df']['alt_mag_corr']
 
 #only get stuff in quiescence
 
@@ -52,212 +103,208 @@ mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 intervals = list(zip(full["Start MJD"], full["End MJD"])) + \
             list(zip(mini["Start MJD"], mini["End MJD"]))
 
-#Call everything quiescent, then remove anything inside the outbursts/mini outbursts
-mask = np.ones(len(oldtable), dtype=bool)
-mask2 = np.ones(len(rtable), dtype=bool)
+def get_quiescent(df, intervals):
+    mask = np.ones(len(df), dtype=bool)
+    
+    for start, end in intervals:
+        mask &= ~((df["MJD"] >= start) & (df["MJD"] <= end))
+    
+    return df[mask].copy()
 
-for start, end in intervals:
-    mask &= ~((oldtable["MJD"] >= start) & (oldtable["MJD"] <= end))
-oldtable = oldtable[mask]
-
-for start, end in intervals:
-    mask2 &= ~((rtable["MJD"] >= start) & (rtable["MJD"] <= end))
-rtable = rtable[mask2]
-
-#%%
-table=oldtable
-magstring='Jmag_corr'
-maglabel='J mag'
-
+for key in data:
+    df = data[key]['df']
+    data[key]['quiescence'] = get_quiescent(df, intervals)
+    data[key]['global med q mag'] = data[key]['quiescence']['mag_shifted'].median()
+    data[key]['global mean q mag'] = data[key]['quiescence']['mag_shifted'].mean()
+    print(key, data[key]['global mean q mag'])
 
 
 #%%
-###J band stuff
-####HEY KATIE????
-#mask anything sneaking in from outbursts?? or lower stuff?
-if magstring=='Jmag_corr':
-    table=table.loc[(table[magstring]>15.6) & (table[magstring]<19)]
-elif magstring=='Jmag Divided Version':
-    table=table.loc[(table[magstring]>17.3) & (table[magstring]<18.7)]
-elif magstring=='Rmag_corr':
-    table=table.loc[(table[magstring]>19.5) & (table[magstring]<21)]
-elif magstring=='Rmag Divided Version':
-    table=table.loc[(table[magstring]>20) & (table[magstring]<20.5)]
-
-#periodogramming things
-baseline=table['nice time'].max()-table['nice time'].min()
-base_days=baseline.total_seconds() / 3600 /24
-print(base_days)
-
-#folded??
-P = 0.789498  # period in days
-times = Time(table['nice time']).mjd
-t0 = times.min()
-phase = ((times - t0) / P) % 1
-table['their phase']=phase
-
-##periodograms
-min_frequency = 24/19.5
-max_frequency = 24/18.5
-
-deltaf=P/base_days/4
-print('DELTA F:', deltaf)
-print(np.abs(min_frequency-max_frequency)/10000)
-
-frequency = np.arange(min_frequency, max_frequency, deltaf)
-
-fall, pall = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).autopower(maximum_frequency=2)
-power = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).power(frequency)
-
-# Convert frequency to period in hours
-period_hours = 24 / frequency
-sorted_idx = np.argsort(period_hours)
-period_hours_sorted = period_hours[sorted_idx]
-power_sorted = power[sorted_idx]
-
-# Plot periodogram in period units
-plt.figure(figsize=(8,4))
-plt.plot(period_hours_sorted, power_sorted)
-plt.xlabel('Period (hours)')
-plt.ylabel('Power')
-plt.title('Lomb-Scargle Periodogram')
-plt.axvline(x=P*24,alpha=0.5, color='red')
-plt.show(block=False)
-
-fig, ax = plt.subplots(figsize=(8,4))
-ax.plot(frequency, power)
-plt.show(block=False)
-
-# samme thing for fall pall
-pall_hours = 24 / fall
-sorted_idxall = np.argsort(pall_hours)
-period_hours_sortedall = pall_hours[sorted_idxall]
-power_sortedall = pall[sorted_idxall]
-
-# Plot periodogram in period units
-plt.figure(figsize=(8,4))
-plt.plot(period_hours_sortedall, power_sortedall)
-plt.xlabel('Period (hours)')
-plt.ylabel('Power')
-plt.title('Lomb-Scargle Periodogram (all freq, capped)')
-plt.axvline(x=P*24,alpha=0.5, color='red')
-plt.xlim(12, 45)
-plt.show(block=False)
-
-fig, ax = plt.subplots()
-ax.plot(fall, pall)
-plt.show(block=False)
-
-best_frequency = frequency[np.argmax(power)]
-P2 = 1 / best_frequency
-best_period_hours = P2 * 24
-print(best_period_hours)
-
-phase2 = ((times - t0) / P2) % 1
-table['our phase']=phase2
-
-# Number of bins
-nbins = 16
-bins = np.linspace(0, 1, nbins + 1)
-bin_centers = 0.5 * (bins[:-1] + bins[1:])
-
-# Assign each phase to a bin
-table['our phase bin'] = pd.cut(table['our phase'], bins=bins, include_lowest=True, labels=bin_centers)
-table['their phase bin'] = pd.cut(table['their phase'], bins=bins, include_lowest=True, labels=bin_centers)
-
-# Compute mean and std per bin
-binned = table.groupby('our phase bin')[magstring].agg(['mean','std']).reset_index()
-binned_them = table.groupby('their phase bin')[magstring].agg(['mean','std']).reset_index()
-
-yerr_up_us = []
-yerr_down_us = []
-
-for center in binned['our phase bin']:
-    # Get all points in this phase bin
-    points = table.loc[table['our phase bin'] == center, magstring].values
-    if len(points) == 0:
-        yerr_up_us.append(0)
-        yerr_down_us.append(0)
+for key in data:
+    if key!='J SMARTS':
         continue
+    table=data[key]['quiescence']
+    maglabel=key
+    magstring='mag_corr'
+    upper=15.6
+    lower=19
+    table=table.loc[(table[magstring]>upper) & (table[magstring]<lower)]
     
-    mean_bin = np.mean(points)
     
-    # Points above/below mean
-    above = points[points > mean_bin]
-    below = points[points < mean_bin]
+    #periodogramming things
+    baseline=table['nice time'].max()-table['nice time'].min()
+    base_days=baseline.total_seconds() / 3600 /24
+    print(base_days)
     
-    # 68% confidence ~ 1 sigma
-    sigma_up = np.percentile(above, 68.3) - mean_bin if len(above) > 0 else 0
-    sigma_down = mean_bin - np.percentile(below, 31.7) if len(below) > 0 else 0
+    #folded??
+    P = 0.789498  # period in days
+    times = Time(table['nice time']).mjd
+    t0 = times.min()
+    phase = ((times - t0) / P) % 1
+    table['their phase']=phase
     
-    yerr_up_us.append(sigma_up)
-    yerr_down_us.append(sigma_down)
-
-# Make 2×N array for asymmetric error bars
-yerr_asym_us = np.array([yerr_down_us, yerr_up_us])
-
-yerr_up_them = []
-yerr_down_them = []
-
-for center in binned['our phase bin']:
-    # Get all points in this phase bin
-    points = table.loc[table['our phase bin'] == center, magstring].values
-    if len(points) == 0:
-        yerr_up_them.append(0)
-        yerr_down_them.append(0)
-        continue
+    ##periodograms
+    min_frequency = 24/19.5
+    max_frequency = 24/18.5
     
-    mean_bin = np.mean(points)
+    deltaf=P/base_days/4
+    print('DELTA F:', deltaf)
+    print(np.abs(min_frequency-max_frequency)/10000)
     
-    # Points above/below mean
-    above = points[points > mean_bin]
-    below = points[points < mean_bin]
+    frequency = np.arange(min_frequency, max_frequency, deltaf)
     
-    # 68% confidence ~ 1 sigma
-    sigma_up = np.percentile(above, 68.3) - mean_bin if len(above) > 0 else 0
-    sigma_down = mean_bin - np.percentile(below, 31.7) if len(below) > 0 else 0
+    fall, pall = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).autopower(maximum_frequency=2)
+    power = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).power(frequency)
     
-    yerr_up_them.append(sigma_up)
-    yerr_down_them.append(sigma_down)
-
-# Make 2×N array for asymmetric error bars
-yerr_asym_them = np.array([yerr_down_them, yerr_up_them])
-
-# Plot with asymmetric error bars
-plt.figure(figsize=(8,4))
-plt.scatter(phase2, table[magstring], s=15, color='gray', label='Data')
-plt.scatter(phase2 + 1, table[magstring], s=15, color='gray', alpha=0.5)
-plt.errorbar(binned['our phase bin'].astype(float), binned['mean'], yerr=yerr_asym_us,
-             fmt='o', color='red', label='Binned Avg')
-plt.errorbar(binned['our phase bin'].astype(float)+1, binned['mean'], yerr=yerr_asym_us,
-             fmt='o', color='red', alpha=0.5)
-plt.xlabel('Orbital Phase')
-plt.ylabel(maglabel)
-plt.gca().invert_yaxis()
-plt.title(f'{magstring} Our Period: {best_period_hours} hrs')
-plt.legend()
-plt.tight_layout()
-
-plt.show(block=False)
-
-
-# Plot
-plt.figure(figsize=(8,4))
-plt.scatter(phase, table[magstring], s=15, color='gray', label='Data')
-plt.scatter(phase + 1, table[magstring], s=15, color='gray', alpha=0.5)
-
-plt.errorbar(binned_them['their phase bin'].astype(float), binned_them['mean'], yerr=yerr_asym_them,
-             fmt='o', color='red', label='Binned Avg')
-plt.errorbar(binned_them['their phase bin'].astype(float)+1, binned_them['mean'], yerr=yerr_asym_them,
-             fmt='o', color='red', alpha=0.5)
-
-plt.xlabel('Orbital Phase')
-plt.ylabel(maglabel)
-plt.gca().invert_yaxis()
-plt.legend()
-plt.title(f'{magstring} Their Period: {P*24} hrs')
-plt.tight_layout()
-plt.show()
+    # Convert frequency to period in hours
+    period_hours = 24 / frequency
+    sorted_idx = np.argsort(period_hours)
+    period_hours_sorted = period_hours[sorted_idx]
+    power_sorted = power[sorted_idx]
+    
+    # Plot periodogram in period units
+    plt.figure(figsize=(8,4))
+    plt.plot(period_hours_sorted, power_sorted)
+    plt.xlabel('Period (hours)')
+    plt.ylabel('Power')
+    plt.title('Lomb-Scargle Periodogram')
+    plt.axvline(x=P*24,alpha=0.5, color='red')
+    plt.show(block=False)
+    
+    fig, ax = plt.subplots(figsize=(8,4))
+    ax.plot(frequency, power)
+    plt.show(block=False)
+    
+    # samme thing for fall pall
+    pall_hours = 24 / fall
+    sorted_idxall = np.argsort(pall_hours)
+    period_hours_sortedall = pall_hours[sorted_idxall]
+    power_sortedall = pall[sorted_idxall]
+    
+    # Plot periodogram in period units
+    plt.figure(figsize=(8,4))
+    plt.plot(period_hours_sortedall, power_sortedall)
+    plt.xlabel('Period (hours)')
+    plt.ylabel('Power')
+    plt.title('Lomb-Scargle Periodogram (all freq, capped)')
+    plt.axvline(x=P*24,alpha=0.5, color='red')
+    plt.xlim(12, 45)
+    plt.show(block=False)
+    
+    fig, ax = plt.subplots()
+    ax.plot(fall, pall)
+    plt.show(block=False)
+    
+    best_frequency = frequency[np.argmax(power)]
+    P2 = 1 / best_frequency
+    best_period_hours = P2 * 24
+    print(best_period_hours)
+    
+    phase2 = ((times - t0) / P2) % 1
+    table['our phase']=phase2
+    
+    # Number of bins
+    nbins = 16
+    bins = np.linspace(0, 1, nbins + 1)
+    bin_centers = 0.5 * (bins[:-1] + bins[1:])
+    
+    # Assign each phase to a bin
+    table['our phase bin'] = pd.cut(table['our phase'], bins=bins, include_lowest=True, labels=bin_centers)
+    table['their phase bin'] = pd.cut(table['their phase'], bins=bins, include_lowest=True, labels=bin_centers)
+    
+    # Compute mean and std per bin
+    binned = table.groupby('our phase bin')[magstring].agg(['mean','std']).reset_index()
+    binned_them = table.groupby('their phase bin')[magstring].agg(['mean','std']).reset_index()
+    
+    yerr_up_us = []
+    yerr_down_us = []
+    
+    for center in binned['our phase bin']:
+        # Get all points in this phase bin
+        points = table.loc[table['our phase bin'] == center, magstring].values
+        if len(points) == 0:
+            yerr_up_us.append(0)
+            yerr_down_us.append(0)
+            continue
+        
+        mean_bin = np.mean(points)
+        
+        # Points above/below mean
+        above = points[points > mean_bin]
+        below = points[points < mean_bin]
+        
+        # 68% confidence ~ 1 sigma
+        sigma_up = np.percentile(above, 68.3) - mean_bin if len(above) > 0 else 0
+        sigma_down = mean_bin - np.percentile(below, 31.7) if len(below) > 0 else 0
+        
+        yerr_up_us.append(sigma_up)
+        yerr_down_us.append(sigma_down)
+    
+    # Make 2×N array for asymmetric error bars
+    yerr_asym_us = np.array([yerr_down_us, yerr_up_us])
+    
+    yerr_up_them = []
+    yerr_down_them = []
+    
+    for center in binned['our phase bin']:
+        # Get all points in this phase bin
+        points = table.loc[table['our phase bin'] == center, magstring].values
+        if len(points) == 0:
+            yerr_up_them.append(0)
+            yerr_down_them.append(0)
+            continue
+        
+        mean_bin = np.mean(points)
+        
+        # Points above/below mean
+        above = points[points > mean_bin]
+        below = points[points < mean_bin]
+        
+        # 68% confidence ~ 1 sigma
+        sigma_up = np.percentile(above, 68.3) - mean_bin if len(above) > 0 else 0
+        sigma_down = mean_bin - np.percentile(below, 31.7) if len(below) > 0 else 0
+        
+        yerr_up_them.append(sigma_up)
+        yerr_down_them.append(sigma_down)
+    
+    # Make 2×N array for asymmetric error bars
+    yerr_asym_them = np.array([yerr_down_them, yerr_up_them])
+    
+    # Plot with asymmetric error bars
+    plt.figure(figsize=(8,4))
+    plt.scatter(phase2, table[magstring], s=15, color='gray', label='Data')
+    plt.scatter(phase2 + 1, table[magstring], s=15, color='gray', alpha=0.5)
+    plt.errorbar(binned['our phase bin'].astype(float), binned['mean'], yerr=yerr_asym_us,
+                 fmt='o', color='red', label='Binned Avg')
+    plt.errorbar(binned['our phase bin'].astype(float)+1, binned['mean'], yerr=yerr_asym_us,
+                 fmt='o', color='red', alpha=0.5)
+    plt.xlabel('Orbital Phase')
+    plt.ylabel(maglabel)
+    plt.gca().invert_yaxis()
+    plt.title(f'{magstring} Our Period: {best_period_hours} hrs')
+    plt.legend()
+    plt.tight_layout()
+    
+    plt.show(block=False)
+    
+    
+    # Plot
+    plt.figure(figsize=(8,4))
+    plt.scatter(phase, table[magstring], s=15, color='gray', label='Data')
+    plt.scatter(phase + 1, table[magstring], s=15, color='gray', alpha=0.5)
+    
+    plt.errorbar(binned_them['their phase bin'].astype(float), binned_them['mean'], yerr=yerr_asym_them,
+                 fmt='o', color='red', label='Binned Avg')
+    plt.errorbar(binned_them['their phase bin'].astype(float)+1, binned_them['mean'], yerr=yerr_asym_them,
+                 fmt='o', color='red', alpha=0.5)
+    
+    plt.xlabel('Orbital Phase')
+    plt.ylabel(maglabel)
+    plt.gca().invert_yaxis()
+    plt.legend()
+    plt.title(f'{magstring} Their Period: {P*24} hrs')
+    plt.tight_layout()
+    plt.show()
 
 #%%
 #crappy 2-sin cruve fit
