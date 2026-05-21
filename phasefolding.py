@@ -23,10 +23,6 @@ from astropy.timeseries import LombScargle
 
 data = {}
 
-data['B SMARTS'] = {
-    'df': pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_B_corrected_lc_4_27.csv')
-}
-
 data['V SMARTS'] = {
     'df': pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_V_corrected_lc_4_27.csv')
 }
@@ -123,6 +119,7 @@ for key in data:
 
 #%%
 for key in data:
+    print('running ', key)
     #if key!='J SMARTS':
     #    continue
     table=data[key]['quiescence']
@@ -316,7 +313,7 @@ for key in data:
 
     #crappy 2-sin cruve fit
     
-    
+    '''
     # Our binned data
     xdata = binned['our phase bin'].astype(float).values
     ydata = binned['mean'].values
@@ -387,4 +384,4 @@ for key in data:
     
     plt.show()
 
-
+    '''
