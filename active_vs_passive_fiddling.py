@@ -243,7 +243,7 @@ def get_pvalue(key,a=0.05, n_iter=10000):
             plt.figure(figsize=(8,4))
             plt.hist(fake_medians, bins=50)
             plt.title(f'{key}, epoch {epoch}')
-            plt.savefig('/home/kmc249/Downloads/simulated_histograms/f{key}_{epoch}.png')
+            plt.savefig(f'/home/kmc249/Downloads/simulated_histograms/f{key}_{epoch}.png')
             plt.show()
         except:
             continue
@@ -410,6 +410,7 @@ def ks_test(key,a=0.05, n_iter=10000):
     plt.xlabel("x (percentile threshold)")
     plt.ylabel("Fraction of percentiles ≤ x")
     plt.legend()
+    plt.savefig(f'/home/kmc249/Downloads/cdf_{key}.png')
     plt.show()
 
 #%%

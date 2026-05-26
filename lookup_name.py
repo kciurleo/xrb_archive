@@ -1334,6 +1334,10 @@ xrb_list = ['A0620-00', 'AqlX-1', 'CenX-3', 'CenX-4', 'CirX-1', 'GROJ1655-40', '
             'IGR17597-2201', 'J004308.6+411247', 'J1626.6', 'J165408-395636', 'J174716.1-281048', 'MMVel',
             'V1408Aql', 'X0614+091']        
 
+#v not including aql x-1
+SWIFT_list=['GROJ1655-40', 'GX339-4', 'J1753', 'J1820', 'GRS1716−249', 'IGRJ17091-3624', 'J1357', 
+            'GS1354-645', 'J1535-571', 'J1659-152', 'J1752-223', 'LMCX-3', 'V4641', 'J1858.6-0814', 'J1808.4-3658']
+
 def get_proper_name(alias: str) -> str:
     '''
     Given a str of a given nickname, return str of its proper name

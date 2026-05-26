@@ -367,9 +367,11 @@ for tbname, info in tables.items():
             x = np.nanstd(residuals)
             #x = np.std(mag_safe)#/np.sqrt(len(mag_safe))
             y = np.nanmean(-2.5 * np.log10(flux_safe))+info['intercept']
-            x_vals.append(x)
+            #x_vals.append(x)
             y_vals.append(y)
             cols_used.append(col)
+            if col=='aql':
+                x_vals.append(x)
             if col!='aql':
 
                 # mask of replaced points
@@ -454,8 +456,27 @@ for tbname, info in tables.items():
                 ax2.set_ylim(ax1.get_ylim())
             
                 plt.tight_layout()
-                plt.savefig(f'/home/kmc249/Downloads/ens_star_diff_mags/{col}.png', dpi=200)
+                #plt.savefig(f'/home/kmc249/Downloads/ens_star_diff_mags/{col}.png', dpi=200)
                 plt.show()
+                
+                # finite residuals only
+                r = residuals[np.isfinite(residuals)]
+                
+                # mean and sigma
+                mu = np.nanmean(r)
+                sigma = np.nanstd(r)
+                
+                # fraction within 1 sigma of the mean
+                frac_within_1sigma = np.mean(np.abs(r - mu) < sigma)
+                
+                # S such that 68% are within mean +/- S
+                S68 = np.nanpercentile(np.abs(r - mu), 68)
+                
+                print(f'{col}')
+                print(f'  sigma = {sigma:.4f}')
+                print(f'  fraction within 1 sigma = {frac_within_1sigma:.3f}')
+                print(f'  S68 = {S68:.4f}')
+                x_vals.append(S68)
 
     x_vals = np.array(x_vals)
     y_vals = np.array(y_vals)
@@ -486,18 +507,20 @@ for tbname, info in tables.items():
     plt.figure(figsize=(8,6))
 
     for x, y, label in zip(x_vals, y_vals, cols_used):
-        plt.scatter(y, x, color='black', s=20)
         
         if label == 'aql':
-            plt.scatter(y, x, color='red', s=40, zorder=3)
-            plt.annotate('Aql', (y, x), xytext=(5,5),
-                         textcoords='offset points', color='red', fontsize=10)
+            #plt.scatter(y, x, color='red', s=40, zorder=3)
+            #plt.annotate('Aql', (y, x), xytext=(5,5),
+            #             textcoords='offset points', color='red', fontsize=10)
+            print('cool')
         else:
+            plt.scatter(y, x, color='black', s=20)
             plt.annotate(label, (y, x), xytext=(3,3),
                          textcoords='offset points', fontsize=7, alpha=0.6)
     
     plt.xlabel('Mean PanSTARRS mag')
-    plt.ylabel('Std of residuals (ave ens mag - mag)')
+    #plt.ylabel('Std of residuals (ave ens mag - mag)')
+    plt.ylabel('S68 of residuals (ave ens mag - mag)')
     plt.gca().invert_xaxis()  # brighter stars on left (astronomy convention)
     plt.title(f'{tbname}: Scatter vs Magnitude')
     plt.tight_layout()

@@ -19,7 +19,7 @@ from photutils.aperture import CircularAperture
 
 #for each target, 
 dumb_run=True #if you specifically want to run this on the dumb stacked objects
-for target in xrb_list:
+for target in ['J1808.4-3658']:#xrb_list:
     print(target)
     try:
         txtfile = glob.glob(f'/neta/xrb/{target}/temp/{target}*.txt')[0]

@@ -13,6 +13,8 @@ from astropy.io import fits
 from astropy.visualization import ZScaleInterval, ImageNormalize, SinhStretch, simple_norm
 import astroalign as aa
 from pathlib import Path
+from smith_utils import *
+from lookup_name import *
 
 #to align and trim images
 def register_with_flips(src, ref, **kwargs):
@@ -44,8 +46,10 @@ def register_with_flips(src, ref, **kwargs):
 overwrite=False
 
 #loop
-for target in ['GX339-4']:#xrb_list:
+for target in SWIFT_list:#['GX339-4']:#xrb_list:
     print(target)
+    if target in ['AqlX-1', 'V4641']:
+        continue
     try:
         txtfile = glob.glob(f'/neta/xrb/{target}/temp/{target}*.txt')[0]
         data = {}
@@ -73,7 +77,7 @@ for target in ['GX339-4']:#xrb_list:
     size = 512
     hs = size // 2 
     cutout = IM[int(y_pixel)-hs:int(y_pixel)+hs, int(x_pixel)-hs:int(x_pixel)+hs]
-    
+    '''
     interval = ZScaleInterval()
     vmin, vmax = interval.get_limits(IM)
     norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
@@ -89,11 +93,15 @@ for target in ['GX339-4']:#xrb_list:
     plt.figure(figsize=(10,10))
     plt.imshow(cutout, cmap='gray', origin='lower', norm=norm)
     plt.scatter(256, 256, marker='x')
+    plt.title(target)
     plt.show()
-    
+    '''
     #Pull all the files
     basedir = Path(f'/neta/xrb/{target}')
-    filelist = list(basedir.glob('*/opt/rccd/*/*'))
+    filelist = [
+        f for f in basedir.glob('*/opt/rccd/*/*')
+        if '_trimmed' not in str(f)
+    ]
     
     #Make a df to keep track
     fwhms = pd.DataFrame(columns=[
@@ -146,31 +154,62 @@ for target in ['GX339-4']:#xrb_list:
         #align and trim, save trimmed images
         img = np.asarray(IM, dtype='<f8')
         inp_img = np.asarray(fits.getdata(file), dtype='<f8')
-
-        #manually flipping it
-        try:
-            img_aligned, footprint = register_with_flips(inp_img, img, detection_sigma=2.0, max_control_points=75)
-        except:
-            print('bad alignment :(')
-            fwhms.at[id, 'bad']=True
-            continue
-
-        # now, apply the saved transform to master
-        trimimg=img_aligned[int(y_pixel)-hs:int(y_pixel)+hs, int(x_pixel)-hs:int(x_pixel)+hs]
         '''
         interval = ZScaleInterval()
         vmin, vmax = interval.get_limits(inp_img)
         norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
-        interval1 = ZScaleInterval()
-        vmin2, vmax2 = interval1.get_limits(img)
-        norm2 = ImageNormalize(vmin=vmin2, vmax=vmax2, stretch=SinhStretch())
+        plt.figure(figsize=(10,10))
+        plt.imshow(inp_img, cmap='gray', origin='lower', norm=norm)
+        plt.show()
+        '''
+        #manually flipping it
+        try:
+            print('skipping original try because smith way worked better')
+            print(askjdhasj)
+            img_aligned, footprint = register_with_flips(inp_img, img, detection_sigma=5.0, max_control_points=75)
+            # now, apply the saved transform to master
+            trimimg=img_aligned[int(y_pixel)-hs:int(y_pixel)+hs, int(x_pixel)-hs:int(x_pixel)+hs]
+            master=img
+        except:
+            print('bad alignment :(')
+            print('trying smith way first')
+            try:
+                #try shifting it first and see what happens
+                xshift, yshift = cross_image(img, inp_img, int(np.shape(IM)[0]/2), int(np.shape(IM)[1]/2), boxsize=400)
+                newimg=shift_image(inp_img,xshift, yshift)
+                #set some buffer around just in case
+                buff=40
+                second_inp=newimg[int(y_pixel)-hs-buff:int(y_pixel)+hs+buff, int(x_pixel)-hs-buff:int(x_pixel)+hs+buff]
+                '''
+                plt.figure(figsize=(10,10))
+                plt.imshow(second_inp, cmap='gray', origin='lower', norm=norm)
+                plt.show()
+                '''
+                img_aligned, footprint = register_with_flips(second_inp, np.asarray(cutout, dtype='<f8'), detection_sigma=2.0, max_control_points=75)
+                trimimg=img_aligned
+                master=cutout
+                print('smith way worked!')
+            except:
+                print('no hope.')
+                fwhms.at[id, 'bad']=True
+                continue
+            
 
+        
+        
+        interval = ZScaleInterval()
+        vmin, vmax = interval.get_limits(inp_img)
+        norm = ImageNormalize(vmin=vmin, vmax=vmax, stretch=SinhStretch())
+        interval1 = ZScaleInterval()
+        vmin2, vmax2 = interval1.get_limits(master)
+        norm2 = ImageNormalize(vmin=vmin2, vmax=vmax2, stretch=SinhStretch())
+        '''
         fig, axes = plt.subplots(2, 2, figsize=(10, 10))
         axes[0, 0].imshow(inp_img, cmap='gray', interpolation='none', origin='lower', norm=norm)
         axes[0, 0].axis('off')
         axes[0, 0].set_title("Source Image")
         
-        axes[0, 1].imshow(img, cmap='gray', interpolation='none', origin='lower', norm=norm2)
+        axes[0, 1].imshow(master, cmap='gray', interpolation='none', origin='lower', norm=norm2)
         axes[0, 1].axis('off')
         axes[0, 1].set_title("Master Image")
 
