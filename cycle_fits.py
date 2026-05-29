@@ -279,8 +279,8 @@ print(len(bad_df))
 final_df=df[~df['filename'].isin(bad_df['filename'])]
 print(len(final_df))
 df=final_df
-df=df.loc[df['Rmag_corr']<=21]
-df.to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_R_corrected_lc.csv')
+df=df.loc[df['Rmag_corr']<=24]
+#df.to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_R_corrected_lc.csv')
 #bad_df.to_csv('/neta/xrb/AqlX-1/temp/AqlX-1_R_badimgs.csv')
 
 fig, axes = plt.subplots(
@@ -323,11 +323,11 @@ for i, chunk in enumerate(time_chunks):
                     fmt='.', color='black', markersize=3, label='Corrected')
     '''
     ax_main.errorbar(df.loc[mask1, 'nice time'],
-                    df.loc[mask1,  'Rmag_corr'], yerr=df.loc[mask1,  'e_Rmag'],
+                    df.loc[mask1,  'Rmag_corr'], yerr=df.loc[mask1,  'e_Rmag_corr'],
                     fmt='.', color='black', markersize=3, label='Corrected Rmag')
     ax_main.errorbar(df.loc[mask3, 'nice time'],
                      df.loc[mask3, 'Rmag_corr'],
-                     yerr=df.loc[mask3, 'e_Rmag'],
+                     yerr=df.loc[mask3, 'e_Rmag_corr'],
                      fmt='.', color='cyan', markersize=4, label='Outliers')
     
     ax_main.set_xlim(tmin, tmax)

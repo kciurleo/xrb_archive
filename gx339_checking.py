@@ -8,8 +8,10 @@ Created on Tue May 26 08:37:53 2026
 
 from pathlib import Path
 
+
+target='J1753'
 # Base directory
-base = Path("/neta/xrb/GX339-4/1.3m/opt/rccd")
+base = Path(f"/neta/xrb/{target}/1.3m/opt/rccd")
 
 bands = ["B", "V", "R", "I"]
 

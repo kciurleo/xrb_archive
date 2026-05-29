@@ -17,7 +17,7 @@ from astropy.time import Time
 full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
-band='I'
+band='B'
 #R BAND
 file1 = f'/home/kmc249/Downloads/full_aphot_{band}_lc_04_20.csv'
 
@@ -205,12 +205,12 @@ axes[0].legend(loc='upper right')
 plt.tight_layout()
 #plt.savefig('/home/kmc249/Downloads/J_corrected.png', dpi=300)
 plt.show()
-'''
+
 if band=='I' or band=='B':
     J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
 if band=='V':
     J_corrected[['nice time', 'MJD', 'Rmag_corr', 'e_Rmag_corr', 'Rmag', 'e_Rmag', 'filename']].to_csv(f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/unshifted/AqlX-1_{band}_corrected_lc_4_27.csv', index=False)
-'''
+
 #%%
 
 fig, axes = plt.subplots(

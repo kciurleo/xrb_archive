@@ -124,6 +124,7 @@ corrected = {}
 
 corrected['R']=pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_R_corrected_lc.csv')
 corrected['I']=pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_I_corrected_lc_4_27.csv')
+corrected['B']=pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_B_corrected_lc_4_27.csv')
 #final_B=pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_B_corrected_lc_4_27.csv')
 corrected['V']=pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/unshifted/AqlX-1_V_corrected_lc_4_27.csv')
 
@@ -1091,7 +1092,7 @@ for id, table in enumerate(lco_corrected_tables):
 V_new.to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_V_corrected_lc_4_27.csv', index=False)
 #%%
 #save files
-'''
+
 ###KATIE YOU NEED TO SAVE THE V BAND
 
 for id, savetable in enumerate(lco_corrected_tables):
@@ -1115,4 +1116,3 @@ for id, savetable in enumerate(lco_corrected_tables):
                 index=False,
                 header=False,
             )
-'''

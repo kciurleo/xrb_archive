@@ -1,0 +1,15 @@
+Keeping Track Of Optical Pipeline
+
+Step 0 (all the making_findercharts.pys): Sort all the files into folders based on filter. Find the filter with the largest number of files, pick a random decent file, use DAOStarFinder, and identify the pixel location of the object (stack if need be to identify the object).
+Step 1 (trimming_images.py): Make a 512x512 cutout centered around the object's pixel location. This is roughly half the detector area, and depending on where the object is, will almost always be visible in all images. Align all images to this cutout and trim the edges. Aligning is done with a 6 parameter affine transformation (from astroalign); we sometimes have to do a basic x-y shift and trim first (from smith_utils).
+*Step 1.5 (TBD): There are several images which fail step 1. Investigate to see if they suck or need to be aligned by hand some other way.
+Step 2 (trimming_wcs_images.py): Plate solve a trimmed image using astrometry.net. We often need to specify pixel scale and central RA/dec to get this to solve properly.
+Step 3 (get_fits_wcs_limits.py & the query on CASJobs): Query the ATLAS-REFCAT2 catalog (https://archive.stsci.edu/hlsp/atlas-refcat2) for nearby reference stars.
+Step 4 (ref_star_pixels.py): Turn the RA/DEC location of reference stars into pixel locations, and save these values (plus a pixel location for our target) as a csv. Get rid of anything that's within 10 pixels of the edges, and make sure that our star is listed as a target and not a reference star. Resave the reference star file. This step requires some manual intervention to check the target is identified okay.
+
+
+Step 5: basic ap phot to get a l.c. (first_pass_photometry.py and first_pass_lc.py)
+Step 6: identify which ensemble stars to actually use in the ensemble differential photometry
+Step 7: redo basic ap phot to get a l.c.
+Step 8: inspect any outliers/inspect files by hand for poor seeing.
+

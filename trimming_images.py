@@ -46,10 +46,8 @@ def register_with_flips(src, ref, **kwargs):
 overwrite=False
 
 #loop
-for target in SWIFT_list:#['GX339-4']:#xrb_list:
+for target in ['GROJ1655-40']:#SWIFT_list:#['GX339-4']:#xrb_list:
     print(target)
-    if target in ['AqlX-1', 'V4641']:
-        continue
     try:
         txtfile = glob.glob(f'/neta/xrb/{target}/temp/{target}*.txt')[0]
         data = {}
@@ -164,8 +162,6 @@ for target in SWIFT_list:#['GX339-4']:#xrb_list:
         '''
         #manually flipping it
         try:
-            print('skipping original try because smith way worked better')
-            print(askjdhasj)
             img_aligned, footprint = register_with_flips(inp_img, img, detection_sigma=5.0, max_control_points=75)
             # now, apply the saved transform to master
             trimimg=img_aligned[int(y_pixel)-hs:int(y_pixel)+hs, int(x_pixel)-hs:int(x_pixel)+hs]

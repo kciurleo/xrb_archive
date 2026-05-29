@@ -35,9 +35,9 @@ import glob
 #fileh='/neta/xrb/A0620-00/1.3m/ir/raw/H/binir031029.0284.fits'
 #filehbackup='/neta/xrb/A0620-00/1.3m/ir/raw/H/binir051127.0248.fits'
 
+#'', 'rccd170528.0107.fits', 'rccd170528.0108.fits'
 
-
-for file in glob.glob('/neta/xrb/GX339-4/1.3m/opt/rccd/I_trimmed/*'):
+for file in ['/neta/xrb/J1535-571/1.3m/opt/rccd/I/rccd171010.0006.fits']:#glob.glob('/neta/xrb/GX339-4/1.3m/opt/rccd/I_trimmed/*'):
     print(f'now showing{file}')
     data=fits.getdata(file)
     hdr=fits.getheader(file)

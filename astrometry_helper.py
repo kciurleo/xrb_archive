@@ -15,6 +15,8 @@ from astrometry_net_client import FileUpload
 from astropy.io import fits
 from astropy.wcs import WCS
 import argparse
+from astrometry_net_client import Settings
+
 '''
 #e.g.:
 target='4U1543-47'
@@ -66,6 +68,60 @@ def make_wcs_fits(ref, output_path, apikey=API_KEY):
     #api stuff
     s = Session(api_key=API_KEY)
     upl = FileUpload(ref, session=s)
+    submission = upl.submit()
+    submission.until_done()
+    job = submission.jobs[0]
+    job.until_done()
+    if job.success():
+        wcs = job.wcs_file()
+    print(job.info())
+    
+    #write the file if successful
+    if job.info()['status']=='success':
+        hdul = fits.open(ref)
+        data = hdul[0].data
+        header = hdul[0].header
+        w = WCS(wcs)
+        header.update(w.to_header(relax=True))
+    
+        fits.writeto(output_path, data, header, overwrite=True)
+        
+        print("WCS-added FITS written to:", output_path)
+        
+def make_centered_wcs_fits(ref, output_path, cra, cdec, apikey=API_KEY):
+    '''
+    Parameters
+    ----------
+    ref : str
+        path to fits file to wcs
+    output_path : str
+        output path to write new fits file to
+    cra: RA in degrees
+    cdec: DEC in degrees
+    apikey : str, optional
+        api key needed for astrometry.net, defaulting to my own
+
+    Returns
+    -------
+    None - saves wcs fits file
+
+    '''
+    
+    #api stuff
+    s = Session(api_key=API_KEY)
+    upl = FileUpload(ref, session=s)
+    settings = Settings()
+    
+    settings["center_ra"] = cra
+    settings["center_dec"] = cdec
+    settings["radius"] = 2.0
+    
+    settings["scale_units"] = "arcsecperpix"
+    settings["scale_lower"] = 0.35
+    settings["scale_upper"] = 0.40
+    
+    upl.settings = settings
+    
     submission = upl.submit()
     submission.until_done()
     job = submission.jobs[0]

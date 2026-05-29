@@ -153,7 +153,7 @@ for tbname, info in tables.items():
         fig, axes = plt.subplots(figsize=(8, 8))
         for e in table.columns:
             
-            if  e not in ['nice time','time', 'filename', '413','1320','a','b','c','d','410']:
+            if  e not in ['nice time','time', 'filename', '413','1320','a','b','c','d','410', '820','271','641', '525']:
                 try:
                     row=standards.loc[standards['num int']==int(e)]
                 except:
@@ -217,7 +217,7 @@ for tbname, info in tables.items():
         info['intercept'] = intercept
         
         #make lc
-        exclude_cols = ['ave instr mag','zeropoint','nice time','time', 'filename', 'aql','neighbor','a','b','c','d','1418','1069','1105', '1320', 'aql mag','ave mag', '413', '410']
+        exclude_cols = ['ave instr mag','zeropoint','nice time','time', 'filename', 'aql','neighbor','a','b','c','d','1418','1069','1105', '1320', 'aql mag','ave mag', '413', '410', '820','271','641', '525']
         ensemble_cols = [
             c for c in table.columns
             if c not in exclude_cols and c.isdigit()
@@ -318,8 +318,7 @@ for tbname, info in tables.items():
 #getting errors
 errors_for_now=[]
 for tbname, info in tables.items():
-    #if tbname=='LCO':
-    if tbname!='R band':
+    if tbname=='LCO':
         continue
     table=info['df']
     #get rid of any inf values
@@ -338,9 +337,9 @@ for tbname, info in tables.items():
     x_vals = []
     y_vals = []
     cols_used = []
-
+    '''
     for col in table.columns:
-        if col not in ['ave instr mag','zeropoint','filename', 'time',  'neighbor', '413', '1320', 'nice time', 'aql mag', 'ave mag', 'error', '410']:
+        if col not in ['ave instr mag','zeropoint','filename', 'time',  'neighbor', '413', '1320', 'nice time', 'aql mag', 'ave mag', 'error', '410', '820','271','641', '525']:
             if col == 'aql':
                 # use quiescence mask to select only rows in quiescence
                 flux_safe = table.loc[mask, col].values.copy()
@@ -370,114 +369,195 @@ for tbname, info in tables.items():
             #x_vals.append(x)
             y_vals.append(y)
             cols_used.append(col)
-            if col=='aql':
-                x_vals.append(x)
-            if col!='aql':
 
-                # mask of replaced points
-                replaced_mask = ~valid
-            
-                # remove NaN residuals for plotting
-                finite = np.isfinite(residuals)
-            
-                times = table.loc[finite, 'nice time']
-                residuals_plot = residuals[finite]
-                replaced_plot = replaced_mask[finite]
-            
-                # make figure with side histogram
-                fig, (ax1, ax2) = plt.subplots(
-                    1, 2,
-                    figsize=(14,3),
-                    gridspec_kw={'width_ratios':[4,1]}
-                )
-            
-                # --------------------------
-                # LEFT PANEL: residuals vs time
-                # --------------------------
-            
-                # normal points
-                ax1.scatter(
-                    times[~replaced_plot],
-                    residuals_plot[~replaced_plot],
-                    color='k',
-                    s=15,
-                    label='Measured flux'
-                )
-            
-                # replaced points
-                ax1.scatter(
-                    times[replaced_plot],
-                    residuals_plot[replaced_plot],
-                    color='red',
-                    s=25,
-                    label='Replaced with mean flux'
-                )
-            
-                ax1.set_ylabel('Differential magnitude (ensemble - star)')
-                ax1.set_title(f'Star: {col}')
-                ax1.invert_yaxis()
-            
-                ax1.legend(loc='best', fontsize=8)
-            
-                # format dates
-                ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-            
-                # secondary MJD axis
-                ax_top = ax1.twiny()
-                ax_top.set_xlim(ax1.get_xlim())
-            
-                tick_locs = ax1.get_xticks()
-                tick_dates = mdates.num2date(tick_locs)
-                tick_mjds = Time(tick_dates).mjd
-            
-                ax_top.set_xticks(tick_locs)
-                ax_top.set_xticklabels([f'{mjd:.1f}' for mjd in tick_mjds])
-            
-                ax_top.xaxis.set_ticks_position('bottom')
-                ax1.xaxis.set_ticks_position('top')
-                ax_top.xaxis.set_label_position('bottom')
-            
-                # --------------------------
-                # RIGHT PANEL: histogram
-                # --------------------------
-            
-                ax2.hist(
-                    residuals[np.isfinite(residuals)],
-                    bins=30,
-                    orientation='horizontal',
-                    color='gray',
-                    alpha=0.7
-                )
-            
-                ax2.set_xlabel('N')
-                ax2.set_title(r'$\sigma =$' + f' {np.nanstd(residuals):.3f}')
-            
-                # match y-axis range
-                ax2.set_ylim(ax1.get_ylim())
-            
-                plt.tight_layout()
-                #plt.savefig(f'/home/kmc249/Downloads/ens_star_diff_mags/{col}.png', dpi=200)
-                plt.show()
-                
-                # finite residuals only
-                r = residuals[np.isfinite(residuals)]
-                
-                # mean and sigma
-                mu = np.nanmean(r)
-                sigma = np.nanstd(r)
-                
-                # fraction within 1 sigma of the mean
-                frac_within_1sigma = np.mean(np.abs(r - mu) < sigma)
-                
-                # S such that 68% are within mean +/- S
-                S68 = np.nanpercentile(np.abs(r - mu), 68)
-                
-                print(f'{col}')
-                print(f'  sigma = {sigma:.4f}')
-                print(f'  fraction within 1 sigma = {frac_within_1sigma:.3f}')
-                print(f'  S68 = {S68:.4f}')
-                x_vals.append(S68)
 
+            # mask of replaced points
+            replaced_mask = ~valid
+        
+            # remove NaN residuals for plotting
+            finite = np.isfinite(residuals)
+        
+            times = table.loc[finite, 'nice time']
+            residuals_plot = residuals[finite]
+            replaced_plot = replaced_mask[finite]
+        
+            # make figure with side histogram
+            fig, (ax1, ax2) = plt.subplots(
+                1, 2,
+                figsize=(14,3),
+                gridspec_kw={'width_ratios':[4,1]}
+            )
+        
+            # --------------------------
+            # LEFT PANEL: residuals vs time
+            # --------------------------
+        
+            # normal points
+            ax1.scatter(
+                times[~replaced_plot],
+                residuals_plot[~replaced_plot],
+                color='k',
+                s=15,
+                label='Measured flux'
+            )
+        
+            # replaced points
+            ax1.scatter(
+                times[replaced_plot],
+                residuals_plot[replaced_plot],
+                color='red',
+                s=25,
+                label='Replaced with mean flux'
+            )
+        
+            ax1.set_ylabel('Differential magnitude (ensemble - star)')
+            ax1.set_title(f'Star: {col}')
+            ax1.invert_yaxis()
+        
+            ax1.legend(loc='best', fontsize=8)
+        
+            # format dates
+            ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+        
+            # secondary MJD axis
+            ax_top = ax1.twiny()
+            ax_top.set_xlim(ax1.get_xlim())
+        
+            tick_locs = ax1.get_xticks()
+            tick_dates = mdates.num2date(tick_locs)
+            tick_mjds = Time(tick_dates).mjd
+        
+            ax_top.set_xticks(tick_locs)
+            ax_top.set_xticklabels([f'{mjd:.1f}' for mjd in tick_mjds])
+        
+            ax_top.xaxis.set_ticks_position('bottom')
+            ax1.xaxis.set_ticks_position('top')
+            ax_top.xaxis.set_label_position('bottom')
+        
+            # --------------------------
+            # RIGHT PANEL: histogram
+            # --------------------------
+        
+            ax2.hist(
+                residuals[np.isfinite(residuals)],
+                bins=30,
+                orientation='horizontal',
+                color='gray',
+                alpha=0.7
+            )
+        
+            ax2.set_xlabel('N')
+            ax2.set_title(r'$\sigma =$' + f' {np.nanstd(residuals):.3f}')
+        
+            # match y-axis range
+            ax2.set_ylim(ax1.get_ylim())
+        
+            plt.tight_layout()
+            #plt.savefig(f'/home/kmc249/Downloads/ens_star_diff_mags/{col}.png', dpi=200)
+            plt.show()
+            
+            # finite residuals only
+            r = residuals[np.isfinite(residuals)]
+            
+            # mean and sigma
+            mu = np.nanmean(r)
+            sigma = np.nanstd(r)
+            
+            # fraction within 1 sigma of the mean
+            frac_within_1sigma = np.mean(np.abs(r - mu) < sigma)
+            
+            # S such that 68% are within mean +/- S
+            S68 = np.nanpercentile(np.abs(r - mu), 68)
+            
+            print(f'{col}')
+            print(f'  sigma = {sigma:.4f}')
+            print(f'  fraction within 1 sigma = {frac_within_1sigma:.3f}')
+            print(f'  S68 = {S68:.4f}')
+            x_vals.append(S68)
+    '''
+    for col in table.columns:
+
+        if col not in ['ave instr mag','zeropoint','filename',
+                       'time','neighbor','413','1320',
+                       'nice time','aql mag','ave mag',
+                       'error','410', '820','271','641', '525']:
+    
+            # ----------------------------
+            # SELECT WHICH TABLE TO USE
+            # ----------------------------
+            if col == 'aql':
+                table_use = table.loc[mask].copy()
+            else:
+                table_use = table.copy()
+    
+            # ----------------------------
+            # GET FLUXES
+            # ----------------------------
+            flux = table_use[col].values.astype(float)
+    
+            valid = (flux > 0) & np.isfinite(flux)
+    
+            flux_safe = flux.copy()
+    
+            if col == 'aql':
+                # keep bad values as NaN
+                flux_safe[~valid] = np.nan
+            else:
+                # replace bad values with mean
+                mean_flux = np.nanmean(flux[valid])
+                flux_safe[~valid] = mean_flux
+    
+            # ----------------------------
+            # ANCILLARY ARRAYS
+            # ----------------------------
+            ave_mag = table_use['ave mag'].values
+            ave_instr_mag = table_use['ave instr mag'].values
+            zeropoints = table_use['zeropoint'].values
+            times_all = table_use['nice time'].values
+    
+            # ----------------------------
+            # COMPUTE RESIDUALS
+            # ----------------------------
+            mag_safe = (-2.5 * np.log10(flux_safe)) + zeropoints
+    
+            residuals = ave_instr_mag - (-2.5 * np.log10(flux_safe))
+    
+            x = np.nanstd(residuals)
+            y = np.nanmean(-2.5 * np.log10(flux_safe)) + info['intercept']
+    
+            y_vals.append(y)
+            cols_used.append(col)
+    
+            # ----------------------------
+            # PLOTTING MASKS
+            # ----------------------------
+            replaced_mask = ~valid
+    
+            finite = np.isfinite(residuals)
+    
+            times = times_all[finite]
+            residuals_plot = residuals[finite]
+            replaced_plot = replaced_mask[finite]
+            
+            # finite residuals only
+            r = residuals[np.isfinite(residuals)]
+            
+            # mean and sigma
+            mu = np.nanmean(r)
+            sigma = np.nanstd(r)
+            
+            # fraction within 1 sigma of the mean
+            frac_within_1sigma = np.mean(np.abs(r - mu) < sigma)
+            
+            # S such that 68% are within mean +/- S
+            S68 = np.nanpercentile(np.abs(r - mu), 68)
+            
+            print(f'{col}')
+            print(f'  sigma = {sigma:.4f}')
+            print(f'  fraction within 1 sigma = {frac_within_1sigma:.3f}')
+            print(f'  S68 = {S68:.4f}')
+            x_vals.append(S68)
+            
     x_vals = np.array(x_vals)
     y_vals = np.array(y_vals)
     cols_used = np.array(cols_used)
@@ -503,6 +583,33 @@ for tbname, info in tables.items():
     info['error aql ave mag']=constanterror
     errors_for_now.append(constanterror)
 
+    def poly4(x,  c, d, e):
+        return  c*x**2 + d*x + e #a*x**4 + b*x**3 + c*x**2 + d*x + e
+    
+    finite_fit = np.isfinite(y_vals) & np.isfinite(x_vals)
+
+    xfit = y_vals[finite_fit]
+    yfit = x_vals[finite_fit]
+    
+    # fit
+    popt, pcov = curve_fit(poly4, xfit, yfit)
+    
+    # fitted curve
+    xgrid = np.linspace(np.min(xfit), np.max(xfit), 5000)
+    ygrid = poly4(xgrid, *popt)
+    idx_min = np.argmin(ygrid)
+
+    mag_min = xgrid[idx_min]
+    err_min = ygrid[idx_min]
+    
+    print("Minimum at mag =", mag_min)
+    print("Minimum error =", err_min)
+    
+    yfloor = ygrid.copy()
+
+    bright = xgrid < mag_min
+    
+    yfloor[bright] = err_min
 
     plt.figure(figsize=(8,6))
 
@@ -517,6 +624,24 @@ for tbname, info in tables.items():
             plt.scatter(y, x, color='black', s=20)
             plt.annotate(label, (y, x), xytext=(3,3),
                          textcoords='offset points', fontsize=7, alpha=0.6)
+            
+       # raw quartic
+    plt.plot(xgrid, ygrid,
+             color='dodgerblue',
+             lw=2,
+             label='Quartic fit')
+    
+    # adopted floor model
+    plt.plot(xgrid, yfloor,
+             color='red',
+             lw=3,
+             label='Adopted error model')
+    
+    # minimum point
+    plt.scatter(mag_min, err_min,
+                color='red',
+                s=80,
+                zorder=5)
     
     plt.xlabel('Mean PanSTARRS mag')
     #plt.ylabel('Std of residuals (ave ens mag - mag)')
@@ -535,7 +660,7 @@ for tbname, info in tables.items():
     
     # prepare array for per-row errors
     row_errors = np.full(len(table), np.nan)
-    
+    '''
     for i, row in table.iterrows():
         aql_mag = row['aql mag']
         
@@ -558,6 +683,28 @@ for tbname, info in tables.items():
         row_errors[i] = np.nanmean(closest_stds)
     
     # assign back to table
+    table['error'] = row_errors
+    '''
+    def error_model(mag):
+
+        mag = np.asarray(mag)
+    
+        vals = poly4(mag, *popt)
+    
+        # brighter than minimum magnitude
+        bright = mag < mag_min
+    
+        # impose constant floor only there
+        vals[bright] = err_min
+    
+        return vals
+    
+    # evaluate model at each Aql magnitude
+    row_errors = error_model(table['aql mag'].values)
+    
+    # preserve NaNs where magnitude is NaN
+    row_errors[~np.isfinite(table['aql mag'].values)] = np.nan
+    
     table['error'] = row_errors
 
 #%%
