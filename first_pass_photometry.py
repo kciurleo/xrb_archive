@@ -29,7 +29,7 @@ import pandas as pd
 #aperture radius
 r_ap = 6.0
 fwhm=3.0
-target='J1752-223'
+target='J1631-478'
 
 outdir = f'/neta/xrb/{target}/product/first_pass_lightcurves'
 os.makedirs(outdir, exist_ok=True)
@@ -87,7 +87,7 @@ for tele in telescopes:
             data=fits.getdata(file)
             hdr=fits.getheader(file)
             #hold onto time
-            band_df.at[ind, 'time']=pd.to_datetime(f"{hdr['DATE-OBS']}T{hdr['TIME-OBS']}")
+            band_df.at[ind, 'time']=pd.to_datetime(f"{hdr['DATE-OBS']}T{hdr['TIME-OBS']}", errors='coerce')
             
             #background subtraction?
             #background subtract data

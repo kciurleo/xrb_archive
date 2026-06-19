@@ -16,27 +16,9 @@ import matplotlib.dates as mdates
 import datetime as dt
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
+import seaborn as sns
 
 #some functions
-def read_corrected_txt(path):
-    df = pd.read_csv(
-        path,
-        sep=r"\s+",
-        comment="#",
-        names=[
-            "MJD",
-            "mag_corr",
-            "mag_corr_err",
-            "flag",
-            "mag",
-            "mag_err",
-            "alt_mag_corr"
-        ]
-    )
-    
-    df["nice time"] = pd.to_datetime(Time(df["MJD"], format="mjd").to_datetime())
-    return df
-
 def get_quiescent(df, intervals):
     mask = np.ones(len(df), dtype=bool)
     
@@ -45,41 +27,79 @@ def get_quiescent(df, intervals):
     
     return df[mask].copy()
 
-#read in 1.3 and 1 m stuff
-Rtable = pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_R_corrected_lc.csv', low_memory=False) #change this girl
-Jtable=pd.read_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_J_corrected_lc.csv', low_memory=False)
+def read_corrected_txt(path):
+    df = pd.read_csv(
+        path,
+        sep=r"\s+",
+        comment="#",
+        names=[
+            "MJD",
+            "mag_shifted",
+            "mag_shifted_err",
+            "flag",
+            "mag",
+            "mag_err",
+            "error_flag"
+        ]
+    )
 
-#rename columns to be consistent
-Rtable = Rtable.rename(columns={
-    'Rmag_corr': 'mag_corr',
-    'e_Rmag_corr': 'mag_corr_err',
-    'Rmag': 'mag',
-    'e_Rmag': 'mag_err',
-    'Rmag Divided Version': 'alt_mag_corr'
-})
-Jtable = Jtable.rename(columns={
-    'Jmag_corr': 'mag_corr',
-    'e_Jmag_corr': 'mag_corr_err',
-    'Jmag': 'mag',
-    'e_Jmag': 'mag_err',
-    'Jmag Divided Version': 'alt_mag_corr'
-})
+    df["nice_time"] = pd.to_datetime(
+        Time(df["MJD"], format="mjd").to_datetime()
+    )
+
+    return df
+
+#outburst labels
+'''
+ob_labels=['FRED+LIS', 'ONLY_FRED', 'ONLY_LIS', 'ONLY_FRED','ONLY_FRED', 'LIS+FRED', 'ONLY_LIS','ONLY_LIS',
+           'ONLY_LIS','FRED+LIS','ONLY_LIS','ONLY_LIS','FRED+LIS', 'LIS+FRED','ONLY_FRED','FRED+LIS','FRED+LIS',
+           'ONLY_LIS','FRED+LIS', 'ONLY_LIS','FRED+LIS','ONLY_FRED','FRED+LIS','ONLY_FRED', 'ONLY_LIS', 
+           'ONLY_FRED','ONLY_FRED','ONLY_FRED','ONLY_FRED']
+'''
+ob_labels=['FRED+LIS', 'ONLY_FRED', 'ONLY_LIS', 'ONLY_FRED','ONLY_FRED', 'LIS+FRED', 'ONLY_LIS','ONLY_LIS',
+           'ONLY_LIS','FRED+LIS','ONLY_LIS','ONLY_LIS','FRED+LIS', 'LIS+FRED','ONLY_FRED','FRED+LIS','FRED+LIS',
+           'ONLY_LIS','FRED+LIS', 'ONLY_LIS','ONLY_FRED','FRED+LIS','ONLY_FRED', 'ONLY_LIS', 
+           'ONLY_FRED','ONLY_FRED','ONLY_FRED','ONLY_FRED']
+
+#labeling the quiescence intervals based on the following outburst:
+q_labels=ob_labels+['none']
+#based on the preceding outburst:
+q_following_labels=['none']+ob_labels
+
+#label map
+label_colors={'ONLY_FRED':'green',
+              'FRED+LIS':'blue', 
+              'LIS+FRED': 'orange',
+              'ONLY_LIS': 'red',
+              'none': 'black'}
+
+order = list(label_colors.keys())
+
+#read in 1.3 and 1 m stuff
+Rtable = read_corrected_txt(
+    "/neta/xrb/AqlX-1/product/full_bands_subtracted/R_SMARTS_corrected.txt"
+)
+Jtable=read_corrected_txt(
+    "/neta/xrb/AqlX-1/product/full_bands_subtracted/J_SMARTS_corrected.txt"
+)
 
 #LCO quiescent data
-R_LCO_banzai_corr = read_corrected_txt('/home/kmc249/Downloads/R_usable_banzai_corrected.txt')  
-R_LCO_orac_corr = read_corrected_txt('/home/kmc249/Downloads/R_usable_orac_corrected.txt')
-R_LCO_corr=pd.concat([R_LCO_banzai_corr, R_LCO_orac_corr], ignore_index=True)
-Rp_LCO_corr = read_corrected_txt('/home/kmc249/Downloads/rp_usable_banzai_corrected.txt') 
+R_LCO_corr=read_corrected_txt(
+    "/neta/xrb/AqlX-1/product/full_bands_subtracted/R_usable_full_corrected.txt"
+)
+Rp_LCO_corr = read_corrected_txt(
+    "/neta/xrb/AqlX-1/product/full_bands_subtracted/rp_usable_full_corrected.txt"
+)
 
 #ip band corr
-ip_LCO_banzai_corr = read_corrected_txt('/home/kmc249/Downloads/ip_usable_banzai_corrected.txt')  
-ip_LCO_orac_corr = read_corrected_txt('/home/kmc249/Downloads/ip_usable_orac_corrected.txt')
-ip_LCO_corr=pd.concat([ip_LCO_banzai_corr, ip_LCO_orac_corr], ignore_index=True)
+ip_LCO_corr=read_corrected_txt(
+    "/neta/xrb/AqlX-1/product/full_bands_subtracted/ip_usable_full_corrected.txt"
+)
 
 #v band corr
-v_LCO_banzai_corr = read_corrected_txt('/home/kmc249/Downloads/V_usable_banzai_corrected.txt')  
-v_LCO_orac_corr = read_corrected_txt('/home/kmc249/Downloads/V_usable_orac_corrected.txt')
-v_LCO_corr=pd.concat([v_LCO_banzai_corr, v_LCO_orac_corr], ignore_index=True)
+v_LCO_corr=read_corrected_txt(
+    "/neta/xrb/AqlX-1/product/full_bands_subtracted/V_usable_full_corrected.txt"
+)
 
 
 #only get stuff in quiescence
@@ -88,13 +108,10 @@ full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
 #Mask out quiescence
-count_mini=False
+mask_mini=False
 full_intervals=list(zip(full["Start MJD"], full["End MJD"])) + \
             list(zip(mini["Start MJD"], mini["End MJD"]))
-if count_mini:
-    intervals = full_intervals
-else:
-    intervals = list(zip(full["Start MJD"], full["End MJD"]))
+intervals = list(zip(full["Start MJD"], full["End MJD"]))
 
 #find quiescence values for all tables which have MJD already
 quiescent_tables={}
@@ -108,14 +125,26 @@ tables = {
     
 }
 
-for name, table in tables.items():
-    quiescent_tables[name] = get_quiescent(table, full_intervals)
+tables = {
+    name: table[table["mag_shifted"] >= 5].copy()
+    for name, table in tables.items()
+}
+if mask_mini:
+    for name, table in tables.items():
+        quiescent_tables[name] = get_quiescent(table, full_intervals)
+else:
+    for name, table in tables.items():
+        quiescent_tables[name] = get_quiescent(table, intervals)
 
 
 
 #%%
 
 #Fiddling with quiescence
+all_mjd = np.concatenate([t["MJD"].values for t in tables.values()])
+
+data_start = np.min(all_mjd)
+data_end   = np.max(all_mjd)
 
 # Sort intervals just in case
 intervals = sorted(intervals, key=lambda x: x[0])
@@ -123,12 +152,22 @@ intervals = sorted(intervals, key=lambda x: x[0])
 # Build quiescent intervals (gaps between outbursts)
 quiescent_intervals = []
 
+#before first outburst
+quiescent_intervals.append(
+    (data_start, intervals[0][0])
+)
+
 for i in range(len(intervals) - 1):
     end_current = intervals[i][1]
     start_next = intervals[i+1][0]
     
     if start_next > end_current:
         quiescent_intervals.append((end_current, start_next))
+        
+# after last outburst
+quiescent_intervals.append(
+    (intervals[-1][1], data_end)
+)
  
 #%%
 #Iterating and plotting
@@ -166,7 +205,7 @@ for key, oldtable in quiescent_tables.items():
         shifted_time = seg["MJD"] - t0
         
         all_x.append(shifted_time.values)
-        all_y.append(seg["alt_mag_corr"].values)
+        all_y.append(seg["mag_shifted"].values)
     
     all_x = np.concatenate(all_x)
     all_y = np.concatenate(all_y)
@@ -183,7 +222,7 @@ for key, oldtable in quiescent_tables.items():
         shifted_time = seg["MJD"] - t0
         color = cmap(norm(dur))
         
-        ax.scatter(shifted_time, seg["alt_mag_corr"], color=color, alpha=0.5)
+        ax.scatter(shifted_time, seg["mag_shifted"], color=color, alpha=0.5)
     
     # best-fit line
     x_fit = np.linspace(all_x.min(), all_x.max(), 500)
@@ -213,7 +252,7 @@ for key, oldtable in quiescent_tables.items():
         shifted_time = seg["MJD"] - t1   # <-- key change
         
         all_x.append(shifted_time.values)
-        all_y.append(seg["alt_mag_corr"].values)
+        all_y.append(seg["mag_shifted"].values)
     
     all_x = np.concatenate(all_x)
     all_y = np.concatenate(all_y)
@@ -228,7 +267,7 @@ for key, oldtable in quiescent_tables.items():
         shifted_time = seg["MJD"] - t1
         color = cmap(norm(dur))
         
-        ax.scatter(shifted_time, seg["alt_mag_corr"], color=color, alpha=0.5)
+        ax.scatter(shifted_time, seg["mag_shifted"], color=color, alpha=0.5)
     
     # best-fit line
     x_fit = np.linspace(all_x.min(), all_x.max(), 500)
@@ -268,7 +307,7 @@ for key, oldtable in quiescent_tables.items():
         scaled_time = (seg["MJD"] - t0) / (t1 - t0)
         
         all_x.append(scaled_time.values)
-        all_y.append(seg["alt_mag_corr"].values)
+        all_y.append(seg["mag_shifted"].values)
     
     all_x = np.concatenate(all_x)
     all_y = np.concatenate(all_y)
@@ -288,7 +327,7 @@ for key, oldtable in quiescent_tables.items():
         scaled_time = (seg["MJD"] - t0) / (t1 - t0)
         color = cmap(norm(dur))
         
-        ax.scatter(scaled_time, seg["alt_mag_corr"], color=color, alpha=0.5)
+        ax.scatter(scaled_time, seg["mag_shifted"], color=color, alpha=0.5)
     
     # best-fit line
     x_fit = np.linspace(0, 1, 500)
@@ -312,161 +351,7 @@ for key, oldtable in quiescent_tables.items():
 
 
 
-    #same thing but 'Jmag Divided Version'
     
-    ##Aligned by start
-    
-    all_x = []
-    all_y = []
-    
-    for seg in segments_J:
-        t0 = seg["MJD"].min()
-        shifted_time = seg["MJD"] - t0
-        
-        all_x.append(shifted_time.values)
-        all_y.append(seg['alt_mag_corr'].values)
-    
-    all_x = np.concatenate(all_x)
-    all_y = np.concatenate(all_y)
-    
-    
-    
-    slope, intercept, r_value, p_value, std_err = linregress(all_x, all_y)
-    
-    fig, ax = plt.subplots()
-    
-    # scatter (your existing loop)
-    for seg, dur in zip(segments_J, durations_J):
-        t0 = seg["MJD"].min()
-        shifted_time = seg["MJD"] - t0
-        color = cmap(norm(dur))
-        
-        ax.scatter(shifted_time, seg['alt_mag_corr'], color=color, alpha=0.5)
-    
-    # best-fit line
-    x_fit = np.linspace(all_x.min(), all_x.max(), 500)
-    y_fit = slope * x_fit + intercept
-    
-    ax.plot(x_fit, y_fit, color='black', linewidth=2, label=f'y={slope:.4f}x+{intercept:2f}')
-    ax.set_title("Quiescence aligned by start")
-    ax.set_xlabel("Time since quiescence start (days)")
-    ax.set_ylabel(f"{key} (divided only)")
-    ax.invert_yaxis()
-    ax.legend()
-    
-    # colorbar
-    sm = cm.ScalarMappable(norm=norm, cmap=cmap)
-    sm.set_array([])
-    fig.colorbar(sm, ax=ax, label="Quiescence duration (days)")
-    
-    plt.show()
-    
-    ##Aligned by end
-    
-    all_x = []
-    all_y = []
-    
-    for seg in segments_J:
-        t1 = seg["MJD"].max()
-        shifted_time = seg["MJD"] - t1   # <-- key change
-        
-        all_x.append(shifted_time.values)
-        all_y.append(seg['alt_mag_corr'].values)
-    
-    all_x = np.concatenate(all_x)
-    all_y = np.concatenate(all_y)
-    
-    slope, intercept, r_value, p_value, std_err = linregress(all_x, all_y)
-    
-    fig, ax = plt.subplots()
-    
-    # scatter
-    for seg, dur in zip(segments_J, durations_J):
-        t1 = seg["MJD"].max()
-        shifted_time = seg["MJD"] - t1
-        color = cmap(norm(dur))
-        
-        ax.scatter(shifted_time, seg['alt_mag_corr'], color=color, alpha=0.5)
-    
-    # best-fit line
-    x_fit = np.linspace(all_x.min(), all_x.max(), 500)
-    y_fit = slope * x_fit + intercept
-    
-    ax.plot(x_fit, y_fit, color='black', linewidth=2,
-            label=f'y={slope:.4f}x+{intercept:.4f}')
-    
-    ax.set_title("Quiescence aligned by end")
-    ax.set_xlabel("Time until next outburst (days)")
-    ax.set_ylabel(f"{key} (divided only)")
-    ax.invert_yaxis()
-    ax.legend()
-    
-    # colorbar
-    sm = cm.ScalarMappable(norm=norm, cmap=cmap)
-    sm.set_array([])
-    fig.colorbar(sm, ax=ax, label="Quiescence duration (days)")
-    
-    plt.show()
-    
-    
-    ##Scaled
-    
-    
-    all_x = []
-    all_y = []
-    
-    for seg in segments_J:
-        t0 = seg["MJD"].min()
-        t1 = seg["MJD"].max()
-        
-        # avoid divide-by-zero for very short segments
-        if (t1 - t0) <= 0:
-            continue
-        
-        scaled_time = (seg["MJD"] - t0) / (t1 - t0)
-        
-        all_x.append(scaled_time.values)
-        all_y.append(seg['alt_mag_corr'].values)
-    
-    all_x = np.concatenate(all_x)
-    all_y = np.concatenate(all_y)
-    
-    slope, intercept, r_value, p_value, std_err = linregress(all_x, all_y)
-    
-    fig, ax = plt.subplots()
-    
-    # scatter
-    for seg, dur in zip(segments_J, durations_J):
-        t0 = seg["MJD"].min()
-        t1 = seg["MJD"].max()
-        
-        if (t1 - t0) <= 0:
-            continue
-        
-        scaled_time = (seg["MJD"] - t0) / (t1 - t0)
-        color = cmap(norm(dur))
-        
-        ax.scatter(scaled_time, seg['alt_mag_corr'], color=color, alpha=0.5)
-    
-    # best-fit line
-    x_fit = np.linspace(0, 1, 500)
-    y_fit = slope * x_fit + intercept
-    
-    ax.plot(x_fit, y_fit, color='black', linewidth=2,
-            label=f'y={slope:.4f}x+{intercept:.4f}')
-    
-    ax.set_title("Scaled quiescence (start=0, end=1)")
-    ax.set_xlabel("Normalized quiescence phase")
-    ax.set_ylabel(f"{key} (divided only)")
-    ax.invert_yaxis()
-    ax.legend()
-    
-    # colorbar
-    sm = cm.ScalarMappable(norm=norm, cmap=cmap)
-    sm.set_array([])
-    fig.colorbar(sm, ax=ax, label="Quiescence duration (days)")
-    
-    plt.show()
 
 
 #%%
@@ -531,7 +416,7 @@ for row_idx, (name, table) in enumerate(quiescent_tables.items()):
             if x is None:
                 continue
 
-            y = seg["alt_mag_corr"].values
+            y = seg["mag_shifted"].values
 
             all_x.append(x.values)
             all_y.append(y)
@@ -569,6 +454,7 @@ for row_idx, (name, table) in enumerate(quiescent_tables.items()):
 axes[len(keys)-1,2].set_xlabel("Normalized quiescence phase")
 axes[len(keys)-1,1].set_xlabel("Time until next outburst (days)")
 axes[len(keys)-1,0].set_xlabel("Time since quiescence start (days)")
+plt.suptitle('Masked mini-outbursts')
 plt.tight_layout()        
 plt.show()
 
@@ -582,7 +468,7 @@ def table_sigma_clip(x, y, mean, std, sigma=5):
 table_stats = {}
 
 for name, table in quiescent_tables.items():
-    vals = table["mag_corr"].values
+    vals = table["mag_shifted"].values
     vals = vals[~np.isnan(vals)]
 
     table_stats[name] = {
@@ -627,7 +513,7 @@ for row_idx, (name, table) in enumerate(quiescent_tables.items()):
             if x is None:
                 continue
 
-            y = seg["alt_mag_corr"].values
+            y = seg["mag_shifted"].values
 
             # sigma clip per segment
             stats = table_stats[name]
@@ -680,6 +566,7 @@ for row_idx, (name, table) in enumerate(quiescent_tables.items()):
 axes[len(keys)-1,2].set_xlabel("Normalized quiescence phase")
 axes[len(keys)-1,1].set_xlabel("Time until next outburst (days)")
 axes[len(keys)-1,0].set_xlabel("Time since quiescence start (days)")
+plt.suptitle('5-sigma clipped')
 plt.tight_layout()        
 plt.show()
 
@@ -693,13 +580,11 @@ full_buffered_intervals = [
     (start - buffer, end + buffer)
     for start, end in full_intervals
 ]
-if count_mini:
-    buffered_intervals=full_buffered_intervals
-else:
-    buffered_intervals = [
-        (start - buffer, end + buffer)
-        for start, end in intervals
-    ]
+
+buffered_intervals = [
+    (start - buffer, end + buffer)
+    for start, end in intervals
+]
 
 buffered_quiescent_tables={}
 for name, table in tables.items():
@@ -708,12 +593,22 @@ for name, table in tables.items():
 # Build quiescent intervals (gaps between outbursts)
 buffered_quiescent_intervals = []
 
+buffered_quiescent_intervals.append(
+    (data_start, buffered_intervals[0][0])
+)
+
 for i in range(len(buffered_intervals) - 1):
     end_current = buffered_intervals[i][1]
     start_next = buffered_intervals[i+1][0]
-    
+
     if start_next > end_current:
-        buffered_quiescent_intervals.append((end_current, start_next))
+        buffered_quiescent_intervals.append(
+            (end_current, start_next)
+        )
+
+buffered_quiescent_intervals.append(
+    (buffered_intervals[-1][1], data_end)
+)
 
 
 fig, axes = plt.subplots(
@@ -752,7 +647,7 @@ for row_idx, (name, table) in enumerate(buffered_quiescent_tables.items()):
             if x is None:
                 continue
 
-            y = seg["alt_mag_corr"].values
+            y = seg["mag_shifted"].values
 
             all_x.append(x.values)
             all_y.append(y)
@@ -790,6 +685,7 @@ for row_idx, (name, table) in enumerate(buffered_quiescent_tables.items()):
 axes[len(keys)-1,2].set_xlabel("Normalized quiescence phase")
 axes[len(keys)-1,1].set_xlabel("Time until next outburst (days)")
 axes[len(keys)-1,0].set_xlabel("Time since quiescence start (days)")
+plt.suptitle(f'{buffer} day buffer')
 plt.tight_layout()        
 plt.show()
 
@@ -803,7 +699,7 @@ def build_buffered(table, buffered_intervals):
     return get_quiescent(table, buffered_intervals)
 
 def sigma_clip_global(df, mean, std, sigma=5):
-    m = np.abs(df["alt_mag_corr"] - mean) < sigma * std
+    m = np.abs(df["mag_shifted"] - mean) < sigma * std
     return df[m].copy()
 
 raw_tables = quiescent_tables
@@ -811,7 +707,7 @@ buffered_tables = buffered_quiescent_tables
 
 table_stats = {}
 for name, table in quiescent_tables.items():
-    vals = table["alt_mag_corr"].dropna().values
+    vals = table["mag_shifted"].dropna().values
     table_stats[name] = (np.mean(vals), np.std(vals))
     
 def align_start(seg):
@@ -866,7 +762,7 @@ for row_idx, mode in enumerate(row_names):
 
         # flatten ALL bands together
         for name, table in data_dict.items():
-            meanmag=table["alt_mag_corr"].mean()
+            meanmag=table["mag_shifted"].mean()
 
             segments = []
             for start, end in intervals_use:
@@ -880,7 +776,7 @@ for row_idx, mode in enumerate(row_names):
                 if x is None:
                     continue
 
-                y = seg["alt_mag_corr"].values
+                y = seg["mag_shifted"].values
                 
                 #subtract the mean value from y to put it on the same scale
                 y-=meanmag
@@ -933,7 +829,7 @@ plt.show()
 #%%
 
 all_mjd = np.concatenate([t["MJD"].values for t in tables.values()])
-all_mag = np.concatenate([t["mag_corr"].values for t in tables.values()])
+all_mag = np.concatenate([t["mag_shifted"].values for t in tables.values()])
 ymin, ymax = np.nanmin(all_mag), np.nanmax(all_mag)
 t_min, t_max = np.min(all_mjd), np.max(all_mjd)
 
@@ -961,11 +857,11 @@ for i in range(4):
 
         ax.scatter(
             table.loc[mask, "MJD"],
-            table.loc[mask, "mag_corr"],
+            table.loc[mask, "mag_shifted"],
             s=2,
             alpha=0.2,
             color=colors.get(name, "gray"),
-            label=name
+            #label=name
         )
         
     for name, table in quiescent_tables.items():
@@ -973,7 +869,7 @@ for i in range(4):
 
         ax.scatter(
             table.loc[mask, "MJD"],
-            table.loc[mask, "mag_corr"],
+            table.loc[mask, "mag_shifted"],
             s=2,
             alpha=1,
             color=colors.get(name, "gray"),
@@ -995,6 +891,82 @@ for i in range(4):
         if end < t_start or start > t_end:
             continue
         ax.axvspan(start, end, color="black", alpha=0.08)
+        
+    for j, ((start, end), label) in enumerate(zip(intervals, ob_labels), start=1):
+
+        if end < t_start or start > t_end:
+            continue
+    
+        ax.axvspan(start, end, color="red", alpha=0.15)
+    
+
+        if end < t_start or start > t_end:
+            continue
+    
+        center = 0.5 * (start + end)
+    
+        ax.annotate(
+            f"OB{j}",
+            xy=(center, 0.95),               # x=data, y=axes fraction
+            xycoords=("data", "axes fraction"),
+            ha="center",
+            va="top",
+            color=label_colors[label],
+            fontsize=8,
+            fontweight="bold"
+        )
+    for j, (start, end) in enumerate(quiescent_intervals, start=1):
+
+        if end < t_start or start > t_end:
+            continue
+    
+        ax.axvspan(start, end, color="gray", alpha=0.12)
+    
+        xmid = 0.5 * (start + end)
+    
+        ax.text(
+            xmid,
+            0.85,                       # slightly lower so labels don't overlap
+            f"Q{j}",
+            transform=ax.get_xaxis_transform(),
+            ha="center",
+            va="top",
+            fontsize=8,
+            color="black"
+        )
+            
+    
+    for qnum, ((start, end), prev_lab, next_lab) in enumerate(
+        zip(quiescent_intervals,
+            q_following_labels,
+            q_labels),
+        start=1
+    ):
+    
+        if end < t_start or start > t_end:
+            continue
+    
+        center = 0.5 * (start + end)
+    
+        # previous outburst colour
+        ax.plot(
+            center-30,
+            0.9,
+            marker="o",
+            markersize=5,
+            color=label_colors.get(prev_lab, "black"),
+            transform=ax.get_xaxis_transform()
+        )
+    
+        # following outburst colour
+        ax.plot(
+            center+30,
+            0.9,
+            marker="s",
+            markersize=5,
+            color=label_colors.get(next_lab, "black"),
+            transform=ax.get_xaxis_transform()
+        )
 
     ax.set_xlim(t_start, t_end)
 
@@ -1054,7 +1026,7 @@ for row_idx, mode in enumerate(row_names):
                 if x is None:
                     continue
 
-                y = seg["alt_mag_corr"].values
+                y = seg["mag_shifted"].values
 
                 slope, intercept, *_ = linregress(x.values, y)
 
@@ -1119,7 +1091,7 @@ for row_idx, (name, table) in enumerate(quiescent_tables.items()):
             if x is None:
                 continue
 
-            y = seg["alt_mag_corr"].values
+            y = seg["mag_shifted"].values
 
             xv = x.values
             yv = y
@@ -1163,4 +1135,374 @@ axes[-1, 1].set_xlabel("Slope (mag/day)")
 axes[-1, 2].set_xlabel("Slope (mag/day)")
 
 plt.tight_layout()
+plt.show()
+
+#%%
+for name, table in quiescent_tables.items():
+    if not 'Smarts' in name:
+        continue
+    records = []
+    
+    for qnum, ((start, end), label) in enumerate(
+        zip(quiescent_intervals, q_labels),
+        start=1
+    ):
+    
+        seg = table[
+            (table["MJD"] >= start) &
+            (table["MJD"] <= end)
+        ]
+    
+        if len(seg) < 5:
+            continue
+    
+        slope, intercept, r, p, stderr = linregress(
+            seg["MJD"],
+            seg["mag_shifted"]
+        )
+    
+        records.append({
+            "Q": qnum,
+            "label": label,
+            "slope": slope,
+            "duration": end-start,
+            "npts": len(seg),
+            "stderr": stderr,
+            "r": r
+        })
+    
+    slope_df_follow = pd.DataFrame(records)
+    
+    plt.figure(figsize=(8,5))
+    
+    sns.boxplot(
+        data=slope_df_follow,
+        x='label',
+        y="slope",
+        palette=label_colors,
+        order=order
+    )
+    
+    sns.stripplot(
+        data=slope_df_follow,
+        x='label',
+        y="slope",
+        order=order,
+        color="black",
+        alpha=0.6,
+        jitter=False
+    )
+    
+    plt.gca().invert_yaxis()
+    plt.title(f'{name}, labeled by following outburst')
+    plt.axhline(0, color="k", ls="--")
+    plt.show()
+    
+for name, table in quiescent_tables.items():
+    if not 'Smarts' in name:
+        continue
+    records = []
+    
+    for qnum, ((start, end), label) in enumerate(
+        zip(quiescent_intervals, q_following_labels),
+        start=1
+    ):
+    
+        seg = table[
+            (table["MJD"] >= start) &
+            (table["MJD"] <= end)
+        ]
+    
+        if len(seg) < 5:
+            continue
+    
+        slope, intercept, r, p, stderr = linregress(
+            seg["MJD"],
+            seg["mag_shifted"]
+        )
+    
+        records.append({
+            "Q": qnum,
+            "label": label,
+            "slope": slope,
+            "duration": end-start,
+            "npts": len(seg),
+            "stderr": stderr,
+            "r": r
+        })
+    
+    slope_df_prec = pd.DataFrame(records)
+    
+    plt.figure(figsize=(8,5))
+    
+    sns.boxplot(
+        data=slope_df_prec,
+        x='label',
+        y="slope",
+        palette=label_colors,
+        order=order
+    )
+    
+    sns.stripplot(
+        data=slope_df_prec,
+        x='label',
+        y="slope",
+        order=order,
+        color="black",
+        alpha=0.6,
+        jitter=False
+    )
+    
+    plt.gca().invert_yaxis()
+    plt.title(f'{name}, labeled by preceding outburst')
+    plt.axhline(0, color="k", ls="--")
+    plt.show()
+    
+#%%
+for name, table in quiescent_tables.items():
+    if not 'Smarts' in name:
+        continue
+    records = []
+    
+    for qnum, ((start, end), label) in enumerate(
+        zip(quiescent_intervals, q_labels),
+        start=1
+    ):
+    
+        seg = table[
+            (table["MJD"] >= start) &
+            (table["MJD"] <= end)
+        ].copy()
+    
+        if len(seg) < 5:
+            continue
+
+        t0 = seg["MJD"].min()
+        t1 = seg["MJD"].max()
+
+        if t1 - t0 <= 0:
+            continue
+
+        x = (seg["MJD"] - t0) / (t1 - t0)
+        y = seg["mag_shifted"].values
+
+        slope, intercept, r, p, stderr = linregress(x, y)
+
+        records.append({
+            "Q": qnum,
+            "label": label,
+            "slope": slope,
+            "duration": end - start,
+            "npts": len(seg),
+            "stderr": stderr,
+            "r": r
+        })
+
+    slope_df_follow_scaled = pd.DataFrame(records)
+
+    plt.figure(figsize=(8,5))
+
+    sns.boxplot(
+        data=slope_df_follow_scaled,
+        x="label",
+        y="slope",
+        palette=label_colors,
+        order=order
+    )
+
+    sns.stripplot(
+        data=slope_df_follow_scaled,
+        x="label",
+        y="slope",
+        order=order,
+        color="black",
+        alpha=0.6,
+        jitter=True
+    )
+
+    plt.gca().invert_yaxis()
+    plt.title(f"{name}, scaled quiescence phase, labeled by following outburst")
+    plt.axhline(0, color="k", ls="--")
+    plt.show()
+    
+for name, table in quiescent_tables.items():
+    if not 'Smarts' in name:
+        continue
+    records = []
+    
+    for qnum, ((start, end), label) in enumerate(
+        zip(quiescent_intervals, q_following_labels),
+        start=1
+    ):
+    
+        seg = table[
+            (table["MJD"] >= start) &
+            (table["MJD"] <= end)
+        ].copy()
+    
+        if len(seg) < 5:
+            continue
+
+        t0 = seg["MJD"].min()
+        t1 = seg["MJD"].max()
+
+        if t1 - t0 <= 0:
+            continue
+
+        x = (seg["MJD"] - t0) / (t1 - t0)
+        y = seg["mag_shifted"].values
+
+        slope, intercept, r, p, stderr = linregress(x, y)
+
+        records.append({
+            "Q": qnum,
+            "label": label,
+            "slope": slope,
+            "duration": end - start,
+            "npts": len(seg),
+            "stderr": stderr,
+            "r": r
+        })
+
+    slope_df_prec_scaled = pd.DataFrame(records)
+
+    plt.figure(figsize=(8,5))
+
+    sns.boxplot(
+        data=slope_df_prec_scaled,
+        x="label",
+        y="slope",
+        palette=label_colors,
+        order=order
+    )
+
+    sns.stripplot(
+        data=slope_df_prec_scaled,
+        x="label",
+        y="slope",
+        order=order,
+        color="black",
+        alpha=0.6,
+        jitter=True
+    )
+
+    plt.gca().invert_yaxis()
+    plt.title(f"{name}, scaled quiescence phase, labeled by preceeding outburst")
+    plt.axhline(0, color="k", ls="--")
+    plt.show()
+    
+#%%
+#counting mini outbursts
+mini_count=[]
+for q in quiescent_intervals:
+    minis=mini.loc[(mini['Peak MJD']>q[0]) & (mini['Peak MJD']<q[1])]
+    mini_count.append(len(minis))
+    
+records = []
+
+for qnum, ((start, end), next_label, prev_label) in enumerate(
+    zip(quiescent_intervals,
+        q_labels,
+        q_following_labels),
+    start=1
+):
+
+    nummini = len(
+        mini.loc[
+            (mini["Peak MJD"] > start) &
+            (mini["Peak MJD"] < end)
+        ]
+    )
+
+    records.append({
+        "Q": qnum,
+        "num_minis": nummini,
+        "following_label": next_label,
+        "preceding_label": prev_label
+    })
+
+mini_df = pd.DataFrame(records)
+
+
+plt.figure(figsize=(8,5))
+
+sns.boxplot(
+    data=mini_df,
+    x="following_label",
+    y="num_minis",
+    palette=label_colors,
+    order=order
+)
+
+sns.stripplot(
+    data=mini_df,
+    x="following_label",
+    y="num_minis",
+    order=order,
+    color="black",
+    alpha=0.6,
+    jitter=True
+)
+
+plt.title("Number of mini-outbursts by following outburst type")
+plt.show()
+
+plt.figure(figsize=(8,5))
+
+sns.boxplot(
+    data=mini_df,
+    x="preceding_label",
+    y="num_minis",
+    palette=label_colors,
+    order=order
+)
+
+sns.stripplot(
+    data=mini_df,
+    x="preceding_label",
+    y="num_minis",
+    order=order,
+    color="black",
+    alpha=0.6,
+    jitter=True
+)
+
+plt.title("Number of mini-outbursts by preceding outburst type")
+plt.show()
+#%%
+
+R_df = slope_df_follow_scaled.merge(
+    mini_df[["Q", "num_minis"]],
+    on="Q",
+    how="left"
+)
+R_df["num_minis_jitter"] = (
+    R_df["num_minis"]
+    + np.random.uniform(-0.1, 0.1, len(R_df))
+)
+
+plt.figure(figsize=(6,5))
+
+sns.scatterplot(
+    data=R_df,
+    x="num_minis_jitter",
+    y="slope",
+    hue="label",
+    palette=label_colors,
+    s=80
+)
+
+for _, row in R_df.iterrows():
+    plt.text(
+        row["num_minis_jitter"] + 0.03,
+        row["slope"],
+        f"Q{row['Q']}",
+        fontsize=8
+    )
+
+plt.axhline(0, color="k", ls="--")
+plt.gca().invert_yaxis()
+plt.xlabel('number of mini outbursts')
+plt.ylabel('R slope (scaled)')
+
 plt.show()

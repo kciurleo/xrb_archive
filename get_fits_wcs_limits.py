@@ -10,8 +10,9 @@ from astropy.io import fits
 from astropy.wcs import WCS
 import numpy as np
 import glob
+import re
 
-target='J1753'
+target='GX339-4'
 file=glob.glob(f'/neta/xrb/{target}/product/*wcs.fits')[0]
 
 # Load FITS
@@ -34,6 +35,9 @@ ra_dec = wcs.all_pix2world(corners_pix, 0)  # origin=0 for numpy indexing
 
 ra = ra_dec[:, 0]
 dec = ra_dec[:, 1]
-print(target)
-print("RA range:", ra.min(), ra.max())
-print("Dec range:", dec.min(), dec.max())
+shortname=re.split(r'[-−.]', target)[0]
+if shortname.startswith('4'):
+    shortname=shortname[1:]
+print(f"select * into mydb.{shortname}_ref_stars from refcat2")
+print(f"where ra between {ra.min()} and {ra.max()}")
+print(f"and dec between {dec.min()} and {dec.max()}")

@@ -46,7 +46,7 @@ def register_with_flips(src, ref, **kwargs):
 overwrite=False
 
 #loop
-for target in ['LMCX-2']:#SWIFT_list:#['GX339-4']:#xrb_list:
+for target in ['J1305-704']:#SWIFT_list:#['GX339-4']:#xrb_list:
     print(target)
     try:
         txtfile = glob.glob(f'/neta/xrb/{target}/temp/{target}*.txt')[0]

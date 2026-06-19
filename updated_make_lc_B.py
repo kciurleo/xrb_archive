@@ -318,7 +318,8 @@ for tbname, info in tables.items():
 #getting errors
 errors_for_now=[]
 for tbname, info in tables.items():
-    if tbname=='LCO':
+    if tbname!='R band':
+    #if tbname=='LCO':
         continue
     table=info['df']
     #get rid of any inf values
@@ -407,7 +408,7 @@ for tbname, info in tables.items():
                 residuals_plot[replaced_plot],
                 color='red',
                 s=25,
-                label='Replaced with mean flux'
+                label='Repputting table['nice time'] = pd.to_datetime(table['nice time']) didn't worklaced with mean flux'
             )
         
             ax1.set_ylabel('Differential magnitude (ensemble - star)')
@@ -475,6 +476,7 @@ for tbname, info in tables.items():
             print(f'  S68 = {S68:.4f}')
             x_vals.append(S68)
     '''
+    all_outliers = []
     for col in table.columns:
 
         if col not in ['ave instr mag','zeropoint','filename',
@@ -552,10 +554,23 @@ for tbname, info in tables.items():
             # S such that 68% are within mean +/- S
             S68 = np.nanpercentile(np.abs(r - mu), 68)
             
-            print(f'{col}')
-            print(f'  sigma = {sigma:.4f}')
-            print(f'  fraction within 1 sigma = {frac_within_1sigma:.3f}')
-            print(f'  S68 = {S68:.4f}')
+            outlier_mask = np.abs(residuals - mu) > 5*S68
+            
+            outlier_df = pd.DataFrame({
+                'filename': table_use['filename'].values,
+                'time': table_use['nice time'].values,
+                'star': col,
+                'residual': residuals
+            })
+            
+            outlier_df = outlier_df[outlier_mask]
+            
+            all_outliers.append(outlier_df)
+            
+            #print(f'{col}')
+            #print(f'  sigma = {sigma:.4f}')
+            #print(f'  fraction within 1 sigma = {frac_within_1sigma:.3f}')
+            #print(f'  S68 = {S68:.4f}')
             x_vals.append(S68)
             
     x_vals = np.array(x_vals)
@@ -575,11 +590,11 @@ for tbname, info in tables.items():
 
     #print(constanterror)
     print(tbname)
-    print("Stars closest to aql:", cols_used[closest_idx])
+    #print("Stars closest to aql:", cols_used[closest_idx])
     constanterror = np.mean(x_vals[closest_idx])
     #print(constanterror)
-    print("Stars closest to aql:", cols_used[closest_idx])
-    print("Average x (std) of 5 closest stars:", constanterror)
+    #print("Stars closest to aql:", cols_used[closest_idx])
+    #print("Average x (std) of 5 closest stars:", constanterror)
     info['error aql ave mag']=constanterror
     errors_for_now.append(constanterror)
 
@@ -602,8 +617,8 @@ for tbname, info in tables.items():
     mag_min = xgrid[idx_min]
     err_min = ygrid[idx_min]
     
-    print("Minimum at mag =", mag_min)
-    print("Minimum error =", err_min)
+    #print("Minimum at mag =", mag_min)
+    #print("Minimum error =", err_min)
     
     yfloor = ygrid.copy()
 
@@ -616,10 +631,10 @@ for tbname, info in tables.items():
     for x, y, label in zip(x_vals, y_vals, cols_used):
         
         if label == 'aql':
-            #plt.scatter(y, x, color='red', s=40, zorder=3)
-            #plt.annotate('Aql', (y, x), xytext=(5,5),
-            #             textcoords='offset points', color='red', fontsize=10)
-            print('cool')
+            plt.scatter(y, x, color='red', s=40, zorder=3)
+            plt.annotate('Aql', (y, x), xytext=(5,5),
+                         textcoords='offset points', color='red', fontsize=10)
+            #print('cool')
         else:
             plt.scatter(y, x, color='black', s=20)
             plt.annotate(label, (y, x), xytext=(3,3),
@@ -706,6 +721,162 @@ for tbname, info in tables.items():
     row_errors[~np.isfinite(table['aql mag'].values)] = np.nan
     
     table['error'] = row_errors
+    
+    #temporarily, where are those outliers?
+    all_outliers = pd.concat(all_outliers, ignore_index=True)
+    
+    counts = (
+        all_outliers
+        .groupby('filename')
+        .size()
+        .sort_values(ascending=False)
+    )
+    
+    print(counts.tail(50))
+    print(len(counts))
+    print('out of ',len(table))
+
+#%%
+
+#An attempt at per night
+star_means = {}
+
+for col in ensemble_cols:
+
+    flux = table[col].astype(float).values
+
+    valid = (flux > 0) & np.isfinite(flux)
+
+    mag = np.full(len(flux), np.nan)
+    mag[valid] = (
+        -2.5*np.log10(flux[valid])
+        + table.loc[valid, 'zeropoint'].values
+    )
+
+    star_means[col] = np.nanmean(mag)
+    
+row_errors = np.full(len(table), np.nan)
+
+N_CLOSEST = 5
+
+for i, row in table.iterrows():
+
+    aql_mag = row['aql mag']
+
+    if not np.isfinite(aql_mag):
+        continue
+
+    # ----------------------------------
+    # find stars closest to Aql's current magnitude
+    # ----------------------------------
+
+    dists = []
+
+    for star, mean_mag in star_means.items():
+
+        d = abs(mean_mag - aql_mag)
+
+        dists.append((star, d))
+
+    dists.sort(key=lambda x: x[1])
+
+    closest_stars = [s for s, _ in dists[:N_CLOSEST]]
+
+    # ----------------------------------
+    # compute residuals for those stars
+    # ----------------------------------
+
+    residuals = []
+
+    for star in closest_stars:
+
+        flux = row[star]
+
+        if not np.isfinite(flux):
+            continue
+
+        if flux <= 0:
+            continue
+
+        star_mag = (
+            -2.5*np.log10(flux)
+            + row['zeropoint']
+        )
+
+        residuals.append(
+            star_mag - star_means[star]
+        )
+
+    residuals = np.array(residuals)
+
+    if len(residuals) < 5:
+        continue
+
+    center = np.nanmedian(residuals)
+
+    S68 = np.nanpercentile(
+        np.abs(residuals - center),
+        68
+    )
+
+    row_errors[i] = S68
+    
+    
+table['error_pernight'] = row_errors
+    
+#%%
+
+#temporarily...plot aql errors over time in R band
+
+plt.figure(figsize=(12,3))
+for tbname, info in tables.items():
+    if tbname!='R band':
+    #if tbname=='LCO':
+        continue
+    table = info['df']
+    #plt.errorbar(table['nice time'].values, table['error'], yerr=0,fmt='.', color=info['color'], label='Global errors')
+    #plt.errorbar(table['nice time'].values, table['error_pernight'], yerr=0,fmt='.', color='blue', label='Per night errors')
+    plt.errorbar(table['nice time'].values, table['aql mag'], yerr=table['error_pernight'],fmt='none', color='blue', label='Per night errors')
+    plt.errorbar(table['nice time'].values, table['aql mag'], yerr=table['error'],fmt='none', color=info['color'], label='Global errors')
+    
+      
+
+       
+#handles = [h2, h3]
+#labels = ['aql', 'ens (offset)']
+plt.legend()
+plt.ylabel('Pan-STARRS r')
+#plt.ylim(20,16.5)
+#plt.yscale('log')
+plt.gca().invert_yaxis()
+
+# --- Primary x-axis: date ---
+ax1 = plt.gca()
+ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+
+# --- Secondary x-axis (MJD), properly aligned ---
+ax2 = ax1.twiny()  # create a second x-axis that shares the same y
+ax2.set_xlim(ax1.get_xlim())  # align limits
+
+# Convert tick locations to MJD
+tick_locs = ax1.get_xticks()
+tick_dates = mdates.num2date(tick_locs)
+tick_mjds = Time(tick_dates).mjd
+
+ax2.set_xticks(tick_locs)
+ax2.set_xticklabels([f'{mjd:.1f}' for mjd in tick_mjds])
+
+# Shift second axis downward for clarity (optional)
+ax2.xaxis.set_ticks_position('bottom')
+ax1.xaxis.set_ticks_position('top')
+ax2.xaxis.set_label_position('bottom')
+plt.subplots_adjust(bottom=0.25)
+ax1.xaxis.set_ticks_position('top')
+plt.tight_layout()
+#plt.savefig('/Users/katieciurleo/Downloads/yalestuff/aql_lc_psf_try1.png', dpi=250)
+plt.title(tbname)
+plt.show()
+
 
 #%%
 

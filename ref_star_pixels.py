@@ -19,19 +19,22 @@ import pandas as pd
 import glob
 
 #Lining up the refernce stars with detected stars on the image
-target='J1808.4-3658'
+target='GX339-4'
 shortname=re.split(r'[-−.]', target)[0]
+if shortname.startswith('4'):
+    shortname=shortname[1:]
 
 #if the folder is in downloads, move it to the archive
 try:
+    file=f'/neta/xrb/{target}/product/{shortname}_ref_stars_kciurleo.csv'
+    refstars=pd.read_csv(file)
+    print('file in archive already.')
+except:
     file=f'/home/kmc249/Downloads/{shortname}_ref_stars_kciurleo.csv'
     refstars=pd.read_csv(file)
     shutil.move(file, f'/neta/xrb/{target}/product/{shortname}_ref_stars_kciurleo.csv')
     print('moved file.')
-except:
-    print('file in archive already.')
-    file=f'/neta/xrb/{target}/product/{shortname}_ref_stars_kciurleo.csv'
-    refstars=pd.read_csv(file)
+
 
 #trimmed wcs file    
 wcsfile=glob.glob(f'/neta/xrb/{target}/product/*wcs.fits')[0]

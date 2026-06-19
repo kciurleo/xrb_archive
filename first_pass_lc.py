@@ -28,7 +28,8 @@ import matplotlib.dates as mdates
 from astropy.time import Time
 
 
-target='J1752-223'
+target='J1631-478'
+ignore_error_issue=False #Sometimes, the 4D fit goes crazy, so we need to do a 2D poly fit instead
 
 outdir = f'/neta/xrb/{target}/product/first_pass_lightcurves'
 
@@ -42,8 +43,12 @@ optical_bands=['B','V','R','I']
 telescopes=['1.3m', '1m']
 
 #function definition
-def poly4(x, a, b, c, d, e):
-    return  a*x**4 + b*x**3 + c*x**2 + d*x + e #a*x**4 + b*x**3 + c*x**2 + d*x + e
+if ignore_error_issue:
+    def poly4(x, c, d, e):
+        return  c*x**2 + d*x + e 
+else:
+    def poly4(x, a, b, c, d, e):
+        return  a*x**4 + b*x**3 + c*x**2 + d*x + e 
 
 def error_model(mag, popt, mag_min, err_min):
     mag = np.asarray(mag)
@@ -73,9 +78,27 @@ for tele in telescopes:
             print(f'Skipping {tele} {band}')
             continue
         print(f'Working on {tele} {band}')
-        infile = f'{outdir}/{target}_{tele}_{band}_first_pass_phot.csv'
-        table=pd.read_csv(infile, low_memory=False)
-        table['nice time']=pd.to_datetime(table['time'])
+        try:
+            infile = f'{outdir}/{target}_{tele}_{band}_first_pass_phot.csv'
+            table=pd.read_csv(infile, low_memory=False)
+        except:
+            print('phot file doesnt exist!!! Something went wrong earlier')
+            continue
+        if len(table)==0:
+            print('phot file is empty!!! Something went wrong earlier')
+            continue
+        table['nice time'] = pd.to_datetime(
+            table['time'],
+            format='mixed',
+            utc=True,
+            errors='coerce'
+        ).dt.tz_localize(None)
+        
+        # force real datetime64 dtype
+        table['nice time'] = pd.Series(
+            table['nice time'].values,
+            dtype='datetime64[ns]'
+        )
         
         #Whole Ensemble Comparison Across Time
         fig, axes = plt.subplots(figsize=(8, 8))
@@ -91,6 +114,10 @@ for tele in telescopes:
             bandstr= 'i'
         elif band=='R':
             bandstr= 'r'
+        
+        #Make sure no weird stars make it into our ensemble
+        good_mask = refstars.loc[eids, bandstr] != 0
+        eids = list(np.array(eids)[good_mask.values])
                 
         for e in eids:
             row=refstars.loc[int(e)]
@@ -120,13 +147,13 @@ for tele in telescopes:
         axes.set_xlabel('instr mag of standard stars')
         axes.set_ylabel(f'{bandstr} mag')
         #slope, intercept, r, p, se =linregress(xdata3, ydata3)
-        intercept = np.mean(np.array(refmags) - np.array(instrmags))
+        intercept = np.nanmean(np.array(refmags) - np.array(instrmags))
         slope = 1.0
-        instrmag_arr=np.linspace(np.min(instrmags), np.max(instrmags))
+        instrmag_arr=np.linspace(np.nanmin(instrmags), np.nanmax(instrmags))
         axes.plot(instrmag_arr, slope*instrmag_arr+intercept, 'g--', label=f'y={np.round(slope,2)}x+{np.round(intercept, 2)}')
         axes.invert_yaxis()
         axes.invert_xaxis()
-        plt.legend()
+        plt.legend(loc='upper left')
         plt.title(f'{tele} {band}')
         plt.savefig(f'{outdir}/{target}_{tele}_{band}_magcal.png', dpi=200)
         plt.show()
@@ -325,12 +352,16 @@ for tele in telescopes:
         
         fig, ax1 = plt.subplots(figsize=(12, 3))
         
-        valid = table['target mag'].notna()
+        valid = (
+            table['target mag'].notna() &
+            table['error'].notna() &
+            table['nice time'].notna()
+        )
         
         ax1.errorbar(
-            table.loc[valid, 'nice time'],
-            table.loc[valid, 'target mag'],
-            yerr=table.loc[valid, 'error'],
+            table.loc[valid, 'nice time'].to_numpy(),
+            table.loc[valid, 'target mag'].to_numpy(),
+            yerr=table.loc[valid, 'error'].to_numpy(),
             fmt='.',
             color='k',
             markersize=15
@@ -365,4 +396,74 @@ for tele in telescopes:
         plt.savefig(f'{outdir}/{target}_{tele}_{band}_lc.png', dpi=200)
         plt.show()
         
-#Also add one more plot to look at - the reference stars on the image  
+        #save the tables for now
+        table.to_csv(f'{outdir}/{target}_{tele}_{band}_first_pass_lc.csv', index=False)
+
+#%%
+
+#Save one full light curve just for comparison's sake
+colors = {
+    'B': 'blue',
+    'V': 'green',
+    'R': 'red',
+    'I': 'chocolate'
+}
+
+plt.figure(figsize=(14, 4))
+
+for tele in telescopes:
+    for band in optical_bands:
+        fname = f'{outdir}/{target}_{tele}_{band}_first_pass_lc.csv'
+        
+        try:
+            df = pd.read_csv(fname)
+        except FileNotFoundError:
+            continue
+        if len(df)==0:
+            print('phot file is empty!!! Something went wrong earlier')
+            continue
+
+        df['nice time'] = pd.to_datetime(
+            df['time'],
+            format='mixed',
+            utc=True,
+            errors='coerce'
+        ).dt.tz_localize(None)
+        
+        # force real datetime64 dtype
+        df['nice time'] = pd.Series(
+            df['nice time'].values,
+            dtype='datetime64[ns]'
+        )
+        valid = (
+            df['target mag'].notna() &
+            df['error'].notna() &
+            df['nice time'].notna()
+        )
+
+        if valid.sum() == 0:
+            continue
+
+        plt.errorbar(
+            df.loc[valid, 'nice time'].to_numpy(),
+            df.loc[valid, 'target mag'].to_numpy(),
+            yerr=df.loc[valid, 'error'].to_numpy(),
+            fmt='o',
+            ms=3,
+            lw=0.5,
+            color=colors.get(band, 'black'),
+            alpha=0.7,
+            label=f'{tele} {band}'
+        )
+
+plt.gca().invert_yaxis()
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+
+plt.ylabel("Magnitude")
+plt.title(f"{target} — Combined Light Curves")
+
+plt.legend(ncol=4, fontsize=8)
+plt.tight_layout()
+
+plt.savefig(f'{outdir}/{target}_combined_first_pass_lc.png', dpi=200)
+plt.show()

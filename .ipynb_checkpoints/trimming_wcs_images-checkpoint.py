@@ -35,7 +35,7 @@ def make_trimmed_path(untrimmed_ref):
 overwrite=True
 
 #loop
-for target in ['GX339-4']:
+for target in ['J1305-704']:
     print(target)
     try:
         txtfile = glob.glob(f'/neta/xrb/{target}/temp/{target}*.txt')[0]

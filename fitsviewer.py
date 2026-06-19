@@ -34,11 +34,20 @@ import glob
 #filei='/neta/xrb/A0620-00/1.3m/opt/rccd/I/rccd031117.0087.fits'
 #fileh='/neta/xrb/A0620-00/1.3m/ir/raw/H/binir031029.0284.fits'
 #filehbackup='/neta/xrb/A0620-00/1.3m/ir/raw/H/binir051127.0248.fits'
+prefix='/neta/xrb/J1746-322/1.3m/opt/rccd/I/'
+filelist=['rccd030426.0197.fits',
+ 'rccd030502.0114.fits',
+ 'rccd030508.0024.fits',
+ 'rccd030526.0091.fits',
+ 'rccd050820.0030.fits',
+ 'rccd050820.0031.fits',
+ 'rccd050902.0039.fits',
+ 'rccd050902.0040.fits']
 
-#'', 'rccd170528.0107.fits', 'rccd170528.0108.fits'
 
-for file in ['/neta/xrb/J1535-571/1.3m/opt/rccd/I/rccd171010.0006.fits']:#glob.glob('/neta/xrb/GX339-4/1.3m/opt/rccd/I_trimmed/*'):
+for file in filelist:#['/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd030404.0358.fits']:#glob.glob('/neta/xrb/GX339-4/1.3m/opt/rccd/I_trimmed/*'):
     print(f'now showing{file}')
+    file=prefix+file
     data=fits.getdata(file)
     hdr=fits.getheader(file)
     print(hdr)

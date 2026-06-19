@@ -179,60 +179,7 @@ plt.tight_layout()
 plt.show()
 
 K_corrected[['Date', 'MJD', 'Kmag_corr', 'e_Kmag_corr', 'Kmag', 'e_Kmag', 'Ncomp', 'Nmatch', 'stack_median', "Kmag Divided Version"]].to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_K_corrected_lc.csv', index=False)
-#%%
 
-fig, axes = plt.subplots(
-    8, 1, figsize=(16, 24),
-    gridspec_kw={'height_ratios': [1,1,1,1,1,1,1,1]}
-)
-
-# get start and end times
-t_start = K_corrected['nice time'].min()
-t_end   = K_corrected['nice time'].max()
-
-# create 4 evenly spaced edges
-edges = pd.date_range(start=t_start, end=t_end, periods=9)  # 4 chunks = 5 edges
-
-# now split K_corrected into 4 chunks by time range
-time_chunks = [K_corrected[(K_corrected['nice time'] >= edges[i]) & (K_corrected['nice time'] < edges[i+1])]
-               for i in range(8)]
-
-# note: last chunk includes the last timestamp exactly
-time_chunks[-1] = K_corrected[(K_corrected['nice time'] >= edges[-2]) & (K_corrected['nice time'] <= edges[-1])]
-
-for i, chunk in enumerate(time_chunks):
-    ax_main = axes[i]
-        
-    tmin = chunk['nice time'].min()
-    tmax = chunk['nice time'].max()
-    
-    # masks
-    mask1 = (K_corrected['nice time'] >= tmin) & (K_corrected['nice time'] <= tmax)
-    
-    # --- MAIN LIGHT CURVE ---
-    ax_main.errorbar(K_corrected.loc[mask1, 'nice time'],
-                    K_corrected.loc[mask1,  'F_corr'], yerr=0.,#yerr=np.abs(K_corrected.loc[mask1,  'e_Kmag_corr']), 
-                    fmt='.', color='red', markersize=3, label='Corrected')
-    
-    ax_main.errorbar(K_corrected.loc[mask1, 'nice time'],
-                    K_corrected.loc[mask1,  'K_flux'], yerr=0,
-                    fmt='.', color='black', markersize=3, label='Uncorrected')
-    
-    
-    ax_main.set_xlim(tmin, tmax)
-    #ax_main.set_ylim(20, 15.3)
-    #ax_main.invert_yaxis()
-    #ax_main.set_ylim(ymax, ymin) 
-    
-    
-    # formatting
-    ax_main.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-
-# legend once
-axes[0].legend(loc='upper right')
-
-plt.tight_layout()
-plt.show()
 
 #%%
 plt.figure(figsize=(10,10))

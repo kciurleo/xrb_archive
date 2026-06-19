@@ -26,7 +26,7 @@ neighbor_mags = np.array([
     18.494,   # I
     16.850,   # J
     16.391,   # H
-    16.038    # K
+    15.820    # K
 ])
 
 #Uncertainties
@@ -36,7 +36,7 @@ neighbor_errs = np.array([
     0.024,   # I
     0.230,   # J
     0.100,   # H
-    0.143    # K
+    0.216    # K
 ])
 
 #and for aql
@@ -46,7 +46,7 @@ aql_mags = np.array([
     19.837,
     17.878,
     17.064,
-    15.962
+    16.215
 ])
     
 aql_errs=np.array([
@@ -55,7 +55,7 @@ aql_errs=np.array([
     0.073,
     0.240,
     0.106,
-    0.143
+    0.275
 ])
 
 
@@ -101,8 +101,16 @@ table = table.dropna(subset=required_cols)
 table = table.reset_index(drop=True)
 
 #which one are we doing?
-mags=aql_mags
-errs=aql_errs
+doing='aql'
+if doing=='neighbor':
+    mags=neighbor_mags
+    errs=neighbor_errs
+    target_spt = "G9V" #for aql, K4
+if doing=='aql':
+    mags=aql_mags
+    errs=aql_errs
+    target_spt = "K4V"
+    
 #%%
 #Function for dereddening our magnitudes
 def deredden_wav(EBV, Rv=3.1):
@@ -189,7 +197,7 @@ for id, row in table.iterrows():
         dof = len(dc) - 2
         chi2_red = chi2 / dof
     
-        chi2_grid[id, j] = chi2_red
+        chi2_grid[id, j] = chi2#chi2_red
 
 
 best_flat_index = np.argmin(chi2_grid)
@@ -209,11 +217,15 @@ print("chi2_red:", best_chi2)
 #plotting
 from matplotlib.colors import LogNorm
 
+#1sigma thing???
+chi2_min = np.min(chi2_grid)
+delta_chi2 = chi2_grid - chi2_min
+levels = [2.30, 6.17, 11.8]
+
 spt_labels = table["SpT"].values
 best_x = ebv_array[best_ebv_idx]
 best_y = best_spT_idx
-#target_spt = "G9V" #for aql, K4
-target_spt = "K4V"
+
 
 g5_idx = table.index[table["SpT"] == target_spt][0]
 ebv_target = 0.5
@@ -228,11 +240,37 @@ im = plt.imshow(
     cmap='RdYlGn_r',
     norm=LogNorm()
 )
-plt.colorbar(im, label=r'$\chi^2_{red}$')
+
+
+plt.contour(
+    ebv_array,
+    np.arange(len(table)),
+    delta_chi2,
+    levels=levels,
+    colors='k',
+    linewidths=1.5
+)
+
+plt.clabel(
+    plt.contour(
+        ebv_array,
+        np.arange(len(table)),
+        delta_chi2,
+        levels=levels,
+        colors='k'
+    ),
+    fmt={
+        2.30: '1σ',
+        6.17: '2σ',
+        11.8: '3σ'
+    }
+)
+
+plt.colorbar(im, label=r'$\chi^2$')
 
 plt.xlabel("E(B-V)")
 plt.ylabel("Spectral Type Index")
-plt.title("Reduced Chi-Squared Grid")
+plt.title("Chi-Squared Grid")
 plt.yticks(
     ticks=np.arange(len(table)),
     labels=spt_labels
@@ -253,7 +291,7 @@ plt.scatter(
     color='black',
     s=80,
     marker='x',
-    label='G5V, EBV=0.5'
+    label=f'{target_spt}, EBV=0.5'
 )
 plt.legend()
 plt.show()
@@ -261,15 +299,18 @@ plt.show()
 #%%
 # Recompute best-fit quantities
 best_row = table.iloc[best_spT_idx]
+target_row = table.iloc[g5_idx]
 
 model_colors_best = best_row[["V-Rc","V-Ic","V-Ks","J-H","H-Ks"]].values
+model_colors_lit = target_row[["V-Rc","V-Ic","V-Ks","J-H","H-Ks"]].values
 data_colors_best = our_colors(best_ebv)
 
 color_labels = ["V-R", "V-I", "V-K", "J-H", "H-K"]
 x = np.arange(len(color_labels))
 plt.figure(figsize=(8,5))
 
-plt.plot(x, model_colors_best, 'o-', label=f"Model ({best_spt})")
+plt.plot(x, model_colors_best, 'o-', label=f"Best-fit Model ({best_spt})")
+plt.plot(x, model_colors_lit, 'o-', label=f"Lit. Model ({target_spt})")
 plt.errorbar(
     x, data_colors_best,
     yerr=sigma,
@@ -279,15 +320,277 @@ plt.errorbar(
 
 plt.xticks(x, color_labels)
 plt.ylabel("Color (mag)")
-plt.title("Best-fit Model vs Dereddened Data Colors")
+plt.title(doing)
 plt.legend()
 plt.grid(alpha=0.3)
 
 plt.show()
 
+
 #%%
 
+#Forced reddening
+def mags_to_colors(mags):
+    return np.array([
+        mags[0] - mags[1],  # V-R
+        mags[0] - mags[2],  # V-I
+        mags[0] - mags[5],  # V-K
+        mags[3] - mags[4],  # J-H
+        mags[4] - mags[5],  # H-K
+    ])
 
+neighbor_colors = mags_to_colors(neighbor_mags)
+neighbor_color_errors=np.array([
+    sigma_quick(neighbor_errs[0],neighbor_errs[1]),
+    sigma_quick(neighbor_errs[0],neighbor_errs[2]),
+    sigma_quick(neighbor_errs[0],neighbor_errs[5]),
+    sigma_quick(neighbor_errs[3],neighbor_errs[4]),
+    sigma_quick(neighbor_errs[4],neighbor_errs[5]),
+    ])
+
+g9_row = table.loc[table["SpT"] == "G9V"].iloc[0]
+k4_row = table.loc[table["SpT"] == "K4V"].iloc[0]
+
+g9_colors = g9_row[
+    ["V-Rc", "V-Ic", "V-Ks", "J-H", "H-Ks"]
+].values.astype(float)
+k4_colors = k4_row[
+    ["V-Rc", "V-Ic", "V-Ks", "J-H", "H-Ks"]
+].values.astype(float)
+
+color_residuals = neighbor_colors - g9_colors
+
+print("Color residuals:")
+for name, resid in zip(
+        ["V-R","V-I","V-K","J-H","H-K"],
+        color_residuals):
+    print(name, resid)
+    
+aql_colors = mags_to_colors(aql_mags)
+
+aql_colors_corrected = aql_colors - color_residuals
+
+chi2_spt = np.zeros(len(table))
+
+for i, row in table.iterrows():
+
+    model_colors = row[
+        ["V-Rc", "V-Ic", "V-Ks", "J-H", "H-Ks"]
+    ].values.astype(float)
+
+    chi2 = np.sum(
+        (aql_colors_corrected - model_colors)**2 /
+        sigma**2
+    )
+
+    chi2_spt[i] = chi2
+
+best_idx = np.argmin(chi2_spt)
+
+print("Best-fit Aql spectral type:")
+print(table["SpT"].iloc[best_idx])
+print("chi2 =", chi2_spt[best_idx])
+
+plt.figure(figsize=(8,5))
+
+plt.errorbar(
+    np.arange(5),
+    aql_colors_corrected,
+    yerr=sigma,
+    fmt='o-',
+    label='Aql X-1 Dereddened'
+)
+
+best_model = table.iloc[best_idx][
+    ["V-Rc","V-Ic","V-Ks","J-H","H-Ks"]
+].values.astype(float)
+
+plt.plot(
+    np.arange(5),
+    best_model,
+    's-',
+    label=table["SpT"].iloc[best_idx]
+)
+
+plt.plot(
+    np.arange(5),
+    k4_colors,
+    's-',
+    label="K4V"
+)
+
+plt.xticks(
+    np.arange(5),
+    ["V-R","V-I","V-K","J-H","H-K"]
+)
+plt.xlabel('Color (mag)')
+plt.grid(alpha=0.3)
+plt.legend()
+plt.show()
+
+color_labels = ["V-R", "V-I", "V-K", "J-H", "H-K"]
+x = np.arange(5)
+
+plt.figure(figsize=(9,5))
+
+# Neighbor observed
+plt.errorbar(x, neighbor_colors, yerr=neighbor_color_errors, fmt='o-', label='Neighbor')
+
+# G9V reference
+plt.plot(x, g9_colors, 's-', label='G9V')
+
+# Neighbor forced dereddened (should overlap G9V)
+plt.plot(x, neighbor_colors-color_residuals, 'x--', label='Dereddened Neighbor')
+
+plt.xticks(x, color_labels)
+plt.ylabel("Color (mag)")
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+
+#%%
+
+def table_colors_new(row):
+    vr = row["V-Rc"]
+    vi = row["V-Ic"]
+    vk = row["V-Ks"]
+    jh = row["J-H"]
+    hk = row["H-Ks"]
+
+    ri = vi - vr
+    ij = vk - vi - jh - hk
+
+    return np.array([
+        vr,
+        ri,
+        ij,
+        jh,
+        hk
+    ])
+
+def mags_to_colors_new(mags):
+    return np.array([
+        mags[0] - mags[1],  # V-R
+        mags[1] - mags[2],  # R-I
+        mags[2] - mags[3],  # I-J
+        mags[3] - mags[4],  # J-H
+        mags[4] - mags[5],  # H-K
+    ])
+
+sigma_new = np.array([
+    sigma_quick(errs[0], errs[1]),  # V-R
+    sigma_quick(errs[1], errs[2]),  # R-I
+    sigma_quick(errs[2], errs[3]),  # I-J
+    sigma_quick(errs[3], errs[4]),  # J-H
+    sigma_quick(errs[4], errs[5]),  # H-K
+])
+
+neighbor_color_errors_new = np.array([
+    sigma_quick(neighbor_errs[0], neighbor_errs[1]),
+    sigma_quick(neighbor_errs[1], neighbor_errs[2]),
+    sigma_quick(neighbor_errs[2], neighbor_errs[3]),
+    sigma_quick(neighbor_errs[3], neighbor_errs[4]),
+    sigma_quick(neighbor_errs[4], neighbor_errs[5]),
+])
+
+color_labels_new = ["V-R", "R-I", "I-J", "J-H", "H-K"]
+
+
+neighbor_colors_new = mags_to_colors_new(neighbor_mags)
+
+
+g9_colors_new = table_colors_new(g9_row)
+
+k4_colors_new = table_colors_new(k4_row)
+
+color_residuals_new = neighbor_colors_new - g9_colors_new
+
+print("Color residuals:")
+for name, resid in zip(
+        color_labels_new,
+        color_residuals):
+    print(name, resid)
+    
+aql_colors_new = mags_to_colors_new(aql_mags)
+
+aql_colors_corrected_new = aql_colors_new - color_residuals_new
+
+chi2_spt_new = np.zeros(len(table))
+
+for i, row in table.iterrows():
+
+    model_colors = table_colors_new(row)
+
+    chi2 = np.sum(
+        (aql_colors_corrected_new - model_colors)**2 /
+        sigma_new**2
+    )
+
+    chi2_spt_new[i] = chi2
+
+best_idx_new = np.argmin(chi2_spt_new)
+
+print("Best-fit Aql spectral type:")
+print(table["SpT"].iloc[best_idx_new])
+print("chi2 =", chi2_spt[best_idx_new])
+
+plt.figure(figsize=(8,5))
+
+plt.errorbar(
+    np.arange(5),
+    aql_colors_corrected_new,
+    yerr=sigma_new,
+    fmt='o-',
+    label='Aql X-1 Dereddened'
+)
+
+best_model_new = table_colors_new(table.iloc[best_idx_new])
+
+plt.plot(
+    np.arange(5),
+    best_model_new,
+    's-',
+    label=table["SpT"].iloc[best_idx]
+)
+
+plt.plot(
+    np.arange(5),
+    k4_colors_new,
+    's-',
+    label="K4V"
+)
+
+plt.xticks(
+    np.arange(5),
+    color_labels_new
+)
+plt.xlabel('Color (mag)')
+plt.grid(alpha=0.3)
+plt.legend()
+plt.show()
+
+x = np.arange(5)
+
+plt.figure(figsize=(9,5))
+
+# Neighbor observed
+plt.errorbar(x, neighbor_colors_new, yerr=neighbor_color_errors_new, fmt='o-', label='Neighbor')
+
+# G9V reference
+plt.plot(x, g9_colors_new, 's-', label='G9V')
+
+# Neighbor forced dereddened (should overlap G9V)
+plt.plot(x, neighbor_colors_new-color_residuals_new, 'x--', label='Dereddened Neighbor')
+
+plt.xticks(x, color_labels)
+plt.ylabel("Color (mag)")
+plt.legend()
+plt.grid(alpha=0.3)
+plt.show()
+
+#%%
+
+'''
 
 ###doing really stupid stuff over here
 from itertools import product
@@ -338,8 +641,6 @@ for mask in all_masks:
     spt_labels = table["SpT"].values
     best_x = ebv_array[best_ebv_idx]
     best_y = best_spT_idx
-    #target_spt = "G9V" #for aql, K4
-    target_spt = "K4V"
     
     g5_idx = table.index[table["SpT"] == target_spt][0]
     ebv_target = 0.5
@@ -358,7 +659,7 @@ for mask in all_masks:
     
     plt.xlabel("E(B-V)")
     plt.ylabel("Spectral Type Index")
-    plt.title("Reduced Chi-Squared Grid")
+    plt.title(f'Using: {np.array(["V-Rc","V-Ic","V-Ks","J-H","H-Ks"])[use_colors]}')
     plt.yticks(
         ticks=np.arange(len(table)),
         labels=spt_labels
@@ -379,7 +680,7 @@ for mask in all_masks:
         color='black',
         s=80,
         marker='x',
-        #label='G9V, EBV=0.5'
+        label=f'{target_spt}, EBV=0.5'
     )
     plt.legend()
     plt.show()
@@ -390,3 +691,4 @@ print("Best mask:", best_run["mask"])
 print("Best SpT:", best_run["best_spt"])
 print("Best E(B-V):", best_run["best_ebv"])
 print("Best chi2:", best_run["best_chi2"])
+'''

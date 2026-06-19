@@ -114,8 +114,49 @@ full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
 #Mask out quiescence
-intervals = list(zip(full["Start MJD"], full["End MJD"])) + \
-            list(zip(mini["Start MJD"], mini["End MJD"]))
+count_mini = True
+
+full_intervals = (
+    list(zip(full["Start MJD"], full["End MJD"])) +
+    list(zip(mini["Start MJD"], mini["End MJD"]))
+)
+
+if count_mini:
+    intervals = full_intervals
+else:
+    intervals = list(zip(full["Start MJD"], full["End MJD"]))
+
+#quiescent intervals
+all_mjd = np.concatenate([
+    data[key]["df"]["MJD"].values
+    for key in data
+])
+
+data_start = np.min(all_mjd)
+data_end   = np.max(all_mjd)
+
+intervals = sorted(intervals, key=lambda x: x[0])
+
+quiescent_intervals = []
+
+quiescent_intervals.append(
+    (data_start, intervals[0][0])
+)
+
+for i in range(len(intervals)-1):
+
+    end_current = intervals[i][1]
+    start_next  = intervals[i+1][0]
+
+    if start_next > end_current:
+        quiescent_intervals.append(
+            (end_current, start_next)
+        )
+
+quiescent_intervals.append(
+    (intervals[-1][1], data_end)
+)
+    
 
 def get_quiescent(df, intervals):
     mask = np.ones(len(df), dtype=bool)
@@ -169,24 +210,21 @@ for key in data:
 #%%
 
 #epochs, I think based on all times
+def assign_quiescent_epochs(df, quiescent_intervals):
 
-def get_epoch_boundaries(all_mjd, gap=42):
-    all_mjd = np.sort(np.unique(all_mjd))
-
-    boundaries = [all_mjd[0]]
-
-    for i in range(1, len(all_mjd)):
-        if all_mjd[i] - all_mjd[i-1] >= gap:
-            boundaries.append(all_mjd[i])
-
-    boundaries.append(all_mjd[-1] + 1)
-
-    return boundaries
-
-def assign_epochs_from_boundaries(df, boundaries):
     df = df.copy()
 
-    df["epoch"] = np.digitize(df["MJD"], boundaries) - 1
+    df["epoch"] = -1
+
+    for i, (start, end) in enumerate(quiescent_intervals):
+
+        mask = (
+            (df["MJD"] >= start) &
+            (df["MJD"] <= end)
+        )
+
+        df.loc[mask, "epoch"] = i
+
     return df
 
 def compute_epoch_medians(df):
@@ -258,7 +296,7 @@ def get_pvalue(key,a=0.05, n_iter=10000):
             plt.figure(figsize=(8,4))
             plt.hist(fake_medians, bins=50)
             plt.title(f'{key}, epoch {epoch}')
-            plt.savefig(f'/home/kmc249/Downloads/simulated_histograms/f{key}_{epoch}.png')
+            #plt.savefig(f'/home/kmc249/Downloads/simulated_histograms/f{key}_{epoch}.png')
             plt.show()
         except:
             continue
@@ -269,14 +307,16 @@ def get_pvalue(key,a=0.05, n_iter=10000):
 
 #%%
 #find the epochs and compute some medians
-all_mjd = pd.concat([data[k]["quiescence"][["MJD"]] for k in data])["MJD"].values
-boundaries = get_epoch_boundaries(all_mjd, gap=42)
 for key in data:
-    df = data[key]['quiescence']
 
+    df = data[key]["quiescence"]
     # 1. assign epochs
-    df = assign_epochs_from_boundaries(df, boundaries)
-    data[key]['quiescence'] = df
+    df = assign_quiescent_epochs(
+        df,
+        quiescent_intervals
+    )
+
+    data[key]["quiescence"] = df
 
     # 2. local epoch medians
     epoch_medians = compute_epoch_medians(df)
@@ -421,11 +461,13 @@ def ks_test(key,a=0.05, n_iter=10000):
     
     # ideal uniform line
     plt.plot([0, 1], [0, 1], '--', color='black', label="x=y")
+    plt.plot([0, 0.5], [0, 1], '--', color='blue', label="active expected")
+    plt.plot([0.5, 1.0], [0.0, 1.0], '--', color="orange", label="passive expected")
     plt.title(key)
     plt.xlabel("x (percentile threshold)")
     plt.ylabel("Fraction of percentiles ≤ x")
     plt.legend()
-    plt.savefig(f'/home/kmc249/Downloads/cdf_{key}.png')
+    #plt.savefig(f'/home/kmc249/Downloads/cdf_{key}.png')
     plt.show()
 
 #%%
@@ -451,9 +493,7 @@ for ax, (key, item) in zip(axes, data.items()):
     df = item["plot_df"]
     
     # ---- shaded epoch regions ----
-    for i in range(len(boundaries) - 1):
-        start = boundaries[i]
-        end = boundaries[i + 1]
+    for i, (start, end) in enumerate(quiescent_intervals):
 
         epoch_id = i
 
@@ -475,8 +515,9 @@ for ax, (key, item) in zip(axes, data.items()):
                    s=10, color=color, label=state, alpha=0.8)
 
     # ---- vertical epoch boundaries ----
-    for x in boundaries:
-        ax.axvline(x, color="k", alpha=0.3, linewidth=1)
+    for start, end in quiescent_intervals:
+        ax.axvline(start, color="k", alpha=0.3, linewidth=1)
+        ax.axvline(end,   color="k", alpha=0.3, linewidth=1)
 
 
     ax.set_title(key)
@@ -558,9 +599,7 @@ for ax, (key, item) in zip(axes, data.items()):
     print(df.columns)
     
     # ---- shaded epoch regions (per-band significance) ----
-    for i in range(len(boundaries) - 1):
-        start = boundaries[i]
-        end = boundaries[i + 1]
+    for i, (start, end) in enumerate(quiescent_intervals):
     
         epoch_id = i
     
@@ -589,8 +628,9 @@ for ax, (key, item) in zip(axes, data.items()):
                        s=10, color=color, marker=marker, label=state, alpha=0.8)
 
     # ---- vertical epoch boundaries ----
-    for x in boundaries:
-        ax.axvline(x, color="k", alpha=0.3, linewidth=1)
+    for start, end in quiescent_intervals:
+        ax.axvline(start, color="k", alpha=0.3, linewidth=1)
+        ax.axvline(end,   color="k", alpha=0.3, linewidth=1)
 
 
     ax.set_title(key)
@@ -611,243 +651,246 @@ plt.show()
 #%%
 
 for key in data:
-    try:
-        print('running ', key)
-        if key!='R SMARTS':
-            continue
-        table=data[key]['plot_df']
-        
-        #get only passive
-        table = table[table["state"] == 'passive']
-        table['nice time']=Time(table['MJD'], format='mjd').to_datetime()
-        maglabel=key
-        magstring='mag'
-        #upper=19
-        #lower=22
-        #table=table.loc[(table[magstring]>upper) & (table[magstring]<lower)]
-        #sigma clip
-        mag = table[magstring]
-    
-        center = np.median(mag)  # robust center
-        s68 = (np.percentile(mag, 84.13) - np.percentile(mag, 15.87)) / 2
-        
-        table = table[np.abs(mag - center) <= 5 * s68]
-        
-        
-        #periodogramming things
-        baseline=table['nice time'].max()-table['nice time'].min()
-        base_days=baseline.total_seconds() / 3600 /24
-        print(base_days)
-        
-        #folded??
-        P = 0.789498/2  # period in days
-        times = Time(table['nice time']).mjd
-        t0 = times.min()
-        phase = ((times - t0) / P) % 1
-        table['their phase']=phase
-        
-        ##periodograms
-        min_frequency = 2*24/18.96
-        max_frequency = 2*24/18.94
-        
-        deltaf=P/base_days/4
-        print('DELTA F:', deltaf)
-        print(np.abs(min_frequency-max_frequency)/10000)
-        
-        frequency = np.linspace(min_frequency, max_frequency, 20000)#np.arange(min_frequency, max_frequency, deltaf)
-        
-        fall, pall = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).autopower(maximum_frequency=2)
-        power = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).power(frequency)
-        
-        # Convert frequency to period in hours
-        period_hours = 24 / frequency
-        sorted_idx = np.argsort(period_hours)
-        period_hours_sorted = period_hours[sorted_idx]
-        power_sorted = power[sorted_idx]
-        
-        # Plot periodogram in period units
-        plt.figure(figsize=(8,4))
-        plt.plot(period_hours_sorted, power_sorted)
-        plt.xlabel('Period (hours)')
-        plt.ylabel('Power')
-        plt.title('Lomb-Scargle Periodogram')
-        plt.axvline(x=P*24/2,alpha=0.5, color='red')
-        plt.savefig(f'/home/kmc249/folded_curves/{key}_periodogram.png')
-        plt.show(block=False)
-        
-        fig, ax = plt.subplots(figsize=(8,4))
-        ax.plot(frequency, power)
-        plt.show(block=False)
-        
-        # samme thing for fall pall
-        pall_hours = 24 / fall
-        sorted_idxall = np.argsort(pall_hours)
-        period_hours_sortedall = pall_hours[sorted_idxall]
-        power_sortedall = pall[sorted_idxall]
-        
-        # Plot periodogram in period units
-        '''
-        plt.figure(figsize=(8,4))
-        plt.plot(period_hours_sortedall, power_sortedall)
-        plt.xlabel('Period (hours)')
-        plt.ylabel('Power')
-        plt.title('Lomb-Scargle Periodogram (all freq, capped)')
-        plt.axvline(x=P*24,alpha=0.5, color='red')
-        plt.xlim(12, 45)
-        plt.show(block=False)
-        '''
-        
-        fig, ax = plt.subplots()
-        ax.plot(fall, pall)
-        plt.show(block=False)
-        
-        best_frequency = frequency[np.argmax(power)]
-        P2 = 1 / best_frequency
-        best_period_hours = P2 * 24
-        print(best_period_hours)
-        
-        phase2 = ((times - t0) / P2) % 1
-        table['our phase']=phase2
-        
-        # Number of bins
-        nbins = 5
-        bins = np.linspace(0, 1, nbins + 1)
-        bin_centers = 0.5 * (bins[:-1] + bins[1:])
-        
-        # Assign each phase to a bin
-        table['our phase bin'] = pd.cut(table['our phase'], bins=bins, include_lowest=True, labels=bin_centers)
-        table['their phase bin'] = pd.cut(table['their phase'], bins=bins, include_lowest=True, labels=bin_centers)
-        
-        # Compute mean and std per bin
-        binned = table.groupby('our phase bin')[magstring].agg(['mean','std']).reset_index()
-        binned_them = table.groupby('their phase bin')[magstring].agg(['mean','std']).reset_index()
-        
-        yerr_up_us = []
-        yerr_down_us = []
-        
-        for center in binned['our phase bin']:
-            # Get all points in this phase bin
-            points = table.loc[table['our phase bin'] == center, magstring].values
-            if len(points) == 0:
-                yerr_up_us.append(0)
-                yerr_down_us.append(0)
-                continue
-            
-            mean_bin = np.mean(points)
-            
-            # Points above/below mean
-            above = points[points > mean_bin]
-            below = points[points < mean_bin]
-            
-            # 68% confidence ~ 1 sigma
-            sigma_up = np.percentile(above, 68.3) - mean_bin if len(above) > 0 else 0
-            sigma_down = mean_bin - np.percentile(below, 31.7) if len(below) > 0 else 0
-            
-            yerr_up_us.append(sigma_up)
-            yerr_down_us.append(sigma_down)
-        
-        # Make 2×N array for asymmetric error bars
-        yerr_asym_us = np.array([yerr_down_us, yerr_up_us])
-        
-        yerr_up_them = []
-        yerr_down_them = []
-        
-        for center in binned['our phase bin']:
-            # Get all points in this phase bin
-            points = table.loc[table['our phase bin'] == center, magstring].values
-            if len(points) == 0:
-                yerr_up_them.append(0)
-                yerr_down_them.append(0)
-                continue
-            
-            mean_bin = np.mean(points)
-            
-            # Points above/below mean
-            above = points[points > mean_bin]
-            below = points[points < mean_bin]
-            
-            # 68% confidence ~ 1 sigma
-            sigma_up = np.percentile(above, 68.3) - mean_bin if len(above) > 0 else 0
-            sigma_down = mean_bin - np.percentile(below, 31.7) if len(below) > 0 else 0
-            
-            yerr_up_them.append(sigma_up)
-            yerr_down_them.append(sigma_down)
-        
-        # Make 2×N array for asymmetric error bars
-        yerr_asym_them = np.array([yerr_down_them, yerr_up_them])
-        
-        def sine_model(phi, offset, amplitude, phase_shift):
-            return offset + amplitude * np.sin(2*np.pi*(phi - phase_shift))
-        
-        
-        
-        x = binned['our phase bin'].astype(float).values
-        y = binned['mean'].values
-        
-        # remove NaNs
-        mask = np.isfinite(x) & np.isfinite(y)
-        x = x[mask]
-        y = y[mask]
-        
-        # initial guesses
-        offset0 = np.mean(y)
-        amp0 = (np.max(y) - np.min(y)) / 2
-        phase0 = x[np.argmin(y)]   # minimum mag = brightest
-        
-        popt, pcov = curve_fit(
-            sine_model,
-            x,
-            y,
-            p0=[offset0, amp0, phase0]
-        )
-        
-        offset_fit, amp_fit, phase_fit = popt
-        
-        print("Offset =", offset_fit)
-        print("Amplitude =", amp_fit)
-        print("Phase shift =", phase_fit)
-        phi_fit = np.linspace(0, 2, 1000)
 
-        y_fit = sine_model(phi_fit % 1, *popt)
-        
-        # Plot with asymmetric error bars
-        plt.figure(figsize=(8,4))
-        plt.scatter(phase2, table[magstring], s=15, color='gray', label='Data')
-        plt.scatter(phase2 + 1, table[magstring], s=15, color='gray', alpha=0.5)
-        plt.errorbar(binned['our phase bin'].astype(float), binned['mean'], yerr=yerr_asym_us,
-                     fmt='o', color='red', label='Binned Avg')
-        plt.errorbar(binned['our phase bin'].astype(float)+1, binned['mean'], yerr=yerr_asym_us,
-                     fmt='o', color='red', alpha=0.5)
-        plt.plot(phi_fit, y_fit, 'b-', lw=3, label=f'Sine fit, A={amp_fit:.3f}')
-        plt.xlabel('Orbital Phase')
-        plt.ylabel(maglabel)
-        plt.gca().invert_yaxis()
-        plt.title(f'{magstring} Our Period: {best_period_hours} hrs')
-        plt.legend()
-        plt.tight_layout()
-        
-        plt.show(block=False)
-        
-        
-        # Plot
-        plt.figure(figsize=(8,4))
-        plt.scatter(phase, table[magstring], s=15, color='gray', label='Data')
-        plt.scatter(phase + 1, table[magstring], s=15, color='gray', alpha=0.5)
-        
-        plt.errorbar(binned_them['their phase bin'].astype(float), binned_them['mean'], yerr=yerr_asym_them,
-                     fmt='o', color='red', label='Binned Avg')
-        plt.errorbar(binned_them['their phase bin'].astype(float)+1, binned_them['mean'], yerr=yerr_asym_them,
-                     fmt='o', color='red', alpha=0.5)
-        
-        plt.xlabel('Orbital Phase')
-        plt.ylabel(maglabel)
-        plt.gca().invert_yaxis()
-        plt.legend()
-        plt.title(f'{magstring} Their Period: {P*24} hrs')
-        plt.tight_layout()
-        plt.show()
-    except:
-        continue
+    print('running ', key)
+    table=data[key]['plot_df']
+    
+    #get only passive
+    table = table[table["state"] == 'passive']
+    table['nice time']=Time(table['MJD'], format='mjd').to_datetime()
+    maglabel=key
+    magstring='mag_shifted'
+    #upper=19
+    #lower=22
+    #table=table.loc[(table[magstring]>upper) & (table[magstring]<lower)]
+    #sigma clip
+    mag = table[magstring]
+    
+    # drop NaNs FIRST
+    mag = mag.dropna()
+    table = table.loc[mag.index].copy()
+    
+    center = np.median(mag)
+    
+    s68 = 0.5 * (np.percentile(mag, 84.13) - np.percentile(mag, 15.87))
+    
+    # safety check
+    if not np.isfinite(s68) or s68 == 0:
+        print(key, "bad s68 =", s68, "→ skipping clipping")
+    else:
+        mask = np.abs(mag - center) <= 5 * s68
+        table = table.loc[mask].copy()
     
     
+    #periodogramming things
+    baseline=table['nice time'].max()-table['nice time'].min()
+    base_days=baseline.total_seconds() / 3600 /24
+    print(base_days)
+    
+    #folded??
+    P = 0.789498/2  # period in days
+    times = Time(table['nice time']).mjd
+    t0 = times.min()
+    phase = ((times - t0) / P) % 1
+    table['their phase']=phase
+    
+    ##periodograms
+    min_frequency = 2*24/18.96
+    max_frequency = 2*24/18.94
+    
+    deltaf=P/base_days/4
+    print('DELTA F:', deltaf)
+    print(np.abs(min_frequency-max_frequency)/10000)
+    
+    frequency = np.linspace(min_frequency, max_frequency, 20000)#np.arange(min_frequency, max_frequency, deltaf)
+    
+    fall, pall = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).autopower(maximum_frequency=2)
+    power = LombScargle(times, table[magstring]-np.nanmean(table[magstring])).power(frequency)
+    
+    # Convert frequency to period in hours
+    period_hours = 24 / frequency
+    sorted_idx = np.argsort(period_hours)
+    period_hours_sorted = period_hours[sorted_idx]
+    power_sorted = power[sorted_idx]
+    '''
+    # Plot periodogram in period units
+    plt.figure(figsize=(8,4))
+    plt.plot(period_hours_sorted, power_sorted)
+    plt.xlabel('Period (hours)')
+    plt.ylabel('Power')
+    plt.title('Lomb-Scargle Periodogram')
+    plt.axvline(x=P*24/2,alpha=0.5, color='red')
+    plt.savefig(f'/home/kmc249/folded_curves/{key}_periodogram.png')
+    plt.show(block=False)
+    
+    fig, ax = plt.subplots(figsize=(8,4))
+    ax.plot(frequency, power)
+    plt.show(block=False)
+    '''
+    # samme thing for fall pall
+    pall_hours = 24 / fall
+    sorted_idxall = np.argsort(pall_hours)
+    period_hours_sortedall = pall_hours[sorted_idxall]
+    power_sortedall = pall[sorted_idxall]
+    
+    # Plot periodogram in period units
+    '''
+    plt.figure(figsize=(8,4))
+    plt.plot(period_hours_sortedall, power_sortedall)
+    plt.xlabel('Period (hours)')
+    plt.ylabel('Power')
+    plt.title('Lomb-Scargle Periodogram (all freq, capped)')
+    plt.axvline(x=P*24,alpha=0.5, color='red')
+    plt.xlim(12, 45)
+    plt.show(block=False)
+    '''
+    '''
+    fig, ax = plt.subplots()
+    ax.plot(fall, pall)
+    plt.show(block=False)
+    '''
+    best_frequency = frequency[np.argmax(power)]
+    P2 = 1 / best_frequency
+    best_period_hours = P2 * 24
+    print(best_period_hours)
+    
+    phase2 = ((times - t0) / P2) % 1
+    table['our phase']=phase2
+    
+    # Number of bins
+    nbins = 5
+    bins = np.linspace(0, 1, nbins + 1)
+    bin_centers = 0.5 * (bins[:-1] + bins[1:])
+    
+    # Assign each phase to a bin
+    table['our phase bin'] = pd.cut(table['our phase'], bins=bins, include_lowest=True, labels=bin_centers)
+    table['their phase bin'] = pd.cut(table['their phase'], bins=bins, include_lowest=True, labels=bin_centers)
+    
+    # Compute mean and std per bin
+    binned = table.groupby('our phase bin')[magstring].agg(['mean','std']).reset_index()
+    binned_them = table.groupby('their phase bin')[magstring].agg(['mean','std']).reset_index()
+    
+    binned = table.groupby('our phase bin')[magstring].agg(
+        mean='mean',
+        std='std',
+        count='count'
+    ).reset_index()
+    
+    binned_them = table.groupby('their phase bin')[magstring].agg(
+        mean='mean',
+        std='std',
+        count='count'
+    ).reset_index()
+    
+    binned['sem'] = binned['std'] / np.sqrt(binned['count'])
+    binned_them['sem'] = binned_them['std'] / np.sqrt(binned_them['count'])
+    
+    yerr_us = binned['sem'].values
+    yerr_them = binned_them['sem'].values
+    
+    def sine_model(phi, offset, amplitude, phase_shift):
+        return offset + amplitude * np.sin(2*np.pi*(phi - phase_shift))
+    
+    def linear_model(x, m, b):
+        return m * x + b
+    
+    x = binned['our phase bin'].astype(float).values
+    y = binned['mean'].values
+    
+    # remove NaNs
+    mask = np.isfinite(x) & np.isfinite(y)
+    x = x[mask]
+    y = y[mask]
+    
+    # initial guesses
+    offset0 = np.mean(y)
+    amp0 = (np.max(y) - np.min(y)) / 2
+    phase0 = x[np.argmin(y)]   # minimum mag = brightest
+    
+    popt, pcov = curve_fit(
+        sine_model,
+        x,
+        y,
+        p0=[offset0, amp0, phase0]
+    )
+    
+    popt_lin, pcov_lin = curve_fit(
+        linear_model,
+        x,
+        y,
+        p0=[0, np.mean(y)]
+    )
+    
+    m_fit, b_fit = popt_lin
+    
+    offset_fit, amp_fit, phase_fit = popt
+    
+    print("Offset =", offset_fit)
+    print("Amplitude =", amp_fit)
+    print("Phase shift =", phase_fit)
+    phi_fit = np.linspace(0, 2, 1000)
 
+    y_fit = sine_model(phi_fit % 1, *popt)
+    
+    #chi^2 red
+    y_fit2 = sine_model(binned['our phase bin'].astype(float), *popt)
+    residuals = binned['mean'] - y_fit2
+
+    chi2 = np.sum((residuals / yerr_us) ** 2)
+    dof = len(x) - len(popt)
+    chi2_red = chi2 / dof
+    
+    print("Reduced chi-square:", chi2_red)
+    
+    y_lin = linear_model(binned['our phase bin'].astype(float).values, *popt_lin)
+    res_lin = binned['mean'] - y_lin
+    
+    chi2_lin = np.sum((res_lin / yerr_us) ** 2)
+    dof_lin = len(x) - len(popt_lin)
+    chi2_red_lin = chi2_lin / dof_lin
+    
+    print("Linear reduced chi-square:", chi2_red_lin)
+    x_fit = np.linspace(0, 1, 500)
+    y_lin_fit = linear_model(x_fit, *popt_lin)
+    
+    # Plot with asymmetric error bars
+    plt.figure(figsize=(8,4))
+    plt.scatter(phase2, table[magstring], s=15, color='gray', label='Data')
+    plt.scatter(phase2 + 1, table[magstring], s=15, color='gray', alpha=0.5)
+    plt.plot(phi_fit, y_fit, 'b-', lw=1, label=f'Sine fit, A={amp_fit:.3f}, χ²_red= {chi2_red:.3f}')
+    plt.plot(x_fit, y_lin_fit, 'k--', lw=2, label=f'Linear fit, χ²_red={chi2_red_lin:.2f}')
+    plt.errorbar(binned['our phase bin'].astype(float), binned['mean'], yerr=yerr_us,
+                 fmt='none', color='red', label='Binned Avg')
+    plt.errorbar(binned['our phase bin'].astype(float)+1, binned['mean'], yerr=yerr_us,
+                 fmt='none', color='red', alpha=0.5)
+    
+    plt.xlabel('Orbital Phase')
+    plt.ylabel(maglabel)
+    plt.gca().invert_yaxis()
+    plt.title(f'{magstring} Our Period: {best_period_hours} hrs')
+    plt.legend()
+    plt.tight_layout()
+    #plt.savefig(f'/home/kmc249/Downloads/{maglabel}_passive_count_mini.png')
+    
+    plt.show(block=False)
+    '''
+    
+    # Plot
+    plt.figure(figsize=(8,4))
+    plt.scatter(phase, table[magstring], s=15, color='gray', label='Data')
+    plt.scatter(phase + 1, table[magstring], s=15, color='gray', alpha=0.5)
+    
+    plt.errorbar(binned_them['their phase bin'].astype(float), binned_them['mean'], yerr=yerr_them,
+                 fmt='.', color='red', label='Binned Avg')
+    plt.errorbar(binned_them['their phase bin'].astype(float)+1, binned_them['mean'], yerr=yerr_them,
+                 fmt='.', color='red', alpha=0.5)
+    
+    plt.xlabel('Orbital Phase')
+    plt.ylabel(maglabel)
+    plt.gca().invert_yaxis()
+    plt.legend()
+    plt.title(f'{magstring} Their Period: {P*24} hrs')
+    plt.tight_layout()
+    plt.show()
+    '''
+    

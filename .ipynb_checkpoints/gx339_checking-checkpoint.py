@@ -9,7 +9,7 @@ Created on Tue May 26 08:37:53 2026
 from pathlib import Path
 
 
-target='GX339-4'
+target='J1305-704'
 # Base directory
 base = Path(f"/neta/xrb/{target}/1.3m/opt/rccd")
 

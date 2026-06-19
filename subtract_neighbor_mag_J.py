@@ -190,7 +190,7 @@ plt.tight_layout()
 #plt.savefig('/home/kmc249/Downloads/J_corrected.png', dpi=300)
 plt.show()
 
-#J_corrected[['Date', 'MJD', 'Jmag_corr', 'e_Jmag_corr', 'Jmag', 'e_Jmag', 'Ncomp', 'Nmatch', 'stack_median', "Jmag Divided Version"]].to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_J_corrected_lc.csv', index=False)
+J_corrected[['Date', 'MJD', 'Jmag_corr', 'e_Jmag_corr', 'Jmag', 'e_Jmag', 'Ncomp', 'Nmatch', 'stack_median', "Jmag Divided Version"]].to_csv('/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_J_corrected_lc.csv', index=False)
 #%%
 
 fig, axes = plt.subplots(
