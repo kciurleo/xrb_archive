@@ -28,7 +28,7 @@ import matplotlib.dates as mdates
 from astropy.time import Time
 
 
-target='J1631-478'
+target='NovaMusca'
 ignore_error_issue=False #Sometimes, the 4D fit goes crazy, so we need to do a 2D poly fit instead
 
 outdir = f'/neta/xrb/{target}/product/first_pass_lightcurves'
@@ -409,18 +409,43 @@ colors = {
     'I': 'chocolate'
 }
 
-plt.figure(figsize=(14, 4))
+# Save one full light curve grouped by filter
 
-for tele in telescopes:
-    for band in optical_bands:
+# Determine which filters actually exist
+available_bands = []
+
+for band in optical_bands:
+    for tele in telescopes:
         fname = f'{outdir}/{target}_{tele}_{band}_first_pass_lc.csv'
-        
-        try:
-            df = pd.read_csv(fname)
-        except FileNotFoundError:
+        if os.path.exists(fname):
+            available_bands.append(band)
+            break
+
+available_bands = list(dict.fromkeys(available_bands))  # preserve order
+
+fig, axes = plt.subplots(
+    len(available_bands),
+    1,
+    figsize=(14, 3*len(available_bands)),
+    sharex=True
+)
+
+# Handle case of only one subplot
+if len(available_bands) == 1:
+    axes = [axes]
+
+for ax, band in zip(axes, available_bands):
+
+    for tele in telescopes:
+
+        fname = f'{outdir}/{target}_{tele}_{band}_first_pass_lc.csv'
+
+        if not os.path.exists(fname):
             continue
-        if len(df)==0:
-            print('phot file is empty!!! Something went wrong earlier')
+
+        df = pd.read_csv(fname)
+
+        if len(df) == 0:
             continue
 
         df['nice time'] = pd.to_datetime(
@@ -429,12 +454,7 @@ for tele in telescopes:
             utc=True,
             errors='coerce'
         ).dt.tz_localize(None)
-        
-        # force real datetime64 dtype
-        df['nice time'] = pd.Series(
-            df['nice time'].values,
-            dtype='datetime64[ns]'
-        )
+
         valid = (
             df['target mag'].notna() &
             df['error'].notna() &
@@ -444,26 +464,53 @@ for tele in telescopes:
         if valid.sum() == 0:
             continue
 
-        plt.errorbar(
-            df.loc[valid, 'nice time'].to_numpy(),
-            df.loc[valid, 'target mag'].to_numpy(),
-            yerr=df.loc[valid, 'error'].to_numpy(),
+        ax.errorbar(
+            df.loc[valid, 'nice time'],
+            df.loc[valid, 'target mag'],
+            yerr=df.loc[valid, 'error'],
             fmt='o',
-            ms=3,
+            ms=1,
             lw=0.5,
-            color=colors.get(band, 'black'),
-            alpha=0.7,
-            label=f'{tele} {band}'
+            color=colors[band],
+            alpha=0.8,
+            label=tele
         )
 
-plt.gca().invert_yaxis()
-plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+    ax.invert_yaxis()
+    ax.set_ylabel(f'{band} mag')
+    #ax.legend()
 
-plt.ylabel("Magnitude")
-plt.title(f"{target} — Combined Light Curves")
+# Top axis (MJD)
+tick_locs = axes[0].get_xticks()
+tick_dates = mdates.num2date(tick_locs)
+tick_mjds = Time(tick_dates).mjd
 
-plt.legend(ncol=4, fontsize=8)
-plt.tight_layout()
+axes[0].set_xticks(tick_locs)
+axes[0].set_xticklabels([f"{mjd:.1f}" for mjd in tick_mjds])
+axes[0].xaxis.set_ticks_position('top')
+axes[0].xaxis.set_label_position('top')
+axes[0].set_xlabel("MJD")
+
+# Hide the bottom ticks/labels on the top subplot
+axes[0].tick_params(axis='x', bottom=False, labelbottom=False)
+
+# Bottom axis (Date)
+ax_date = axes[-1].twiny()
+ax_date.set_xlim(axes[-1].get_xlim())
+ax_date.set_xticks(tick_locs)
+ax_date.set_xticklabels([d.strftime('%Y-%m-%d') for d in tick_dates])
+
+ax_date.xaxis.set_ticks_position('bottom')
+ax_date.xaxis.set_label_position('bottom')
+ax_date.spines['bottom'].set_position(('outward', 0))
+ax_date.set_xlabel("Date")
+
+# Hide the original bottom axis completely
+axes[-1].tick_params(axis='x', bottom=False, labelbottom=False)
+axes[-1].spines['bottom'].set_visible(False)
+
+fig.suptitle(f"{target}", fontsize=16)
+fig.tight_layout()
 
 plt.savefig(f'{outdir}/{target}_combined_first_pass_lc.png', dpi=200)
 plt.show()

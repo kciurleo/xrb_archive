@@ -343,3 +343,97 @@ fig.legend(handles, labels,
 plt.tight_layout(rect=[0, 0, 1, 0.96])
 plt.show()
 
+
+
+#%%%
+
+#getting b band comps for pagny
+    
+iis=np.array(iis)
+gaias=np.array(gaias)
+diis=np.array(diis)
+dgaias=np.array(dgaias)
+bps=np.array(bps)
+rps=np.array(rps)
+rs=np.array(rs)
+gs=np.array(gs)
+bps_err=np.array(bps_err)
+rps_err=np.array(rps_err)
+rs_err=np.array(rs_err)
+gs_err=np.array(gs_err)
+
+#PanSTARRS transformation:
+panstarrsB=gs+0.212+0.556*d+0.034*d**2
+#transformation error from paper is 0.032
+print(panstarrsB)
+
+lam_B = 4380   # Angstrom
+lam_V = 5450
+lam_I = 7980
+
+
+# effective wavelengths (Angstrom)
+wavelengths = np.array([4380, 5450, 7980])
+
+# Effective wavelengths (Angstrom)
+wavelengths = np.array([4380, 5450, 7980])
+
+plt.figure(figsize=(7,6))
+
+for i, color, name in zip(range(3), colors, names):
+
+    mags = np.array([
+        panstarrsB[i],
+        buxtonV[i],
+        buxtonI[i]
+    ])
+
+    plt.plot(
+        wavelengths,
+        mags,
+        '-o',
+        color=color,
+        lw=2,
+        ms=8,
+        label=f'Star {name}'
+    )
+
+plt.gca().invert_yaxis()      # brighter stars at the top
+plt.xticks(wavelengths, ['B', 'V', 'I'])
+plt.xlabel('Filter')
+plt.ylabel('Magnitude')
+plt.title('with buxton v, i and synth b')
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+
+
+plt.figure(figsize=(7,6))
+
+for i, color, name in zip(range(3), colors, names):
+
+    mags = np.array([
+        panstarrsB[i],
+        synth_V[i],
+        synth_I[i]
+    ])
+
+    plt.plot(
+        wavelengths,
+        mags,
+        '-o',
+        color=color,
+        lw=2,
+        ms=8,
+        label=f'Star {name}'
+    )
+
+plt.gca().invert_yaxis()      # brighter stars at the top
+plt.xticks(wavelengths, ['B', 'V', 'I'])
+plt.xlabel('Filter')
+plt.ylabel('Magnitude')
+plt.title('with all synth colors')
+plt.legend()
+plt.tight_layout()
+plt.show()

@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 
 #this should be the proper name of the object you want to search for
-interest=''
+interest='SW J1753'
 
 #replog version
 paths=['/USB2/archive/REP-LOGS-2012/','/USB2/archive/2011.lastpart/REP-LOGS/', '/USB1/archive/REP-LOGS/2009/', '/USB1/archive/REP-LOGS/2010/', '/USB1/archive/REP-LOGS/2011firstpart/']
@@ -76,7 +76,7 @@ for log in loglist:
         
     #if we didn't find that log, then there was no observing that night, so skip
     if header_line==0:
-        no_obs_list.append(log)
+        #no_obs_list.append(log)
         continue
     
     df = pd.read_fwf(log, skiprows=header_line+1, colspecs=colspecs,skipfooter=footer_line, names=colnames)
@@ -105,9 +105,9 @@ for log in loglist:
 ### find the xrbs and what files exist for each of them. 
 #we're going to make a massive log to be used with the nice calendar thing
     
-replogdf=pd.DataFrame(xrb_rows)
-
-replogdf.to_csv(f'/home/kmc249/usbdrive_logs/single_replog_{interest}.csv', index=False)
+replogdf=pd.DataFrame(obj_rows)
+print('length of replog: ',len(obj_rows))
+#replogdf.to_csv(f'/home/kmc249/usbdrive_logs/single_replog_{interest}.csv', index=False)
 
 
 #scrapelog version
@@ -205,6 +205,7 @@ for repo in paths:
 
 
 df=pd.DataFrame(rows, columns=['filename', 'full path'] + keywords)
-df.to_csv(f'/home/kmc249/usbdrive_logs/single_scrapelog_{interest}.csv', index=False) 
+#df.to_csv(f'/home/kmc249/usbdrive_logs/single_scrapelog_{interest}.csv', index=False) 
 
 print('objs found in 20013-2019:', set(objs))
+print('len of scrapelog: ',len(rows))

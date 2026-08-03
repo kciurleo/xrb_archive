@@ -45,9 +45,9 @@ filelist=['rccd030426.0197.fits',
  'rccd050902.0040.fits']
 
 
-for file in filelist:#['/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd030404.0358.fits']:#glob.glob('/neta/xrb/GX339-4/1.3m/opt/rccd/I_trimmed/*'):
+for file in glob.glob('/neta/xrb/GX339-4/1.3m/opt/rccd/I_trimmed/*'):
     print(f'now showing{file}')
-    file=prefix+file
+    #file=prefix+file
     data=fits.getdata(file)
     hdr=fits.getheader(file)
     print(hdr)

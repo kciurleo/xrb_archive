@@ -21,6 +21,14 @@ filelist=glob.glob('/home/kmc249/Downloads/phot_fluxes_13m_yr*_apsize_8.0.csv')
 
 dflist=[pd.read_csv(i) for i in filelist]
 table1 = pd.concat(dflist, ignore_index=True)
+
+#table1:
+bad_guys=['/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd010705.0027.fits','/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r0717_1898.067.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r1009_1098.010.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r1120_2198.001.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0515_1699.037.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0703_0499.057.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0703_0499.061.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0703_0499.066.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0703_0499.069.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd990805.0017.fits','/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd100423.0084.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd141031.0025.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd180527.0142.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd180628.0094.fits','/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd990727.0007.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd020511.0037.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd050620.0131.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd080327.0142.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd080426.0131.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd100330.0175.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd110318.0139.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd110608.0137.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd150730.0062.fits','/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r0807_0898.046.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r0815_1698.039.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r0818_1998.033.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r0824_2598.008.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r0905_0698.029.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r0926_2798.004.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r0928_2998.004.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r1012_1398.006.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r1022_2398.008.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_r1029_3098.003.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r1117_1898.002.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r1118_1998.001.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0317_1899.041.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0320_2199.045.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0511_1299.037.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0603_0499.045.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0603_0499.048.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0703_0499.045.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_wideR/trim_r0703_0499.053.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd990728.0013.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd000406.0042.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd000517.0031.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd000517.0035.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd000522.0032.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd000629.0018.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd000819.0024.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd001002.0016.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd001015.0007.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd001122.0001.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd001123.0002.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd001124.0001.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd001125.0001.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd010428.0084.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd010624.0087.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd010708.0018.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd010902.0010.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd010912.0011.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd011112.0001.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd011120.0001.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd011121.0001.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd020329.0031.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd020426.0048.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1_ccd_R/trim_rccd020505.0042.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd030307.0213.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd050721.0079.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd090524.0062.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd141026.0030.fits', '/scratch/temp_CD_data/AqlX-1/trimmed_1.3_ccd_R/trim_rccd170818.0067.fits']
+
+table1=table1[~table1['filename'].isin(bad_guys)]
+
+
+
 bband=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_B_apsize_8.0.csv')
 vband=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_V_apsize_8.0.csv')
 iband=pd.read_csv('/home/kmc249/Downloads/phot_fluxes_I_apsize_8.0.csv')
@@ -144,6 +152,8 @@ def fline(x, c):
     return np.log10(x)+c
 for tbname, info in tables.items():
     table = info['df']
+    if tbname!='R band':
+        continue
 
     if tbname != 'LCO':
         #old way using mean
@@ -735,6 +745,775 @@ for tbname, info in tables.items():
     print(counts.tail(50))
     print(len(counts))
     print('out of ',len(table))
+    
+    
+#%%
+# --------------------------------------------------------
+# Recompute Aql magnitudes using a nightly ensemble subset
+# --------------------------------------------------------
+#%%
+# --------------------------------------------------------
+# Recompute Aql magnitudes using a nightly ensemble subset
+# --------------------------------------------------------
+
+table = tables['R band']['df']
+
+table['aql mag old'] = table['aql mag']
+table['aql mag subset'] = np.nan
+table['reduced_ensemble'] = False
+table['n_ensemble_used'] = np.nan
+
+# dictionary of PanSTARRS magnitudes
+ensemble_catalog = {}
+
+for star in ensemble_cols:
+    row = standards.loc[standards['num int'] == int(star)]
+    if len(row):
+        ensemble_catalog[star] = row['r'].iloc[0]
+
+for i, row in table.iterrows():
+
+    instr_mags = []
+    catalog_mags = []
+
+    for star in ensemble_cols:
+
+        flux = row[star]
+
+        if np.isfinite(flux) and (flux > 0):
+
+            instr_mags.append(-2.5*np.log10(flux))
+            catalog_mags.append(ensemble_catalog[star])
+
+    if len(instr_mags) == 0:
+        continue
+
+    table.at[i, 'n_ensemble_used'] = len(instr_mags)
+
+    if len(instr_mags) < len(ensemble_cols):
+        table.at[i, 'reduced_ensemble'] = True
+
+    nightly_instr_mean = np.mean(instr_mags)
+    nightly_catalog_mean = np.mean(catalog_mags)
+
+    delta = nightly_catalog_mean - nightly_instr_mean
+
+    aql_flux = row['aql']
+
+    if np.isfinite(aql_flux) and (aql_flux > 0):
+
+        table.at[i,'aql mag subset'] = (
+            -2.5*np.log10(aql_flux) + delta
+        )
+
+# --------------------------------------------------------
+# Scatter plot: old vs new
+# --------------------------------------------------------
+
+good = (
+    np.isfinite(table['aql mag old']) &
+    np.isfinite(table['aql mag subset'])
+)
+
+
+plt.figure(figsize=(7,7))
+
+plt.errorbar(
+    table.loc[good,'aql mag old'],
+    table.loc[good,'aql mag subset'],
+    xerr=table.loc[good,'error'],
+    yerr=table.loc[good,'error'],
+    fmt='.',
+    ms=4,
+    alpha=0.6,
+    capsize=0,
+    elinewidth=0.5
+)
+lims = [
+    min(table.loc[good,'aql mag old'].min(),
+        table.loc[good,'aql mag subset'].min()),
+    max(table.loc[good,'aql mag old'].max(),
+        table.loc[good,'aql mag subset'].max())
+]
+plt.plot(lims, lims, 'r--')
+
+plt.gca().invert_xaxis()
+plt.gca().invert_yaxis()
+
+plt.xlabel("Original")
+plt.ylabel("Nightly subset")
+
+plt.tight_layout()
+plt.show()
+
+# --------------------------------------------------------
+# Difference vs time
+# --------------------------------------------------------
+
+diff = table['aql mag subset'] - table['aql mag old']
+
+plt.figure(figsize=(12,4))
+
+plt.scatter(
+    table.loc[~table['reduced_ensemble'],'nice time'],
+    diff[~table['reduced_ensemble']],
+    s=8,
+    color='royalblue',
+    label='Full ensemble'
+)
+
+plt.scatter(
+    table.loc[table['reduced_ensemble'],'nice time'],
+    diff[table['reduced_ensemble']],
+    s=30,
+    facecolors='none',
+    edgecolors='red',
+    linewidth=1.2,
+    label='Reduced ensemble'
+)
+
+plt.axhline(0,color='k',ls='--')
+
+plt.ylabel("Subset − Original (mag)")
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+# --------------------------------------------------------
+# Light curves + residuals
+# --------------------------------------------------------
+
+fig, (ax1, ax2) = plt.subplots(
+    2,1,
+    figsize=(18,7),
+    sharex=True,
+    gridspec_kw={'height_ratios':[3,1]}
+)
+
+good_old = np.isfinite(table['aql mag old'])
+good_new = np.isfinite(table['aql mag subset'])
+
+normal = ~table['reduced_ensemble']
+reduced = table['reduced_ensemble']
+
+# ----- Original light curve
+
+ax1.errorbar(
+    table.loc[good_old,'nice time'],
+    table.loc[good_old,'aql mag old'],
+    yerr=table.loc[good_old,'error'],
+    fmt='.',
+    color='k',
+    ms=4,
+    alpha=0.7,
+    capsize=0,
+    label='Original'
+)
+
+ax1.scatter(
+    table.loc[reduced & good_old,'nice time'],
+    table.loc[reduced & good_old,'aql mag old'],
+    s=25,
+    facecolors='none',
+    edgecolors='red',
+    linewidth=1,
+    label='Original (reduced ensemble)'
+)
+
+# ----- New light curve
+'''
+ax1.scatter(
+    table.loc[normal & good_new,'nice time'],
+    table.loc[normal & good_new,'aql mag subset'],
+    s=5,
+    color='red',
+    alpha=0.7,
+    label='Nightly subset'
+)
+'''
+
+ax1.scatter(
+    table.loc[reduced & good_new,'nice time'],
+    table.loc[reduced & good_new,'aql mag subset'],
+    s=25,
+    facecolors='none',
+    edgecolors='blue',
+    linewidth=1,
+    label='Nightly subset (reduced ensemble)'
+)
+
+ax1.invert_yaxis()
+ax1.set_ylabel("Magnitude")
+ax1.legend(fontsize=8)
+
+# ----- Residuals
+# ----- Residuals
+
+both = good_old & good_new
+
+resid = (
+    table.loc[both,'aql mag subset']
+    - table.loc[both,'aql mag old']
+)
+
+reduced_both = table.loc[both,'reduced_ensemble']
+
+# normal nights
+ax2.errorbar(
+    table.loc[both & ~table['reduced_ensemble'],'nice time'],
+    resid[~reduced_both],
+    yerr=0,#table.loc[both & ~table['reduced_ensemble'],'error'],
+    fmt='.',
+    ms=4,
+    color='royalblue',
+    capsize=0,
+    alpha=0.7
+)
+
+# reduced ensemble nights (red circles)
+ax2.errorbar(
+    table.loc[both & table['reduced_ensemble'],'nice time'],
+    resid[reduced_both],
+    yerr=0,#table.loc[both & table['reduced_ensemble'],'error'],
+    fmt='o',
+    ms=5,
+    color='red',
+    markerfacecolor='none',
+    capsize=0,
+    linewidth=1,
+    label='Reduced ensemble'
+)
+
+ax2.axhline(0,color='k',ls='--')
+
+ax2.set_ylabel("Subset − Original (mag)")
+ax2.set_xlabel("Date")
+ax2.legend(fontsize=8)
+
+plt.tight_layout()
+plt.show()
+
+# --------------------------------------------------------
+# Summary
+# --------------------------------------------------------
+
+print(f"Reduced ensemble used on {table['reduced_ensemble'].sum()} "
+      f"of {len(table)} exposures.")
+
+print("\nNumber of comparison stars used:")
+
+print(table['n_ensemble_used'].value_counts().sort_index())
+
+print("\nMedian difference:", np.nanmedian(diff))
+print("RMS difference:", np.nanstd(diff))
+print("Largest difference:", np.nanmax(np.abs(diff)))
+
+
+
+#%%
+
+###EVEN STRICTER
+# --------------------------------------------------------
+# Nightly ensemble with bad-fit star rejection
+# --------------------------------------------------------
+
+table = tables['R band']['df']
+
+table['aql mag old'] = table['aql mag']
+table['aql mag clipped'] = np.nan
+table['n_ensemble_used'] = np.nan
+table['rejected_stars'] = None
+
+
+# -----------------------------
+# Catalog magnitudes
+# -----------------------------
+
+ensemble_catalog = {}
+
+for star in ensemble_cols:
+    row = standards.loc[standards['num int'] == int(star)]
+    if len(row):
+        ensemble_catalog[star] = row['r'].iloc[0]
+
+
+# -----------------------------
+# Build historical star residuals
+# -----------------------------
+# Each star's typical offset from catalog
+
+star_offsets = {}
+
+for star in ensemble_cols:
+
+    flux = table[star].values.astype(float)
+
+    good = np.isfinite(flux) & (flux > 0)
+
+    if good.sum() < 10:
+        continue
+
+    instr_mag = -2.5*np.log10(flux[good])
+
+    residual = instr_mag - ensemble_catalog[star]
+
+    center = np.median(residual)
+
+    S68 = np.percentile(
+        np.abs(residual-center),
+        68
+    )
+
+    star_offsets[star] = {
+        'center': center,
+        'S68': S68
+    }
+
+
+# threshold
+sigma_cut = 4
+
+
+# -----------------------------
+# Loop over exposures
+# -----------------------------
+
+for i, row in table.iterrows():
+
+    star_residuals = {}
+    
+    # calculate residual of every usable star
+    for star in ensemble_cols:
+
+        flux = row[star]
+
+        if not np.isfinite(flux) or flux <= 0:
+            continue
+
+        if star not in star_offsets:
+            continue
+
+        instr_mag = -2.5*np.log10(flux)
+
+        residual = (
+            instr_mag
+            - ensemble_catalog[star]
+        )
+
+        # subtract typical star offset
+        residual -= star_offsets[star]['center']
+
+        star_residuals[star] = residual
+
+
+    if len(star_residuals) < 3:
+        continue
+
+
+    # ------------------------------------------------
+    # Find image-wide zeropoint shift
+    # ------------------------------------------------
+    # If all stars move together, this captures it
+
+    image_offset = np.median(
+        list(star_residuals.values())
+    )
+
+
+    # residual relative to image
+    relative_residuals = {
+        s: r-image_offset
+        for s,r in star_residuals.items()
+    }
+
+
+    rejected = []
+
+
+    # ------------------------------------------------
+    # Reject only stars that disagree with ensemble
+    # ------------------------------------------------
+
+    for star, resid in relative_residuals.items():
+
+        limit = sigma_cut * star_offsets[star]['S68']
+
+        if np.abs(resid) > limit:
+            rejected.append(star)
+
+
+    # save rejected stars
+    table.at[i,'rejected_stars'] = rejected
+
+
+    # remaining stars
+
+    good_stars = [
+        s for s in star_residuals.keys()
+        if s not in rejected
+    ]
+
+
+    if len(good_stars) == 0:
+        continue
+
+
+    table.at[i,'n_ensemble_used'] = len(good_stars)
+
+
+    # ------------------------------------------------
+    # Compute ensemble zeropoint
+    # ------------------------------------------------
+
+    instr_mags = []
+    catalog_mags = []
+
+
+    for star in good_stars:
+
+        flux=row[star]
+
+        instr_mags.append(
+            -2.5*np.log10(flux)
+        )
+
+        catalog_mags.append(
+            ensemble_catalog[star]
+        )
+
+
+    nightly_instr_mean = np.mean(instr_mags)
+    nightly_catalog_mean = np.mean(catalog_mags)
+
+    delta = (
+        nightly_catalog_mean
+        - nightly_instr_mean
+    )
+
+
+    # Aql magnitude
+
+    aql_flux=row['aql']
+
+    if np.isfinite(aql_flux) and aql_flux > 0:
+
+        table.at[i,'aql mag clipped'] = (
+            -2.5*np.log10(aql_flux)
+            + delta
+        )
+
+# --------------------------------------------------------
+# Compare old ensemble vs clipped ensemble
+# --------------------------------------------------------
+
+good = (
+    np.isfinite(table['aql mag old']) &
+    np.isfinite(table['aql mag clipped'])
+)
+
+
+# --------------------------------------------------------
+# Old vs new scatter
+# --------------------------------------------------------
+
+plt.figure(figsize=(7,7))
+
+plt.errorbar(
+    table.loc[good,'aql mag old'],
+    table.loc[good,'aql mag clipped'],
+    xerr=table.loc[good,'error'],
+    yerr=table.loc[good,'error'],
+    fmt='.',
+    ms=4,
+    alpha=0.6,
+    capsize=0,
+    elinewidth=0.5
+)
+
+lims = [
+    min(
+        table.loc[good,'aql mag old'].min(),
+        table.loc[good,'aql mag clipped'].min()
+    ),
+    max(
+        table.loc[good,'aql mag old'].max(),
+        table.loc[good,'aql mag clipped'].max()
+    )
+]
+
+plt.plot(
+    lims,
+    lims,
+    'r--',
+    label='1:1'
+)
+
+plt.gca().invert_xaxis()
+plt.gca().invert_yaxis()
+
+plt.xlabel("Original ensemble")
+plt.ylabel("Sigma-clipped ensemble")
+
+plt.title("Old vs clipped ensemble")
+
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+
+
+# --------------------------------------------------------
+# Difference vs time
+# --------------------------------------------------------
+
+diff = (
+    table['aql mag clipped']
+    - table['aql mag old']
+)
+
+
+plt.figure(figsize=(12,4))
+
+
+# normal images
+
+normal = (
+    table['rejected_stars']
+    .apply(lambda x: len(x)==0 if isinstance(x,list) else True)
+)
+
+
+plt.scatter(
+    table.loc[normal,'nice time'],
+    diff[normal],
+    s=8,
+    color='royalblue',
+    label='No rejected stars'
+)
+
+
+# images where stars were removed
+
+rejected = ~normal
+
+
+plt.scatter(
+    table.loc[rejected,'nice time'],
+    diff[rejected],
+    s=35,
+    facecolors='none',
+    edgecolors='red',
+    linewidth=1.2,
+    label='Rejected ensemble stars'
+)
+
+
+plt.axhline(
+    0,
+    color='k',
+    ls='--'
+)
+
+plt.ylabel(
+    "Clipped − Original (mag)"
+)
+
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+
+
+# --------------------------------------------------------
+# Light curves + residuals
+# --------------------------------------------------------
+
+fig, (ax1, ax2) = plt.subplots(
+    2,
+    1,
+    figsize=(18,7),
+    sharex=True,
+    gridspec_kw={'height_ratios':[3,1]}
+)
+
+
+good_old = np.isfinite(table['aql mag old'])
+good_new = np.isfinite(table['aql mag clipped'])
+
+
+# which exposures rejected stars?
+
+rejected = table['rejected_stars'].apply(
+    lambda x: len(x)>0 if isinstance(x,list) else False
+)
+
+
+# -----------------------------
+# Original light curve
+# -----------------------------
+
+ax1.errorbar(
+    table.loc[good_old,'nice time'],
+    table.loc[good_old,'aql mag old'],
+    yerr=table.loc[good_old,'error'],
+    fmt='.',
+    color='k',
+    ms=4,
+    alpha=0.6,
+    capsize=0,
+    label='Original ensemble'
+)
+
+
+# mark affected images
+
+ax1.scatter(
+    table.loc[rejected & good_old,'nice time'],
+    table.loc[rejected & good_old,'aql mag old'],
+    s=30,
+    facecolors='none',
+    edgecolors='red',
+    linewidth=1,
+    label='Rejected stars'
+)
+
+
+
+# -----------------------------
+# Clipped light curve
+# -----------------------------
+
+ax1.scatter(
+    table.loc[good_new,'nice time'],
+    table.loc[good_new,'aql mag clipped'],
+    s=6,
+    color='royalblue',
+    alpha=0.6,
+    label='Sigma clipped ensemble'
+)
+
+
+ax1.scatter(
+    table.loc[rejected & good_new,'nice time'],
+    table.loc[rejected & good_new,'aql mag clipped'],
+    s=35,
+    facecolors='none',
+    edgecolors='red',
+    linewidth=1
+)
+
+
+ax1.invert_yaxis()
+
+ax1.set_ylabel(
+    "Magnitude"
+)
+
+ax1.legend(
+    fontsize=8
+)
+
+
+
+# -----------------------------
+# Residual panel
+# -----------------------------
+
+both = (
+    good_old &
+    good_new
+)
+
+
+resid = (
+    table.loc[both,'aql mag clipped']
+    -
+    table.loc[both,'aql mag old']
+)
+
+
+rejected_both = rejected[both]
+
+
+# normal exposures
+
+ax2.scatter(
+    table.loc[both & ~rejected,'nice time'],
+    resid[~rejected_both],
+    s=8,
+    color='royalblue'
+)
+
+
+# rejected exposures
+
+ax2.scatter(
+    table.loc[both & rejected,'nice time'],
+    resid[rejected_both],
+    s=35,
+    facecolors='none',
+    edgecolors='red',
+    linewidth=1
+)
+
+
+ax2.axhline(
+    0,
+    color='k',
+    ls='--'
+)
+
+
+ax2.set_ylabel(
+    "Clipped - Original"
+)
+
+ax2.set_xlabel(
+    "Date"
+)
+
+
+plt.tight_layout()
+plt.show()
+
+
+
+# --------------------------------------------------------
+# Summary statistics
+# --------------------------------------------------------
+
+n_rejected = table['rejected_stars'].apply(
+    lambda x: len(x) if isinstance(x,list) else 0
+)
+
+
+print(
+    f"Images with rejected ensemble stars: "
+    f"{(n_rejected>0).sum()} / {len(table)}"
+)
+
+print(
+    f"Median difference: {np.nanmedian(diff):.5f} mag"
+)
+
+print(
+    f"RMS difference: {np.nanstd(diff):.5f} mag"
+)
+
+print(
+    f"Largest difference: "
+    f"{np.nanmax(np.abs(diff)):.5f} mag"
+)
+
+
+print("\nRejected star counts:")
+print(
+    n_rejected.value_counts()
+    .sort_index()
+)
+
 
 #%%
 
@@ -823,7 +1602,163 @@ for i, row in table.iterrows():
     
     
 table['error_pernight'] = row_errors
-    
+   
+
+#%%
+
+def error_model(mag):
+
+    mag = np.asarray(mag)
+
+    vals = poly4(mag, *popt)
+
+    vals = np.where(mag < mag_min, err_min, vals)
+
+    return vals
+#%%
+
+# Per-night edited:
+# For each image, bin ensemble stars by magnitude, compute S68 within
+# each magnitude bin, then shift the global error model horizontally.
+
+from scipy.optimize import minimize_scalar
+
+BIN_WIDTH = 0.3
+MIN_STARS_PER_BIN = 4
+
+# --------------------------------------------------------
+# Fit horizontal shift
+# --------------------------------------------------------
+
+def fit_shift(bin_mag, bin_s68):
+
+    def objective(shift):
+
+        pred = error_model(bin_mag + shift)
+
+        return np.nansum((bin_s68 - pred)**2)
+
+    res = minimize_scalar(
+        objective,
+        bounds=(-2,2),
+        method='bounded'
+    )
+
+    return res.x
+
+star_mean_mag = {}
+
+for star in ensemble_cols:
+
+    flux = table[star].astype(float).values
+
+    valid = (flux > 0) & np.isfinite(flux)
+
+    mags = (
+        -2.5*np.log10(flux[valid])
+        + table.loc[valid,'zeropoint'].values
+    )
+
+    star_mean_mag[star] = np.nanmean(mags)
+
+# --------------------------------------------------------
+# Compute one error estimate per image
+# --------------------------------------------------------
+
+row_errors = np.full(len(table), np.nan)
+
+for i, row in table.iterrows():
+
+    star_mag = []
+    star_residual = []
+
+    # ----------------------------------
+    # residual for every ensemble star
+    # ----------------------------------
+
+    for star in ensemble_cols:
+
+        flux = row[star]
+
+        if (not np.isfinite(flux)) or (flux <= 0):
+            continue
+
+        mag = (
+            -2.5*np.log10(flux)
+            + row['zeropoint']
+        )
+
+        residual = mag - star_mean_mag[star]
+
+        star_mag.append(mag)
+        star_residual.append(residual)
+
+    star_mag = np.array(star_mag)
+    star_residual = np.array(star_residual)
+
+    if len(star_mag) < MIN_STARS_PER_BIN:
+        continue
+
+    # ----------------------------------
+    # magnitude bins
+    # ----------------------------------
+
+    bins = np.arange(
+        np.floor(star_mag.min()),
+        np.ceil(star_mag.max()) + BIN_WIDTH,
+        BIN_WIDTH
+    )
+
+    inds = np.digitize(star_mag, bins)
+
+    bin_centers = []
+    bin_s68 = []
+
+    for b in np.unique(inds):
+
+        use = inds == b
+
+        if np.sum(use) < MIN_STARS_PER_BIN:
+            continue
+
+        center = np.nanmean(star_mag[use])
+
+        r = star_residual[use]
+
+        med = np.nanmedian(r)
+
+        s68 = np.nanpercentile(
+            np.abs(r - med),
+            68
+        )
+
+        bin_centers.append(center)
+        bin_s68.append(s68)
+
+    bin_centers = np.array(bin_centers)
+    bin_s68 = np.array(bin_s68)
+
+    if len(bin_centers) < 2:
+        continue
+
+    # ----------------------------------
+    # fit horizontal shift
+    # ----------------------------------
+
+    shift = fit_shift(bin_centers, bin_s68)
+
+    # ----------------------------------
+    # estimate Aql uncertainty
+    # ----------------------------------
+
+    if np.isfinite(row['aql mag']):
+
+        row_errors[i] = error_model(
+            row['aql mag'] + shift
+        )
+
+table['error_pernight_edited'] = row_errors
+
 #%%
 
 #temporarily...plot aql errors over time in R band
@@ -834,10 +1769,14 @@ for tbname, info in tables.items():
     #if tbname=='LCO':
         continue
     table = info['df']
-    #plt.errorbar(table['nice time'].values, table['error'], yerr=0,fmt='.', color=info['color'], label='Global errors')
     #plt.errorbar(table['nice time'].values, table['error_pernight'], yerr=0,fmt='.', color='blue', label='Per night errors')
+    #plt.errorbar(table['nice time'].values, table['error'], yerr=0,fmt='.', color=info['color'], label='Global errors')
+    #plt.errorbar(table['nice time'].values, table['error_pernight_edited'], yerr=0,fmt='.', color='green', label='Per night errors edited')
+    
+    
     plt.errorbar(table['nice time'].values, table['aql mag'], yerr=table['error_pernight'],fmt='none', color='blue', label='Per night errors')
     plt.errorbar(table['nice time'].values, table['aql mag'], yerr=table['error'],fmt='none', color=info['color'], label='Global errors')
+    plt.errorbar(table['nice time'].values, table['aql mag'], yerr=table['error_pernight_edited'],fmt='none', color='green', label='Per night errors edited')
     
       
 
