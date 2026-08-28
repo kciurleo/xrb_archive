@@ -6,6 +6,9 @@ Created on Mon Jul 27 10:26:16 2026
 @author: kmc249
 """
 
+
+###testing version. comparing the three different attempts.
+
 import numpy as np
 import matplotlib.pyplot as plt
 import glob
@@ -21,14 +24,10 @@ from astropy.visualization import ImageNormalize, ZScaleInterval, SinhStretch, A
 
 
 
-target='GX339-4'
+target='NovaMusca'
 compstars=[154,192,167,98 ] #If a SMARTS object with published already, ids of compstars
 ignore_error_issue=False #Sometimes, the 4D fit goes crazy, so we need to do a 2D poly fit instead
-#limit_magdiff=0.25 #limit used for distance from line drawn in calib vs instr
-# Iterative first-pass calibration settings
-initial_magdiff_limit = 0.50   # lax first-pass rejection
-magdiff_limit = 0.25           # final rejection threshold
-max_calib_iterations = 20
+limit_magdiff=0.25 #limit used for distance from line drawn in calib vs instr
 limit_s68_fraction = 0.5   # allow 50% larger scatter than expected
 manual_bad_stars=[]
 
@@ -172,7 +171,9 @@ if os.path.exists(error_file):
     os.remove(error_file)
 #%%new
 all_bad_stars = set()
-first_pass_bad_stars = {}
+# Track bad stars separately for each method
+bad_stars_by_method = {}
+
 
 for tele in telescopes:
     # Only do the things we have, and do them separately.
@@ -190,10 +191,6 @@ for tele in telescopes:
 
         for band in ref_bands:
 
-            bad_star_list = []
-            if manual_bad_stars:
-                bad_star_list.extend(manual_bad_stars)
-
             trimdir = f'/neta/xrb/{target}/{tele}/opt/rccd/{band}_trimmed/'
             if not os.path.exists(trimdir):
                 print(f'Skipping {tele} {band}')
@@ -203,221 +200,276 @@ for tele in telescopes:
 
             try:
                 infile = f'{outdir}/{target}_{tele}_{band}_first_pass_phot.csv'
-                table = pd.read_csv(infile, low_memory=False)
+                table1 = pd.read_csv(infile, low_memory=False)
+                infile2 = f'{outdir}/{target}_{tele}_{band}_first_pass_phot_with_DAO.csv'
+                table2 = pd.read_csv(infile2, low_memory=False)
+                infile3 = f'{outdir}/{target}_{tele}_{band}_first_pass_phot_with_stacked_inits.csv'
+                table3 = pd.read_csv(infile3, low_memory=False)
             except:
                 print('phot file doesnt exist!!! Something went wrong earlier')
                 continue
 
-            if len(table) == 0:
+            if len(table1) == 0:
                 print('phot file is empty!!! Something went wrong earlier')
                 continue
+            for table,name in [(table1, 'original'), (table2, 'DAO all images'), (table3, 'Stacked posits')]:
+                
 
-            table['nice time'] = pd.to_datetime(
-                table['time'],
-                format='mixed',
-                utc=True,
-                errors='coerce'
-            ).dt.tz_localize(None)
+            
+                # IMPORTANT: start fresh for each method
+                bad_star_list = []
+                if manual_bad_stars:
+                    bad_star_list.extend(manual_bad_stars)
+            
+                # Store using telescope, band, reference system, and method
+                key = (tele, band, refsystem, name)
+            
+                # Initialize tracking
+                bad_stars_by_method[key] = {
+                    'bad': set(bad_star_list),
+                    'mag_cal_bad': set(),
+                    'error_model_bad': set(),
+                }
+                
+                table['nice time'] = pd.to_datetime(
+                    table['time'],
+                    format='mixed',
+                    utc=True,
+                    errors='coerce'
+                ).dt.tz_localize(None)
+                
+                table['nice time'] = pd.Series(
+                    table['nice time'].values,
+                    dtype='datetime64[ns]'
+                )
+    
+                # Reference magnitude column
+                ref_col = f'{band}_{refsystem}'
+    
+                if ref_col not in refstars.columns:
+                    print(f'Missing {ref_col}, skipping')
+                    continue
+    
+                # Whole Ensemble Comparison Across Time
+                instrmags = []
+                refmags = []
+                valid_eids = []
+                
+                # Make sure no weird stars make it into our ensemble
+                eids = all_eids.copy()
+                
+                good_ref_mask = refstars.loc[eids, ref_col] != 0
+                eids = list(np.array(eids)[good_ref_mask.values])
+                
+                for e in eids:
+                
+                    row = refstars.loc[int(e)]
+                    refmag = row[ref_col]
+                
+                    # Find valid flux
+                    flux = table[str(e)].values.astype(float)
+                    valid = (flux > 0) & np.isfinite(flux)
+                    flux_filled = flux[valid]
+                
+                    # No usable photometry for this star
+                    if len(flux_filled) == 0:
+                        print(f'    EID {e}: no valid flux, excluding from calibration plot')
+                        continue
+                
+                    instrmag = np.mean(-2.5 * np.log10(flux_filled))
+                
+                    instrmags.append(instrmag)
+                    refmags.append(refmag)
+                    valid_eids.append(e)
+                
+                # Convert to arrays
+                instrmags = np.asarray(instrmags)
+                refmags = np.asarray(refmags)
+                valid_eids = np.asarray(valid_eids)
+                
+                if len(instrmags) == 0:
+                    print('No valid stars')
+                    continue
+                
+                # Zero-point offset
+                intercept = np.nanmean(refmags - instrmags)
+                slope = 1.0
+                
+                instrmag_arr = np.linspace(
+                    np.nanmin(instrmags),
+                    np.nanmax(instrmags)
+                )
+                
+                # Identify bad stars using ONLY stars that actually have valid
+                # instrumental magnitudes
+                bad_star_list = list(bad_star_list)
+                
+                for e, refmag, instrmag in zip(valid_eids, refmags, instrmags):
+                
+                    magdiff = refmag - (instrmag + intercept)
+                
+                    if abs(magdiff) > limit_magdiff:
+                        bad_star_list.append(int(e))
+                        bad_stars_by_method[key]['mag_cal_bad'].add(int(e))
+                
+                # Make masks that have exactly the same length as instrmags/refmags
+                good_mask = np.array(
+                    [int(e) not in bad_star_list for e in valid_eids]
+                )
+                
+                bad_mask = np.array(
+                    [int(e) in bad_star_list for e in valid_eids]
+                )
 
-            table['nice time'] = pd.Series(
-                table['nice time'].values,
-                dtype='datetime64[ns]'
-            )
+    
+    
+                fig, axes = plt.subplots(figsize=(8, 8))
+    
+                # Good stars
+                axes.scatter(
+                    np.array(instrmags)[good_mask],
+                    np.array(refmags)[good_mask],
+                    color='k'
+                )
+    
+                # Bad stars
+                axes.scatter(
+                    np.array(instrmags)[bad_mask],
+                    np.array(refmags)[bad_mask],
+                    color='gray',
+                    alpha=0.5
+                )
+    
+                axes.set_xlabel(
+                    f'Uncalibrated {tele} {band} Magnitude'
+                )
+    
+                axes.set_ylabel(
+                    f'Calibrated {band} Magnitude ({refsystem})'
+                )
+    
+                axes.plot(
+                    instrmag_arr,
+                    slope*instrmag_arr + intercept,
+                    'g--',
+                    lw=2,
+                    label=f'y={np.round(slope,2)}x+{np.round(intercept,2)}'
+                )
+    
+                axes.invert_yaxis()
+                axes.invert_xaxis()
+                plt.title(f'{tele} {band} band {name}')
+    
+                plt.legend(loc='upper left')
+                #SAVE FOR NOW DELETE LATER KT
+                #plt.savefig(f'/home/kmc249/Downloads/calibration_plots/{target}_{band}_{refsystem}.png', dpi=300)
+                plt.show()
+#%%
+for tele in ['1.3m']:
+    for band in optical_bands:
+        for refsystem in ['gaia', 'panstarrs']:
 
-            # Reference magnitude column
-            ref_col = f'{band}_{refsystem}'
+            methods = ['original', 'DAO all images', 'Stacked posits']
 
-            if ref_col not in refstars.columns:
-                print(f'Missing {ref_col}, skipping')
-                continue
+            print(f'\n===== {tele} {band} {refsystem} =====')
 
-            # Whole Ensemble Comparison Across Time
-            instrmags = []
-            refmags = []
+            for method in methods:
 
-            # Make sure no weird stars make it into our ensemble
-            eids = all_eids.copy()
+                key = (tele, band, refsystem, method)
 
-            good_mask = refstars.loc[eids, ref_col] != 0
-            eids = list(np.array(eids)[good_mask.values])
-
-            for e in eids:
-                row = refstars.loc[int(e)]
-
-                refmag = row[ref_col]
-
-                # Find valid flux
-                flux = table[str(e)].values.astype(float)
-                valid = (flux > 0) & (~np.isnan(flux))
-                flux_filled = flux[valid]
-
-                if len(flux_filled) == 0:
+                if key not in bad_stars_by_method:
                     continue
 
-                instrmag = np.mean(-2.5 * np.log10(flux_filled))
+                bad = sorted(bad_stars_by_method[key]['mag_cal_bad'])
 
-                instrmags.append(instrmag)
-                refmags.append(refmag)
+                print(f'{method}:')
+                print(f'    {bad}')
+#%%
+print(askdjh)
+for band in ['V', 'R', 'I']:
 
-            if len(instrmags) == 0:
-                print('No valid stars')
-                continue
-            '''
-            #OLD
-            intercept = np.nanmean(np.array(refmags) - np.array(instrmags))
-            slope = 1.0
+    gaia_col = f'{band}_gaia'
+    ps_col = f'{band}_panstarrs'
 
-            instrmag_arr = np.linspace(
-                np.nanmin(instrmags),
-                np.nanmax(instrmags)
-            )
+    mask = (
+        (refstars[gaia_col] != 0) &
+        (refstars[ps_col] != 0) &
+        np.isfinite(refstars[gaia_col]) &
+        np.isfinite(refstars[ps_col])
+    )
 
-            for e, refmag, instrmag in zip(eids, refmags, instrmags):
+    plot_df = refstars.loc[mask].copy()
 
-                magdiff = refmag - (instrmag + intercept)
+    gaia_mag = plot_df[gaia_col]
+    ps_mag = plot_df[ps_col]
+    diff = ps_mag - gaia_mag
+    color = plot_df['BP'] - plot_df['RP']
 
-                if abs(magdiff) > limit_magdiff:
-                    bad_star_list.append(e)
-            '''
-            # ---------------------------------------------------------
-            # Iterative first-pass calibration
-            # ---------------------------------------------------------
-            
-            instrmags_arr = np.array(instrmags, dtype=float)
-            refmags_arr = np.array(refmags, dtype=float)
-            eids_arr = np.array(eids)
-            
-            slope = 1.0
-            
-            # Start with every star
-            good = np.isfinite(instrmags_arr) & np.isfinite(refmags_arr)
-            
-            for iteration in range(max_calib_iterations):
-            
-                # Fit zero point using currently good stars
-                intercept = np.nanmean(
-                    refmags_arr[good] - instrmags_arr[good]
-                )
-            
-                # Residual from current calibration
-                magdiff = refmags_arr - (instrmags_arr + intercept)
-            
-                # Use a lax threshold on the first iteration,
-                # then the normal threshold afterward
-                if iteration == 0:
-                    rejection_limit = initial_magdiff_limit
-                else:
-                    rejection_limit = magdiff_limit
-            
-                new_good = (
-                    np.isfinite(magdiff) &
-                    (np.abs(magdiff) <= rejection_limit)
-                )
-            
-                print(
-                    f'{tele} {band} {refsystem}: '
-                    f'iteration {iteration + 1}, '
-                    f'intercept = {intercept:.4f}, '
-                    f'using {np.sum(new_good)}/{len(eids_arr)} stars, '
-                    f'limit = {rejection_limit:.2f}'
-                )
-            
-                # Stop if nothing changed
-                if np.array_equal(new_good, good):
-                    print('  Calibration converged.')
-                    break
-            
-                good = new_good
-            
-            else:
-                print('  WARNING: calibration did not converge.')
-            
-            # Final intercept after convergence
-            intercept = np.nanmean(
-                refmags_arr[good] - instrmags_arr[good]
-            )
-            
-            # Final residuals
-            magdiff = refmags_arr - (instrmags_arr + intercept)
-            
-            # Final bad-star list
-            bad_star_list = list(
-                eids_arr[~good]
-            )
-            
-            print(
-                f'Final calibration: intercept={intercept:.4f}, '
-                f'{np.sum(good)}/{len(eids_arr)} stars retained'
-            )
-            
-            instrmag_arr = np.linspace(
-                np.nanmin(instrmags_arr),
-                np.nanmax(instrmags_arr)
-            )
+    # mask of stars rejected earlier
+    grey = plot_df.index.isin(all_bad_stars)
+    good = ~grey
 
-            all_bad_stars.update(bad_star_list)
+    mean_offset = np.mean(diff)
+    scatter = np.std(diff)
+    median_offset = np.median(diff)
 
-            good_mask = [e not in bad_star_list for e in eids]
-            bad_mask = [e in bad_star_list for e in eids]
+    bad = np.abs(diff - median_offset) > 3 * scatter
 
-            fig, axes = plt.subplots(figsize=(8, 8))
+    print(f'--- {band} ---')
+    print(f'Number of stars: {len(diff)}')
+    print(f'Bad stars (>3 sigma): {np.sum(bad)}')
+    print(f'Bad fraction: {np.sum(bad)/len(diff):.2%}')
+    print(f'Mean PS - Gaia offset: {mean_offset:.4f} mag')
+    print(f'Median PS - Gaia offset: {median_offset:.4f} mag')
+    print(f'Scatter: {scatter:.4f} mag')
 
-            # Good stars
-            axes.scatter(
-                np.array(instrmags)[good_mask],
-                np.array(refmags)[good_mask],
-                color='k'
-            )
+    # ---------------------------------------------------------
+    # Difference vs Gaia magnitude
+    # ---------------------------------------------------------
+    plt.figure(figsize=(6,5))
 
-            # Bad stars
-            axes.scatter(
-                np.array(instrmags)[bad_mask],
-                np.array(refmags)[bad_mask],
-                color='gray',
-                alpha=0.5
-            )
+    plt.scatter(gaia_mag[good], diff[good], s=10, color='k')
+    plt.scatter(gaia_mag[grey], diff[grey],
+                s=10, color='gray', alpha=0.5)
 
-            axes.set_xlabel(
-                f'Uncalibrated {tele} {band} Magnitude'
-            )
+    plt.axhline(0, color='k')
+    plt.axhline(mean_offset, color='b', ls='--',
+                label=f'mean={mean_offset:.3f}')
+    plt.axhline(median_offset, color='r', ls='--',
+                label=f'median={median_offset:.3f}')
 
-            axes.set_ylabel(
-                f'Calibrated {band} Magnitude ({refsystem})'
-            )
+    plt.xlabel(f'{band} Gaia magnitude')
+    plt.ylabel(f'{band} PanSTARRS - Gaia')
+    plt.gca().invert_xaxis()
+    plt.legend()
+    plt.title(f'{band}: PanSTARRS vs Gaia')
+    #plt.savefig(f'/home/kmc249/Downloads/calibration_plots/{target}_{band}_comparison.png',dpi=300)
+    plt.show()
 
-            axes.plot(
-                instrmag_arr,
-                slope*instrmag_arr + intercept,
-                'g--',
-                lw=2,
-                label=f'y={np.round(slope,2)}x+{np.round(intercept,2)}'
-            )
+    # ---------------------------------------------------------
+    # Difference vs color
+    # ---------------------------------------------------------
+    plt.figure(figsize=(6,5))
 
-            axes.invert_yaxis()
-            axes.invert_xaxis()
+    plt.scatter(color[good], diff[good], s=10, color='k')
+    plt.scatter(color[grey], diff[grey],
+                s=10, color='gray', alpha=0.5)
 
-            plt.legend(loc='upper left')
-            #SAVE FOR NOW DELETE LATER KT
-            plt.savefig(f'/home/kmc249/Downloads/calibration_plots/{target}_{band}_{refsystem}.png', dpi=300)
-            plt.show()
-            
-            # ---------------------------------------------------------
-            # Main light curve
-            # Use ONLY the stars surviving the iterative calibration
-            # ---------------------------------------------------------
-            
-            good_eids = [e for e in eids if e not in bad_star_list]
-            
-            print(
-                f'Using {len(good_eids)} good comparison stars '
-                f'for the ensemble'
-            )
-            bad_star_list = list(eids_arr[~good])
+    plt.axhline(0, color='k', ls='--')
+    plt.axhline(mean_offset, color='b', ls='--',
+                label=f'mean={mean_offset:.3f}')
+    plt.axhline(median_offset, color='r', ls='--',
+                label=f'median={median_offset:.3f}')
 
-            first_pass_bad_stars[(tele, band, refsystem)] = bad_star_list
+    plt.xlabel('Gaia $BP-RP$')
+    plt.ylabel(f'{band} PanSTARRS - Gaia')
+    plt.legend()
+    plt.title('Calib. offset vs. color')
+    plt.tight_layout()
+    #plt.savefig(f'/home/kmc249/Downloads/calibration_plots/{target}_{band}_color_comp.png', dpi=300)
+    plt.show()
 
-
-
+print(AKjshdsjhdajks)
 
 #%%old
 for tele in telescopes:
@@ -429,23 +481,14 @@ for tele in telescopes:
     
     
     for band in optical_bands:
-        # ---------------------------------------------------------
-        # Pan-STARRS is the ONLY reference system used from here on
-        # ---------------------------------------------------------
-        refsystem = 'panstarrs'
-
-        bad_star_list = []
-
+        bad_star_list=[]
         if manual_bad_stars:
             bad_star_list.extend(manual_bad_stars)
-
-        trimdir = f'/neta/xrb/{target}/{tele}/opt/rccd/{band}_trimmed/'
-
+        trimdir=f'/neta/xrb/{target}/{tele}/opt/rccd/{band}_trimmed/'
         if not os.path.exists(trimdir):
             print(f'Skipping {tele} {band}')
             continue
-
-        print(f'Working on {tele} {band} using Pan-STARRS')
+        print(f'Working on {tele} {band}')
         try:
             infile = f'{outdir}/{target}_{tele}_{band}_first_pass_phot.csv'
             table=pd.read_csv(infile, low_memory=False)
@@ -476,63 +519,40 @@ for tele in telescopes:
         #Make sure no weird stars make it into our ensemble
         eids = all_eids.copy()
 
-        ref_col = f'{band}_panstarrs'
-        
-        good_mask = (
-            refstars.loc[eids, ref_col] != 0
-            & np.isfinite(refstars.loc[eids, ref_col])
-        )
-        
+        good_mask = refstars.loc[eids, band] != 0
         eids = list(np.array(eids)[good_mask.values])
 
-  
+                
         for e in eids:
-            row = refstars.loc[int(e)]
-        
-            refmag = row[ref_col]
-        
+            row=refstars.loc[int(e)]
+    
+            refmag=row[band]
+            
+            #Find valid flux
             flux = table[str(e)].values.astype(float)
-        
-            valid = (flux > 0) & np.isfinite(flux)
-        
-            flux_filled = flux[valid]
-        
-            if len(flux_filled) == 0:
-                continue
-        
+            valid = (flux > 0) & (~np.isnan(flux))
+            flux_filled=flux[valid]
+            
+            #Compute instrumental magnitudes and
             instrmag = np.mean(-2.5 * np.log10(flux_filled))
-        
             instrmags.append(instrmag)
             refmags.append(refmag)
+            
+        #slope, intercept, r, p, se =linregress(xdata3, ydata3)
+        intercept = np.nanmean(np.array(refmags) - np.array(instrmags))
+        slope = 1.0
+        instrmag_arr=np.linspace(np.nanmin(instrmags), np.nanmax(instrmags))
+        for e, refmag, instrmag in zip(eids, refmags, instrmags):
 
-        # Start with stars rejected by the Pan-STARRS first-pass calibration
-        first_pass_bad = first_pass_bad_stars.get(
-            (tele, band, 'panstarrs'),
-            []
-        )
+            magdiff = refmag - (instrmag + intercept)
         
-        bad_star_list.extend(first_pass_bad)
-        
-        # remove duplicates
-        bad_star_list = list(set(bad_star_list))
+            if abs(magdiff) > limit_magdiff:
+                bad_star_list.append(e)
 
-        instrmags_arr = np.array(instrmags, dtype=float)
-        refmags_arr = np.array(refmags, dtype=float)
-        eids_arr = np.array(eids)
         
-        not_bad = ~np.isin(eids_arr, bad_star_list)
-        
-        finite = (
-            np.isfinite(instrmags_arr) &
-            np.isfinite(refmags_arr)
-        )
-        
-        good = finite & not_bad
-        
-        intercept = np.nanmean(
-            refmags_arr[good] - instrmags_arr[good]
-        )
 
+
+        good_mask = [e not in bad_star_list for e in eids]
         bad_mask = [e in bad_star_list for e in eids]
         
         fig, axes = plt.subplots(figsize=(8, 8))
@@ -576,15 +596,7 @@ for tele in telescopes:
 
         #Main light curve
         #Getting the mean ensemble calibrated magnitude
-        good_eids = eids_arr[good].astype(int).tolist()
-        
-        ensemble_r_mean = refstars.loc[
-            good_eids,
-            ref_col
-        ].mean()
-        eid_cols = [str(e) for e in good_eids]
-
-  
+        ensemble_r_mean = refstars.loc[eids, band].mean()     
 
 
         #Now doing the conversions night by night
@@ -979,7 +991,7 @@ for tele in telescopes:
         plt.gca().invert_xaxis()
         
         plt.tight_layout()
-        plt.savefig(f'{outdir}/{target}_{tele}_{band}_errors_scatter.png', dpi=200)
+        #plt.savefig(f'{outdir}/{target}_{tele}_{band}_errors_scatter.png', dpi=200)
         plt.show()
         
         # ------------------------------------
@@ -1016,7 +1028,7 @@ for tele in telescopes:
           
 outfile = f'/neta/xrb/{target}/product/{target}_ref_stars_quality.csv'
 
-refstars.to_csv(outfile, index=False)
+#refstars.to_csv(outfile, index=False)
 
 print(f"Saved updated reference star table to {outfile}")
 
@@ -1166,91 +1178,4 @@ for band in optical_bands:
     # )
 
     plt.show()
-#%%
-'''
-#old diagnostic pltos
-for band in ['V', 'R', 'I']:
 
-    gaia_col = f'{band}_gaia'
-    ps_col = f'{band}_panstarrs'
-
-    mask = (
-        (refstars[gaia_col] != 0) &
-        (refstars[ps_col] != 0) &
-        np.isfinite(refstars[gaia_col]) &
-        np.isfinite(refstars[ps_col])
-    )
-
-    plot_df = refstars.loc[mask].copy()
-
-    gaia_mag = plot_df[gaia_col]
-    ps_mag = plot_df[ps_col]
-    diff = ps_mag - gaia_mag
-    color = plot_df['BP'] - plot_df['RP']
-
-    # mask of stars rejected earlier
-    grey = plot_df.index.isin(all_bad_stars)
-    good = ~grey
-
-    mean_offset = np.mean(diff)
-    scatter = np.std(diff)
-    median_offset = np.median(diff)
-
-    bad = np.abs(diff - median_offset) > 3 * scatter
-
-    print(f'--- {band} ---')
-    print(f'Number of stars: {len(diff)}')
-    print(f'Bad stars (>3 sigma): {np.sum(bad)}')
-    print(f'Bad fraction: {np.sum(bad)/len(diff):.2%}')
-    print(f'Mean PS - Gaia offset: {mean_offset:.4f} mag')
-    print(f'Median PS - Gaia offset: {median_offset:.4f} mag')
-    print(f'Scatter: {scatter:.4f} mag')
-
-    # ---------------------------------------------------------
-    # Difference vs Gaia magnitude
-    # ---------------------------------------------------------
-    plt.figure(figsize=(6,5))
-
-    plt.scatter(gaia_mag[good], diff[good], s=10, color='k')
-    plt.scatter(gaia_mag[grey], diff[grey],
-                s=10, color='gray', alpha=0.5)
-
-    plt.axhline(0, color='k')
-    plt.axhline(mean_offset, color='b', ls='--',
-                label=f'mean={mean_offset:.3f}')
-    plt.axhline(median_offset, color='r', ls='--',
-                label=f'median={median_offset:.3f}')
-
-    plt.xlabel(f'{band} Gaia magnitude')
-    plt.ylabel(f'{band} PanSTARRS - Gaia')
-    plt.gca().invert_xaxis()
-    plt.legend()
-    plt.title(f'{band}: PanSTARRS vs Gaia')
-    plt.savefig(f'/home/kmc249/Downloads/calibration_plots/{target}_{band}_comparison.png',
-                dpi=300)
-    plt.show()
-
-    # ---------------------------------------------------------
-    # Difference vs color
-    # ---------------------------------------------------------
-    plt.figure(figsize=(6,5))
-
-    plt.scatter(color[good], diff[good], s=10, color='k')
-    plt.scatter(color[grey], diff[grey],
-                s=10, color='gray', alpha=0.5)
-
-    plt.axhline(0, color='k', ls='--')
-    plt.axhline(mean_offset, color='b', ls='--',
-                label=f'mean={mean_offset:.3f}')
-    plt.axhline(median_offset, color='r', ls='--',
-                label=f'median={median_offset:.3f}')
-
-    plt.xlabel('Gaia $BP-RP$')
-    plt.ylabel(f'{band} PanSTARRS - Gaia')
-    plt.legend()
-    plt.title('Calib. offset vs. color')
-    plt.tight_layout()
-    plt.savefig(f'/home/kmc249/Downloads/calibration_plots/{target}_{band}_color_comp.png',
-                dpi=300)
-    plt.show()
-'''

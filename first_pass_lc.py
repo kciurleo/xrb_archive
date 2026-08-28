@@ -28,7 +28,7 @@ import matplotlib.dates as mdates
 from astropy.time import Time
 
 
-target='NovaMusca'
+target='GX339-4'
 ignore_error_issue=False #Sometimes, the 4D fit goes crazy, so we need to do a 2D poly fit instead
 
 outdir = f'/neta/xrb/{target}/product/first_pass_lightcurves'

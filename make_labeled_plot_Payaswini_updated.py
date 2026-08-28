@@ -167,7 +167,7 @@ dec.set_ticklabel_position('l')
 # -------------------------------------------------------
 # Labels
 # -------------------------------------------------------
-fontsize = 18
+fontsize = 20
 
 for _, row in zoomphot.iterrows():
     txt = ax.annotate(
@@ -287,5 +287,149 @@ ax_pix.xaxis.set_label_position('top')
 ax_pix.yaxis.set_label_position('right')
 
 
+from astropy.wcs.utils import proj_plane_pixel_scales
+# ------------------------------------------------------------
+# Pixel scale from the WCS
+# ------------------------------------------------------------
+
+hires_scale_deg = np.mean(proj_plane_pixel_scales(w_hi))
+hires_scale_arcsec = hires_scale_deg * 3600.0
+
+# Desired angular length of scale bar
+scale_arcsec = 1.0
+
+# Convert arcseconds -> HI-RES image pixels
+scale_bar_pixels = scale_arcsec / hires_scale_arcsec
+
+
+# ============================================================
+# ARCSECOND SCALE BAR
+# ============================================================
+
+bar_x0 = 68
+bar_y0 = 28
+bar_x1 = bar_x0 + scale_bar_pixels
+
+# Main bar
+ax.plot(
+    [bar_x0, bar_x1],
+    [bar_y0, bar_y0],
+    color='white',
+    linewidth=2,
+    solid_capstyle='butt',
+    zorder=20
+)
+
+# End caps
+cap_height = 0.8
+
+ax.plot(
+    [bar_x0, bar_x0],
+    [bar_y0 - cap_height, bar_y0 + cap_height],
+    color='white',
+    linewidth=2,
+    zorder=20
+)
+
+ax.plot(
+    [bar_x1, bar_x1],
+    [bar_y0 - cap_height, bar_y0 + cap_height],
+    color='white',
+    linewidth=2,
+    zorder=20
+)
+
+# Scale label
+txt = ax.text(
+    (bar_x0 + bar_x1) / 2,
+    bar_y0 - 3,
+    f'{scale_arcsec:g}"',
+    color='white',
+    fontsize=16,
+    fontweight='bold',
+    ha='center',
+    va='bottom',
+    zorder=21
+)
+
+txt.set_path_effects([
+    pe.Stroke(linewidth=2, foreground='black'),
+    pe.Normal()
+])
+
+# ============================================================
+# SIMPLE NORTH / EAST INDICATOR
+# North = up, East = left
+# ============================================================
+
+# Position of the compass origin
+compass_x = 68+scale_bar_pixels
+compass_y = 33
+
+# Length of arrows in image pixels
+compass_length = 7
+
+# North = UP
+ax.annotate(
+    '',
+    xy=(compass_x, compass_y + compass_length),
+    xytext=(compass_x, compass_y),
+    arrowprops=dict(
+        arrowstyle='->',
+        color='white',
+        linewidth=2
+    ),
+    zorder=20
+)
+
+
+# East = LEFT
+ax.annotate(
+    '',
+    xy=(compass_x - compass_length, compass_y),
+    xytext=(compass_x, compass_y),
+    arrowprops=dict(
+        arrowstyle='->',
+        color='white',
+        linewidth=2
+    ),
+    zorder=20
+)
+
+# N label
+txt = ax.text(
+    compass_x,
+    compass_y + compass_length + 1,
+    'N',
+    color='white',
+    fontsize=16,
+    fontweight='bold',
+    ha='center',
+    va='bottom',
+    zorder=21
+)
+
+txt.set_path_effects([
+    pe.Stroke(linewidth=2, foreground='black'),
+    pe.Normal()
+])
+
+# E label
+txt = ax.text(
+    compass_x - compass_length - 1,
+    compass_y,
+    'E',
+    color='white',
+    fontsize=16,
+    fontweight='bold',
+    ha='right',
+    va='center',
+    zorder=21
+)
+
+txt.set_path_effects([
+    pe.Stroke(linewidth=2, foreground='black'),
+    pe.Normal()
+])
 plt.savefig('/home/kmc249/Downloads/ir_opt_neighborhood.png', dpi=300)
 plt.show()

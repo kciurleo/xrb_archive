@@ -27,9 +27,9 @@ import os
 import pandas as pd
 
 #aperture radius
-r_ap = 6.0
+r_ap = 4.0
 fwhm=3.0
-target='J1631-478'
+target='GX339-4'
 
 outdir = f'/neta/xrb/{target}/product/first_pass_lightcurves'
 os.makedirs(outdir, exist_ok=True)

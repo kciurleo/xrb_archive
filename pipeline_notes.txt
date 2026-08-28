@@ -11,7 +11,7 @@ Step 6 (real_stacked_images): Make stacked images in each filter, based on a com
 Step 7 (identify_bad_compstars.py): For each telescope and band, identify which ensemble stars to actually use in the ensemble differential photometry, and which stars to use as comparison stars. This first part is based on the potential of color differences (plotting a 1-1 line of our magnitudes vs. Pan-STARRS or Gaia magnitudes and tossing those > some cutoff away, currently 0.25 mag) and variability (fitting the error plot described above, and excluding those stars which are > than some fractional cutoff away from the fit, currently 50%). Then, refit the errors based on S68 as above. Currently, there is no manual selection of bad stars for the error calculation. The next step is to pick from these good stars and from the images ~5 comparison stars to use for differential photometry, which span the magnitudes of our target in all bands, are relatively isolated in the frame, and relatively close to the target on the 512x512 image. The following are then saved: 1-1 mag plot, error plot, error parameters as a txt file, good vs. bad vs. comp and calculated Gaia and Pan-STARRS magnitudes added to the reference star file, a table of comp star magnitudes and errors 
 
 
-Step 8: Identify real good comp stars (the few of them) and get more exact positions of these comp stars and the target
+Step 8: Identify real good comp stars (the few of them) and get more exact positions of these comp stars and the target (maybe comp stars which were never nan/bad flux is a good idea?)
 Step 9: Do any neighbor subtraction we feel is necessary
 
 

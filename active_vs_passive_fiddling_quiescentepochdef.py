@@ -113,8 +113,8 @@ full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
 #Mask out quiescence
-intervals = list(zip(full["Start MJD"], full["End MJD"])) + \
-            list(zip(mini["Start MJD"], mini["End MJD"]))
+intervals = list(zip(full["Start MJD"], full["End MJD"])) #+ \
+            #list(zip(mini["Start MJD"], mini["End MJD"]))
 
 def get_quiescent(df, intervals):
     mask = np.ones(len(df), dtype=bool)
