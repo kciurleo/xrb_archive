@@ -20,7 +20,7 @@ from astropy.visualization import ZScaleInterval, ImageNormalize, AsinhStretch
 ###per band, I will make stacked images here.
 
 
-target='J1746-322'
+target='J1305-704'
 fractions = {
     'B': 0.3,
     'V': 0.3,

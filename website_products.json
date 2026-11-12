@@ -3,19 +3,39 @@
         {
             "name": "4U1254-690",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1254-690/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -24,19 +44,39 @@
         {
             "name": "4U1538-52",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1538-52/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -45,19 +85,39 @@
         {
             "name": "4U1543-47",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1543-47/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -66,19 +126,39 @@
         {
             "name": "4U1543-624",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1543-624/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -87,19 +167,39 @@
         {
             "name": "4U1608-52",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1608-52/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -108,19 +208,39 @@
         {
             "name": "4U1630-47",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1630-47/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -129,19 +249,39 @@
         {
             "name": "4U1636-536",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1636-536/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -150,19 +290,39 @@
         {
             "name": "4U1658-298",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1658-298/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -171,19 +331,39 @@
         {
             "name": "4U1702-429",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1702-429/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -192,19 +372,39 @@
         {
             "name": "4U1735-444",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1735-444/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -213,19 +413,39 @@
         {
             "name": "4U1755-338",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1755-338/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -234,19 +454,39 @@
         {
             "name": "4U1822-371",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1822-371/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -255,19 +495,39 @@
         {
             "name": "4U1907+097",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/4U1907+097/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -276,19 +536,39 @@
         {
             "name": "A0620-00",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/A0620-00/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -297,19 +577,39 @@
         {
             "name": "AqlX-1",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/AqlX-1/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -318,19 +618,39 @@
         {
             "name": "BWCir",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/BWCir/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -339,19 +659,39 @@
         {
             "name": "Cal83",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/Cal83/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -360,19 +700,39 @@
         {
             "name": "CenX-3",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/CenX-3/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -381,40 +741,80 @@
         {
             "name": "CenX-4",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/CenX-4/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/CenX-4/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/CenX-4/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "CirX-1",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/CirX-1/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -423,19 +823,39 @@
         {
             "name": "GROJ0433+32",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GROJ0433+32/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -444,40 +864,80 @@
         {
             "name": "GROJ1655-40",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GROJ1655-40/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GROJ1655-40/lightcurve_B.png"
+                },
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GROJ1655-40/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
                     "available": false,
                     "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GROJ1655-40/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "GRS1009-45",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GRS1009-45/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V_image": {
                     "available": true,
                     "path": "websiteplots/GRS1009-45/stacked_V.png"
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GRS1009-45/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": true,
                     "path": "websiteplots/GRS1009-45/stacked_R.png"
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GRS1009-45/lightcurve_R.png"
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -486,40 +946,80 @@
         {
             "name": "GRS1716\u2212249",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GRS1716\u2212249/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V_image": {
                     "available": true,
                     "path": "websiteplots/GRS1716\u2212249/stacked_V.png"
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GRS1716\u2212249/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
                     "available": true,
                     "path": "websiteplots/GRS1716\u2212249/stacked_I.png"
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GRS1716\u2212249/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "GRS1739-278",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GRS1739-278/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -528,19 +1028,39 @@
         {
             "name": "GRS1915+105",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GRS1915+105/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -549,40 +1069,80 @@
         {
             "name": "GS1354-645",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GS1354-645/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V_image": {
                     "available": true,
                     "path": "websiteplots/GS1354-645/stacked_V.png"
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GS1354-645/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
                     "available": true,
                     "path": "websiteplots/GS1354-645/stacked_I.png"
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GS1354-645/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "GUMus",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GUMus/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -591,19 +1151,39 @@
         {
             "name": "GX1+4",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GX1+4/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -612,19 +1192,39 @@
         {
             "name": "GX13+1",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GX13+1/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -633,19 +1233,39 @@
         {
             "name": "GX17+2",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GX17+2/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -654,19 +1274,39 @@
         {
             "name": "GX301-2",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GX301-2/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -675,40 +1315,80 @@
         {
             "name": "GX339-4",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GX339-4/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GX339-4/lightcurve_B.png"
+                },
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GX339-4/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GX339-4/lightcurve_R.png"
+                },
+                "stacked_I_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/GX339-4/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "GX349+2",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GX349+2/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -717,19 +1397,39 @@
         {
             "name": "GX354-0",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GX354-0/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -738,19 +1438,39 @@
         {
             "name": "GX5-1",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GX5-1/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -759,19 +1479,39 @@
         {
             "name": "GX9+9",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/GX9+9/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -780,19 +1520,39 @@
         {
             "name": "HD96670",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/HD96670/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -801,19 +1561,39 @@
         {
             "name": "IGR17098-3628",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/IGR17098-3628/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -822,19 +1602,39 @@
         {
             "name": "IGR17597-2201",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/IGR17597-2201/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -843,40 +1643,80 @@
         {
             "name": "IGRJ17091-3624",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/IGRJ17091-3624/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/IGRJ17091-3624/lightcurve_B.png"
+                },
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "stacked_R_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/IGRJ17091-3624/lightcurve_R.png"
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/IGRJ17091-3624/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "IGRJ17191-2821",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/IGRJ17191-2821/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -885,40 +1725,80 @@
         {
             "name": "IGRJ17379-3747",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/IGRJ17379-3747/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
                     "available": false,
                     "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/IGRJ17379-3747/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "IGRJ17454",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/IGRJ17454/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -927,19 +1807,39 @@
         {
             "name": "IGRJ17544-2619",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/IGRJ17544-2619/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -948,19 +1848,39 @@
         {
             "name": "J004308.6+411247",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J004308.6+411247/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -969,19 +1889,39 @@
         {
             "name": "J0051-72",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J0051-72/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -990,19 +1930,39 @@
         {
             "name": "J0051-736",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J0051-736/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1011,40 +1971,80 @@
         {
             "name": "J0556-332",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J0556-332/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
                     "available": false,
                     "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J0556-332/lightcurve_R.png"
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J0556-332/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J0911",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J0911/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1053,19 +2053,39 @@
         {
             "name": "J11305",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J11305/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1074,19 +2094,39 @@
         {
             "name": "J11435",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J11435/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1095,82 +2135,162 @@
         {
             "name": "J1305-704",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1305-704/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1305-704/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1305-704/lightcurve_R.png"
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1305-704/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1357",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1357/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1357/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1357/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1535-571",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1535-571/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V_image": {
                     "available": true,
                     "path": "websiteplots/J1535-571/stacked_V.png"
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1535-571/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": true,
                     "path": "websiteplots/J1535-571/stacked_R.png"
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1535-571/lightcurve_R.png"
+                },
+                "stacked_I_image": {
                     "available": true,
                     "path": "websiteplots/J1535-571/stacked_I.png"
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1535-571/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1543-564",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1543-564/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1179,19 +2299,39 @@
         {
             "name": "J1550-564",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1550-564/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1200,19 +2340,39 @@
         {
             "name": "J1626.6",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1626.6/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1626.6/lightcurve_R.png"
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1221,19 +2381,39 @@
         {
             "name": "J1628-41",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1628-41/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1242,19 +2422,39 @@
         {
             "name": "J16283-4838",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J16283-4838/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1263,40 +2463,80 @@
         {
             "name": "J1631-478",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1631-478/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
                     "available": false,
                     "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1631-478/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J16320-4751",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J16320-4751/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1305,19 +2545,39 @@
         {
             "name": "J16358-4726",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J16358-4726/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1326,19 +2586,39 @@
         {
             "name": "J1650-500",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1650-500/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1347,19 +2627,39 @@
         {
             "name": "J165408-395636",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J165408-395636/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1368,40 +2668,80 @@
         {
             "name": "J1659-152",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1659-152/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
                     "available": true,
                     "path": "websiteplots/J1659-152/stacked_R.png"
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1659-152/lightcurve_R.png"
+                },
+                "stacked_I_image": {
                     "available": true,
                     "path": "websiteplots/J1659-152/stacked_I.png"
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1659-152/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1701-462",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1701-462/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1410,19 +2750,39 @@
         {
             "name": "J1719-356",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1719-356/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1431,19 +2791,39 @@
         {
             "name": "J1720-318",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1720-318/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1452,40 +2832,80 @@
         {
             "name": "J1726-476",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1726-476/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1726-476/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1726-476/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1727-203",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1727-203/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1494,19 +2914,39 @@
         {
             "name": "J1745-26",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1745-26/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1515,40 +2955,80 @@
         {
             "name": "J1746-322",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1746-322/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
+                    "available": true,
+                    "path": "websiteplots/J1746-322/stacked_V.png"
+                },
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1746-322/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
                     "available": false,
                     "path": null
+                },
+                "stacked_I_image": {
+                    "available": true,
+                    "path": "websiteplots/J1746-322/stacked_I.png"
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1746-322/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J174716.1-281048",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J174716.1-281048/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1557,19 +3037,39 @@
         {
             "name": "J1749.4-2807",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1749.4-2807/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1578,124 +3078,244 @@
         {
             "name": "J1752-223",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1752-223/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
                     "available": true,
                     "path": "websiteplots/J1752-223/stacked_I.png"
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1752-223/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1753",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1753/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1753/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1753/lightcurve_R.png"
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1753/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1808.4-3658",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1808.4-3658/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
                     "available": true,
                     "path": "websiteplots/J1808.4-3658/stacked_R.png"
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1808.4-3658/lightcurve_R.png"
+                },
+                "stacked_I_image": {
                     "available": true,
                     "path": "websiteplots/J1808.4-3658/stacked_I.png"
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1808.4-3658/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1813-095",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1813-095/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1813-095/lightcurve_B.png"
+                },
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1813-095/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
                     "available": false,
                     "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1813-095/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1817-330",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1817-330/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1817-330/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1817-330/lightcurve_R.png"
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1817-330/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1818-245",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1818-245/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1704,40 +3324,80 @@
         {
             "name": "J1820",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1820/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1820/lightcurve_B.png"
+                },
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1820/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1820/lightcurve_R.png"
+                },
+                "stacked_I_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1820/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1828-249",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1828-249/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1828-249/lightcurve_R.png"
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1746,40 +3406,80 @@
         {
             "name": "J1858.6-0814",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1858.6-0814/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": true,
                     "path": "websiteplots/J1858.6-0814/stacked_B.png"
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1858.6-0814/lightcurve_B.png"
+                },
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
                     "available": true,
                     "path": "websiteplots/J1858.6-0814/stacked_R.png"
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1858.6-0814/lightcurve_R.png"
+                },
+                "stacked_I_image": {
                     "available": true,
                     "path": "websiteplots/J1858.6-0814/stacked_I.png"
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/J1858.6-0814/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "J1957+032",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/J1957+032/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1788,19 +3488,39 @@
         {
             "name": "LMCX-1",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/LMCX-1/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1809,19 +3529,39 @@
         {
             "name": "LMCX-2",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/LMCX-2/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1830,40 +3570,80 @@
         {
             "name": "LMCX-3",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/LMCX-3/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/LMCX-3/lightcurve_B.png"
+                },
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/LMCX-3/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
                     "available": false,
                     "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/LMCX-3/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "MMVel",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/MMVel/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1872,40 +3652,80 @@
         {
             "name": "NovaMusca",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/NovaMusca/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/NovaMusca/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/NovaMusca/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "SMCX-1",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/SMCX-1/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1914,40 +3734,80 @@
         {
             "name": "SMCX-2",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/SMCX-2/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/SMCX-2/lightcurve_B.png"
+                },
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "stacked_R_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/SMCX-2/lightcurve_R.png"
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/SMCX-2/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "SMCX-3",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/SMCX-3/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1956,19 +3816,39 @@
         {
             "name": "ScoX-1",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/ScoX-1/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1977,19 +3857,39 @@
         {
             "name": "UYVol",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/UYVol/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -1998,19 +3898,39 @@
         {
             "name": "V1408Aql",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/V1408Aql/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }
@@ -2019,40 +3939,80 @@
         {
             "name": "V4641",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/V4641/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/V4641/lightcurve_B.png"
+                },
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/V4641/lightcurve_V.png"
+                },
+                "stacked_R_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/V4641/lightcurve_R.png"
+                },
+                "stacked_I_image": {
                     "available": false,
                     "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
+                    "available": true,
+                    "path": "websiteplots/V4641/lightcurve_I.png"
                 }
             }
         },
         {
             "name": "X0614+091",
             "products": {
-                "stacked_B": {
+                "Filter_calendar": {
+                    "available": true,
+                    "path": "websiteplots/X0614+091/filter_calendar.png"
+                },
+                "stacked_B_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_V": {
+                "preliminary_1.3m_B_lightcurve": {
                     "available": false,
                     "path": null
                 },
-                "stacked_R": {
+                "stacked_V_image": {
                     "available": false,
                     "path": null
                 },
-                "stacked_I": {
+                "preliminary_1.3m_V_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_R_lightcurve": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I_image": {
+                    "available": false,
+                    "path": null
+                },
+                "preliminary_1.3m_I_lightcurve": {
                     "available": false,
                     "path": null
                 }

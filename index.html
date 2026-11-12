@@ -99,9 +99,7 @@
 
     <div id="products">
 
-        <p class="placeholder">
-            Select a target to view its available products.
-        </p>
+        
 
     </div>
 
@@ -111,9 +109,7 @@
 let manifest = { targets: [] };
 
 
-// ============================================================
-// LOAD TARGETS FROM JSON
-// ============================================================
+// load targets from json
 
 async function initialize() {
 
@@ -122,10 +118,6 @@ async function initialize() {
     try {
 
         const response = await fetch("website_products.json");
-
-        if (!response.ok) {
-            throw new Error("Could not load website_products.json");
-        }
 
         manifest = await response.json();
 
@@ -145,11 +137,10 @@ async function initialize() {
             option.value = target.name;
             option.textContent = target.name;
 
-            // Check whether this target has ANY available products
+            // disable targets with no available products
             const hasProducts = Object.values(target.products || {})
                 .some(product => product.available === true);
 
-            // Disable targets with no available products
             option.disabled = !hasProducts;
 
             if (!hasProducts) {
@@ -181,9 +172,7 @@ async function initialize() {
 }
 
 
-// ============================================================
-// DISPLAY PRODUCTS FOR SELECTED TARGET
-// ============================================================
+// display products 
 
 function loadProducts() {
 
@@ -199,14 +188,13 @@ function loadProducts() {
     if (!targetName) {
 
         container.innerHTML =
-            '<p class="placeholder">Select a target to view its products.</p>';
+            '<p class="placeholder"></p>';
 
         return;
 
     }
 
 
-    // Find selected target
     const target = manifest.targets.find(
         t => t.name === targetName
     );
@@ -216,7 +204,6 @@ function loadProducts() {
     }
 
 
-    // Display target heading
     const heading = document.createElement("h2");
 
     heading.textContent = target.name;
@@ -224,7 +211,7 @@ function loadProducts() {
     container.appendChild(heading);
 
 
-    // Loop through ALL registered products
+    // loop through all products
     Object.entries(target.products || {}).forEach(
         ([productName, product]) => {
 
@@ -251,7 +238,6 @@ function loadProducts() {
                 const status = document.createElement("p");
 
                 status.className = "available";
-                status.textContent = "Available";
 
                 section.appendChild(status);
 
@@ -310,15 +296,12 @@ function loadProducts() {
 }
 
 
-// ============================================================
-// EVENT LISTENERS
-// ============================================================
+// event listeners
 
 document.getElementById("targetSelect")
     .addEventListener("change", loadProducts);
 
 
-// Initialize website
 initialize();
 
 </script>

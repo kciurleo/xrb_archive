@@ -15,6 +15,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from astropy.io import fits
 from astropy.visualization import ZScaleInterval, ImageNormalize, AsinhStretch
+import shutil
 
 BASE_DIR = Path("/neta/xrb")
 OUTPUT_DIR = Path("/home/kmc249/test_data/xrb_archive/")
@@ -116,6 +117,23 @@ def main():
             "name": target,
             "products": {}
         }
+        
+        
+        #getting the calendar file
+        cal_file=Path(f'/neta/xrb/{target}/product/filter_patterns_{target}.png')
+        calout=f"websiteplots/{target}/filter_calendar.png"
+        if cal_file.exists():
+            cal_available = True
+            Path(calout).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(cal_file, calout)
+        else:
+            cal_available = False
+        target_info["products"]["Filter_calendar"] = {
+            "available": cal_available,
+            "path": calout
+            if cal_available else None
+        }
+        
         #STACKED IMAGES
         for band in bands:
             r_fits = (
@@ -138,10 +156,25 @@ def main():
                 band
             )
     
-            target_info["products"][f"stacked_{band}"] = {
+            target_info["products"][f"stacked_{band}_image"] = {
                 "available": available,
                 "path": f"websiteplots/{target}/stacked_{band}.png"
                 if available else None
+            }
+            
+            #now getting preliminary lcs
+            lc_file=Path(f'/neta/xrb/{target}/product/first_pass_lightcurves/{target}_1.3m_{band}_lc.png')
+            outpath=f"websiteplots/{target}/lightcurve_{band}.png"
+            if lc_file.exists():
+                lc_available = True
+                Path(outpath).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy(lc_file, outpath)
+            else:
+                lc_available = False
+            target_info["products"][f"preliminary_1.3m_{band}_lightcurve"] = {
+                "available": lc_available,
+                "path": outpath
+                if lc_available else None
             }
     
         manifest["targets"].append(target_info)
