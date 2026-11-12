@@ -20,12 +20,12 @@ from astropy.visualization import ZScaleInterval, ImageNormalize, AsinhStretch
 ###per band, I will make stacked images here.
 
 
-target='GX339-4'
+target='J1746-322'
 fractions = {
     'B': 0.3,
     'V': 0.3,
     'R': 0.3,
-    'I': 0.3
+    'I': 0.5
 }
   #fraction of best frames to take in the stack, default of 0.3
 
@@ -214,7 +214,7 @@ for band in bands:
     header['STACK_FRAC']=fraction
     
 
-    outfile=f'{savedir}/stacked_images_optical/{target}_{band}_stacked.fits'
+    outfile=f'{savedir}/stacked_images_optical/{target}_stacked_{band}.fits'
     
     
     fits.writeto(outfile, stacked, header=header, overwrite=True)

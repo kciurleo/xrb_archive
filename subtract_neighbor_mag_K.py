@@ -101,7 +101,7 @@ sigma_m_e = (2.5 / np.log(10)) * (sigma_F_e / F_e)
 
 print(f"K magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
 print(f"K magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
-
+print(aksjhd)
 #new way of magnitude errors
 K_corrected['flux_err'] = K_corrected['K_flux'] * np.log(10) * 0.4 * K_corrected['e_Kmag']
 K_corrected['e_Kmag_shifted']=(2.5 / np.log(10)) * (K_corrected['flux_err'] / K_corrected['F_corr'])

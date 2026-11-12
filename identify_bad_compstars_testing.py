@@ -1040,7 +1040,7 @@ optical_bands = ['B','V','R','I']
 
 for band in optical_bands:
 
-    file = f'{savedir}stacked_images_optical/{target}_{band}_stacked.fits'
+    file = f'{savedir}stacked_images_optical/{target}_stacked_{band}.fits'
 
     if not os.path.exists(file):
         print(f'Missing {file}, skipping')

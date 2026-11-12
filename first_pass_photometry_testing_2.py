@@ -70,7 +70,7 @@ stacked_positions = {}
 
 for band in optical_bands:
 
-    stackfile = f'{savedir}/stacked_images_optical/{target}_{band}_stacked.fits'
+    stackfile = f'{savedir}/stacked_images_optical/{target}_stacked_{band}.fits'
 
     if not os.path.exists(stackfile):
         print(f'No stacked image found for {band}')

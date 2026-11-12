@@ -1,0 +1,2062 @@
+{
+    "targets": [
+        {
+            "name": "4U1254-690",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1538-52",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1543-47",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1543-624",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1608-52",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1630-47",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1636-536",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1658-298",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1702-429",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1735-444",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1755-338",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1822-371",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "4U1907+097",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "A0620-00",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "AqlX-1",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "BWCir",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "Cal83",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "CenX-3",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "CenX-4",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "CirX-1",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GROJ0433+32",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GROJ1655-40",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GRS1009-45",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": true,
+                    "path": "websiteplots/GRS1009-45/stacked_V.png"
+                },
+                "stacked_R": {
+                    "available": true,
+                    "path": "websiteplots/GRS1009-45/stacked_R.png"
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GRS1716\u2212249",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": true,
+                    "path": "websiteplots/GRS1716\u2212249/stacked_V.png"
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": true,
+                    "path": "websiteplots/GRS1716\u2212249/stacked_I.png"
+                }
+            }
+        },
+        {
+            "name": "GRS1739-278",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GRS1915+105",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GS1354-645",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": true,
+                    "path": "websiteplots/GS1354-645/stacked_V.png"
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": true,
+                    "path": "websiteplots/GS1354-645/stacked_I.png"
+                }
+            }
+        },
+        {
+            "name": "GUMus",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GX1+4",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GX13+1",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GX17+2",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GX301-2",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GX339-4",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GX349+2",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GX354-0",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GX5-1",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "GX9+9",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "HD96670",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "IGR17098-3628",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "IGR17597-2201",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "IGRJ17091-3624",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "IGRJ17191-2821",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "IGRJ17379-3747",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "IGRJ17454",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "IGRJ17544-2619",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J004308.6+411247",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J0051-72",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J0051-736",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J0556-332",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J0911",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J11305",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J11435",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1305-704",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1357",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1535-571",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": true,
+                    "path": "websiteplots/J1535-571/stacked_V.png"
+                },
+                "stacked_R": {
+                    "available": true,
+                    "path": "websiteplots/J1535-571/stacked_R.png"
+                },
+                "stacked_I": {
+                    "available": true,
+                    "path": "websiteplots/J1535-571/stacked_I.png"
+                }
+            }
+        },
+        {
+            "name": "J1543-564",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1550-564",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1626.6",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1628-41",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J16283-4838",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1631-478",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J16320-4751",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J16358-4726",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1650-500",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J165408-395636",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1659-152",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": true,
+                    "path": "websiteplots/J1659-152/stacked_R.png"
+                },
+                "stacked_I": {
+                    "available": true,
+                    "path": "websiteplots/J1659-152/stacked_I.png"
+                }
+            }
+        },
+        {
+            "name": "J1701-462",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1719-356",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1720-318",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1726-476",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1727-203",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1745-26",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1746-322",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J174716.1-281048",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1749.4-2807",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1752-223",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": true,
+                    "path": "websiteplots/J1752-223/stacked_I.png"
+                }
+            }
+        },
+        {
+            "name": "J1753",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1808.4-3658",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": true,
+                    "path": "websiteplots/J1808.4-3658/stacked_R.png"
+                },
+                "stacked_I": {
+                    "available": true,
+                    "path": "websiteplots/J1808.4-3658/stacked_I.png"
+                }
+            }
+        },
+        {
+            "name": "J1813-095",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1817-330",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1818-245",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1820",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1828-249",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "J1858.6-0814",
+            "products": {
+                "stacked_B": {
+                    "available": true,
+                    "path": "websiteplots/J1858.6-0814/stacked_B.png"
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": true,
+                    "path": "websiteplots/J1858.6-0814/stacked_R.png"
+                },
+                "stacked_I": {
+                    "available": true,
+                    "path": "websiteplots/J1858.6-0814/stacked_I.png"
+                }
+            }
+        },
+        {
+            "name": "J1957+032",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "LMCX-1",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "LMCX-2",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "LMCX-3",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "MMVel",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "NovaMusca",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "SMCX-1",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "SMCX-2",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "SMCX-3",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "ScoX-1",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "UYVol",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "V1408Aql",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "V4641",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        },
+        {
+            "name": "X0614+091",
+            "products": {
+                "stacked_B": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_V": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_R": {
+                    "available": false,
+                    "path": null
+                },
+                "stacked_I": {
+                    "available": false,
+                    "path": null
+                }
+            }
+        }
+    ]
+}

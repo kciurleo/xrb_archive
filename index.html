@@ -1,15 +1,328 @@
+
 <!DOCTYPE html>
-<html>
-<title>SMARTS XRB Cheatsheet</title>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SMARTS XRB Products (internal)</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 35px;
+            background: #f4f5f7;
+            color: #222;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            min-width: 280px;
+            border-radius: 5px;
+        }
+
+        select option:disabled {
+            color: #999;
+        }
+
+        #products {
+            margin-top: 30px;
+        }
+
+        .product {
+            background: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .product h2 {
+            margin-top: 0;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-top: 15px;
+        }
+
+        .available {
+            color: #238636;
+            font-size: 13px;
+        }
+
+        .unavailable {
+            color: #b22222;
+            font-style: italic;
+            padding: 12px;
+            background: #fff0f0;
+            border-radius: 5px;
+        }
+
+        .placeholder {
+            color: #666;
+            font-style: italic;
+        }
+
+        .error {
+            color: #b22222;
+        }
+
+    </style>
+
+</head>
+
+
 <body>
 
-<h1>SMARTS XRB Cheatsheet</h1>
+    <h1>SMARTS XRB Products (internal)</h1>
 
-<select onchange="window.location.href=this.options[this.selectedIndex].value;">
-    <option value="">Select an object</option>
-    <option value="A0620-00.html">A0620-00</option>
-    <option value="testpage.html">Test Page</option>
-</select>
+    <label for="targetSelect">Select an object:</label>
+
+    <br><br>
+
+    <select id="targetSelect">
+
+        <option value="">Loading targets...</option>
+
+    </select>
+
+
+    <div id="products">
+
+        <p class="placeholder">
+            Select a target to view its available products.
+        </p>
+
+    </div>
+
+
+<script>
+
+let manifest = { targets: [] };
+
+
+// ============================================================
+// LOAD TARGETS FROM JSON
+// ============================================================
+
+async function initialize() {
+
+    const dropdown = document.getElementById("targetSelect");
+
+    try {
+
+        const response = await fetch("website_products.json");
+
+        if (!response.ok) {
+            throw new Error("Could not load website_products.json");
+        }
+
+        manifest = await response.json();
+
+        dropdown.innerHTML = "";
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "Select an object";
+
+        dropdown.appendChild(defaultOption);
+
+
+        manifest.targets.forEach(target => {
+
+            const option = document.createElement("option");
+
+            option.value = target.name;
+            option.textContent = target.name;
+
+            // Check whether this target has ANY available products
+            const hasProducts = Object.values(target.products || {})
+                .some(product => product.available === true);
+
+            // Disable targets with no available products
+            option.disabled = !hasProducts;
+
+            if (!hasProducts) {
+                option.textContent += " (No products available)";
+            }
+
+            dropdown.appendChild(option);
+
+        });
+
+    }
+
+    catch (error) {
+
+        dropdown.innerHTML = "";
+
+        const option = document.createElement("option");
+        option.textContent = "Error loading targets";
+
+        dropdown.appendChild(option);
+
+        document.getElementById("products").innerHTML =
+            '<p class="error">Could not load product information.</p>';
+
+        console.error(error);
+
+    }
+
+}
+
+
+// ============================================================
+// DISPLAY PRODUCTS FOR SELECTED TARGET
+// ============================================================
+
+function loadProducts() {
+
+    const targetName =
+        document.getElementById("targetSelect").value;
+
+    const container =
+        document.getElementById("products");
+
+    container.innerHTML = "";
+
+
+    if (!targetName) {
+
+        container.innerHTML =
+            '<p class="placeholder">Select a target to view its products.</p>';
+
+        return;
+
+    }
+
+
+    // Find selected target
+    const target = manifest.targets.find(
+        t => t.name === targetName
+    );
+
+    if (!target) {
+        return;
+    }
+
+
+    // Display target heading
+    const heading = document.createElement("h2");
+
+    heading.textContent = target.name;
+
+    container.appendChild(heading);
+
+
+    // Loop through ALL registered products
+    Object.entries(target.products || {}).forEach(
+        ([productName, product]) => {
+
+            const section = document.createElement("div");
+
+            section.className = "product";
+
+
+            // Product title
+            const title = document.createElement("h2");
+
+            // Use an optional custom title, otherwise format the key
+            title.textContent = product.title ||
+                productName
+                    .replaceAll("_", " ")
+                    .replace(/\b\w/g, c => c.toUpperCase());
+
+            section.appendChild(title);
+
+
+            if (product.available && product.path) {
+
+                // Product is available
+                const status = document.createElement("p");
+
+                status.className = "available";
+                status.textContent = "Available";
+
+                section.appendChild(status);
+
+
+                // Display plot
+                const img = document.createElement("img");
+
+                // Encode each path component while preserving slashes
+                img.src = product.path
+                    .split("/")
+                    .map(part => encodeURIComponent(part))
+                    .join("/");
+
+                img.alt = title.textContent;
+
+                img.loading = "lazy";
+
+
+                // Handle missing image file
+                img.onerror = function() {
+
+                    img.remove();
+
+                    const message = document.createElement("p");
+
+                    message.className = "unavailable";
+                    message.textContent =
+                        "Product image could not be loaded.";
+
+                    section.appendChild(message);
+
+                };
+
+                section.appendChild(img);
+
+            }
+
+            else {
+
+                // Product is unavailable
+                const message = document.createElement("p");
+
+                message.className = "unavailable";
+                message.textContent = "Product not available.";
+
+                section.appendChild(message);
+
+            }
+
+
+            container.appendChild(section);
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
+
+document.getElementById("targetSelect")
+    .addEventListener("change", loadProducts);
+
+
+// Initialize website
+initialize();
+
+</script>
 
 </body>
+
 </html>

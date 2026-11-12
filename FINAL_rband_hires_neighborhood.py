@@ -55,17 +55,6 @@ def individual_star_models(psf_model, phottable, shape, star_indices=None):
     """
     Build individual star model images for selected fitted sources.
     Works for both ePSFModel and analytic PRF models.
-    
-    Parameters
-    ----------
-    psf_model : astropy.modeling.Fittable2DModel
-        The PSF/PRF model (e.g., EPSFModel, CircularGaussianPRF).
-    phottable : QTable
-        Photometry results table with fitted parameters.
-    shape : tuple
-        Shape of the output image (ny, nx).
-    star_indices : list of ints or None
-        If given, only build models for these rows in phottable.
     """
     star_models = []
     ny, nx = shape
@@ -699,7 +688,7 @@ print(final_phot)
 #outside so I don't have to rerun every time
 epsf_cache={}
 
-#%% dumb cha thin
+#%% 
 whatiputin=five_init[[row['name'] != 'd' for row in five_init]]
 #whatiputin=five_init
 
@@ -729,11 +718,6 @@ def get_epsf(size):
 def make_star_mask(shape, phot_table, radius, exclude_names=None):
     """
     Create a boolean mask selecting pixels near fitted stars.
-    
-    Parameters
-    ----------
-    exclude_names : list or None
-        Star names to exclude from the mask (e.g., ['d'])
     """
     ny, nx = shape
     y, x = np.mgrid[0:ny, 0:nx]
@@ -761,7 +745,7 @@ def compute_chi2(data, model, resid, phot_table, radius=10, read_noise=5.0):
         data.shape,
         phot_table,
         radius,
-        exclude_names=['d']   # <-- KEY CHANGE
+        exclude_names=['d'] #getting rid of d because it doesn't consistently show up in these fits
     )
     
     noise2 = np.abs(model) + read_noise**2
@@ -771,8 +755,8 @@ def compute_chi2(data, model, resid, phot_table, radius=10, read_noise=5.0):
     
     return chi2, n_pix
 
-# ===== SET THESE =====
-sep_lit = 0.46      # arcsec (example)
+
+sep_lit = 0.46      # arcsec
 sep_err_lit = 0.01
 
 flux_lit = 0.17     # e / (a+e)
@@ -800,11 +784,10 @@ def compute_score(chi2_img, n_pix, n_params,
     }
 def run_fit(size, fitnum, ap_radius, return_full=False):
     
-    # ===== rebuild EPSF =====
+    #rebuild epsf
     psf_model = get_epsf(size)
     fit_shape = (fitnum*res+1, fitnum*res+1)
     
-    # ===== photometry (ONLY fivephot now) =====
     psfphot = PSFPhotometry(
         psf_model,
         fit_shape,
@@ -814,13 +797,13 @@ def run_fit(size, fitnum, ap_radius, return_full=False):
     
     result = psfphot(zoomdata, init_params=whatiputin)
 
-    # re-attach names (Photutils drops them)
+    #put names back
     result['name'] = whatiputin['name']
     
     model = psfphot.make_model_image(np.shape(zoomdata))
     resid = psfphot.make_residual_image(zoomdata)
     
-    # ===== χ² (mask radius tied to fit scale) =====
+    #chi2
     chi2, n_pix = compute_chi2(
         zoomdata,
         model,
@@ -829,7 +812,7 @@ def run_fit(size, fitnum, ap_radius, return_full=False):
         radius=fitnum*res
     )
     
-    # ===== separation =====
+    #separation
     ref = result[result['name'] == 'a'][0]
     sky_ref = w.pixel_to_world(ref['x_fit']/res, ref['y_fit']/res)
     
@@ -837,9 +820,9 @@ def run_fit(size, fitnum, ap_radius, return_full=False):
     sky_e = w.pixel_to_world(e_star['x_fit']/res, e_star['y_fit']/res)
     
     sep = sky_ref.separation(sky_e).arcsec
-    sep_err = 0.01  # keep your placeholder or replace later
+    sep_err = 0.01  
     
-    # ===== flux ratio =====
+    #flux ratio
     flux_a = ref['flux_fit']
     flux_e = e_star['flux_fit']
     

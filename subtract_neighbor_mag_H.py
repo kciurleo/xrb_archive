@@ -113,7 +113,7 @@ sigma_m_e = (2.5 / np.log(10)) * (sigma_F_e / F_e)
 
 print(f"H magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
 print(f"H magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
-
+print(aksjdhajsh)
 #new way of magnitude errors
 H_corrected['flux_err'] = H_corrected['H_flux'] * np.log(10) * 0.4 * H_corrected['e_Hmag']
 H_corrected['e_Hmag_shifted']=(2.5 / np.log(10)) * (H_corrected['flux_err'] / H_corrected['F_corr'])

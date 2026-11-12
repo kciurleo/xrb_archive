@@ -113,7 +113,7 @@ sigma_m_e = (2.5 / np.log(10)) * (sigma_F_e / F_e)
 
 print(f"J magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
 print(f"J magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
-
+print(akjhjsd)
 #new way of magnitude errors
 J_corrected['flux_err'] = J_corrected['J_flux'] * np.log(10) * 0.4 * J_corrected['e_Jmag']
 J_corrected['e_Jmag_shifted']=(2.5 / np.log(10)) * (J_corrected['flux_err'] / J_corrected['F_corr'])

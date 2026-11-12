@@ -21,7 +21,7 @@ from astropy.visualization import ImageNormalize, ZScaleInterval, SinhStretch, A
 
 
 
-target='GX339-4'
+target='NovaMusca'
 compstars=[154,192,167,98 ] #If a SMARTS object with published already, ids of compstars
 ignore_error_issue=False #Sometimes, the 4D fit goes crazy, so we need to do a 2D poly fit instead
 #limit_magdiff=0.25 #limit used for distance from line drawn in calib vs instr
@@ -1028,7 +1028,7 @@ optical_bands = ['B','V','R','I']
 
 for band in optical_bands:
 
-    file = f'{savedir}stacked_images_optical/{target}_{band}_stacked.fits'
+    file = f'{savedir}stacked_images_optical/{target}_stacked_{band}.fits'
 
     if not os.path.exists(file):
         print(f'Missing {file}, skipping')

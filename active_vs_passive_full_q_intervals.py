@@ -180,6 +180,7 @@ for key in data:
 #%%
 
 #Resaving files because I suck
+'''
 for key in data:
     savetable=data[key]['df']
     band=key.split(' ')[0]
@@ -209,7 +210,7 @@ for key in data:
         )
 
 #%%
-
+'''
 #epochs, I think based on all times
 def assign_quiescent_epochs(df, quiescent_intervals):
 
@@ -293,15 +294,15 @@ def get_pvalue(key,a=0.05, n_iter=10000):
             "obs_median": obs_med,
             "sig": sig
         })
+
         try:
-            plt.figure(figsize=(8,4))
-            plt.hist(fake_medians, bins=50)
-            plt.title(f'{key}, epoch {epoch}')
+            print(askjhd) #plt.figure(figsize=(8,4))
+            #plt.hist(fake_medians, bins=50)
+            #plt.title(f'{key}, epoch {epoch}')
             #plt.savefig(f'/home/kmc249/Downloads/simulated_histograms/f{key}_{epoch}.png')
-            plt.show()
+            #plt.show()
         except:
             continue
-
     return pd.DataFrame(results)
 
 
@@ -452,7 +453,7 @@ def ks_test(key,a=0.05, n_iter=10000):
     y = np.array([np.mean(percentiles <= xi) for xi in x])
     
    
-    
+'''
     # plot
     plt.figure(figsize=(6,5))
     
@@ -470,7 +471,7 @@ def ks_test(key,a=0.05, n_iter=10000):
     plt.legend()
     #plt.savefig(f'/home/kmc249/Downloads/cdf_{key}.png')
     plt.show()
-
+'''
 #%%
 for key in data:
     ks_test(key,a=0.05, n_iter=10000)
@@ -650,7 +651,7 @@ plt.show()
 
 
 #%%
-
+"""
 for key in data:
 
     print('running ', key)
@@ -909,13 +910,13 @@ for key in data:
     df = df[np.isfinite(df["mag_shifted"])]
 
     # subtract mean (or median)
-    df["mag_scaled"] = (
+    df["mag_centered"] = (
         df["mag_shifted"]
         - df["mag_shifted"].median()
     )
 
     combined.append(
-        df[["MJD", "mag_scaled", "mag_corr_err"]]
+        df[["MJD", "mag_centered", "mag_corr_err"]]
     )
 
 combined = pd.concat(combined, ignore_index=True)
@@ -929,7 +930,7 @@ frequency = np.linspace(
 
 ls = LombScargle(
     combined["MJD"].values,
-    combined["mag_scaled"].values,
+    combined["mag_centered"].values,
     dy=combined["mag_corr_err"].values
 )
 
@@ -1107,4 +1108,96 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
+"""
+#%%
+# SAVE COMBINED DATA AND EPOCH BOUNDARIES
 
+output_dir = "/home/kmc249/Downloads/"
+
+# --------------------------------------------------
+# 1. COMBINE ALL BANDS INTO ONE CSV
+# --------------------------------------------------
+
+combined_data = []
+
+for key in data:
+
+    df = data[key]["plot_df"].copy()
+
+    # Keep only observations with valid magnitudes
+    df = df[np.isfinite(df["mag_shifted"])].copy()
+
+    # Add band name
+    df["band"] = key
+
+    # Add epoch boundaries
+    df["epoch_start"] = df["epoch"].map(
+        {i: start for i, (start, end) in enumerate(quiescent_intervals)}
+    )
+
+    df["epoch_end"] = df["epoch"].map(
+        {i: end for i, (start, end) in enumerate(quiescent_intervals)}
+    )
+
+    # Add global median for this band
+    df["global_median"] = data[key]["global med q mag"]
+
+    # Rename columns for clarity
+    df = df.rename(columns={
+        "mag_shifted": "magnitude",
+        "mag_corr_err": "magnitude_error"
+    })
+
+    # Keep only the columns we want to share
+    df = df[[
+        "MJD",
+        "band",
+        "magnitude",
+        "magnitude_error",
+        "state",
+        "epoch",
+        "epoch_start",
+        "epoch_end",
+        "global_median"
+    ]]
+
+    combined_data.append(df)
+
+
+# Combine all bands
+combined_data = pd.concat(combined_data, ignore_index=True)
+
+# Sort chronologically, then by band
+combined_data = combined_data.sort_values(
+    ["MJD", "band"]
+).reset_index(drop=True)
+
+# Save
+combined_data.to_csv(
+    output_dir + "AqlX1_all_bands_epoch_classification.csv",
+    index=False
+)
+
+print("Saved combined light curve:", len(combined_data), "points")
+
+
+# --------------------------------------------------
+# 2. SAVE QUIESCENT EPOCH BOUNDARIES
+# --------------------------------------------------
+
+epoch_boundaries = pd.DataFrame([
+    {
+        "epoch": i,
+        "start_MJD": start,
+        "end_MJD": end,
+        "duration_days": end - start
+    }
+    for i, (start, end) in enumerate(quiescent_intervals)
+])
+
+epoch_boundaries.to_csv(
+    output_dir + "AqlX1_quiescent_epoch_boundaries.csv",
+    index=False
+)
+
+print("Saved epoch boundaries:", len(epoch_boundaries), "epochs")

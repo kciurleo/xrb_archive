@@ -17,7 +17,7 @@ from astropy.time import Time
 full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
-band='B'
+band='I'
 #R BAND
 file1 = f'/home/kmc249/Downloads/full_aphot_{band}_lc_04_20.csv'
 
@@ -43,14 +43,14 @@ if band=='B':
 	stacked_f = (f_a + f_e)
 	frac_a = f_a / stacked_f
 	frac_e = f_e / stacked_f
-
+	print(frac_a)
 #Error propogation, they come out to be the same
 	sigma_frac_a = np.sqrt(
     		(f_e / stacked_f**2)**2 * err_a**2 +
     		(f_a / stacked_f**2)**2 * err_e**2
 		)
 	sigma_frac_e = sigma_frac_a 
-
+	print(sigma_frac_e)
 
 #I
 if band=='I':
@@ -129,7 +129,7 @@ sigma_m_e = (2.5 / np.log(10)) * (sigma_F_e / F_e)
 print(f"J magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
 print(f"J magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
 
-
+print(akjhsdjh)
 #new way of magnitude errors
 J_corrected['flux_err'] = J_corrected['J_flux'] * np.log(10) * 0.4 * J_corrected['e_Rmag']
 J_corrected['e_Rmag_shifted']=(2.5 / np.log(10)) * (J_corrected['flux_err'] / J_corrected['F_corr'])

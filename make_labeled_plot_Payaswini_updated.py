@@ -5,6 +5,7 @@ Created on Thu Jul 30 15:59:27 2026
 
 @author: kmc249
 """
+from matplotlib.patches import Circle
 import numpy as np
 import matplotlib.pyplot as plt
 from astropy.io import fits
@@ -18,7 +19,6 @@ from scipy.ndimage import map_coordinates
 from photutils.psf import extract_stars
 from astropy.nddata import NDData
 from astropy.wcs import WCS
-from smith_utils import *
 from photutils.datasets import make_model_image
 import glob
 from scipy.optimize import curve_fit
@@ -124,7 +124,19 @@ ax.contour(
     colors='indianred',
     linewidths=1.2
 )
+# Circle around star E (14-pixel diameter in hires coordinates)
+e_row = zoomphot[zoomphot['name'] == 'a'].iloc[0]
 
+e_circle = Circle(
+    (e_row['x_fit'], e_row['y_fit']),
+    radius=14,
+    edgecolor='yellow',
+    facecolor='none',
+    linewidth=2,
+    zorder=3
+)
+
+ax.add_patch(e_circle)
 # -------------------------------------------------------
 # Scatter points
 # -------------------------------------------------------
@@ -235,7 +247,7 @@ ax_pix.set_xticks(ticks)
 ax_pix.set_yticks(ticks)
 
 # Pixel coordinates starting at 0 and divided by 2
-labels = ((ticks - 20) / 2).astype(int)
+labels = ((ticks-20) / res).astype(int)
 
 ax_pix.set_xticklabels(labels)
 ax_pix.set_yticklabels(labels)

@@ -43,14 +43,15 @@ err_e=J_fit.loc[J_fit['name']=='e']['flux_err'].values[0]
 stacked_f = (f_a + f_e)
 frac_a = f_a / stacked_f
 frac_e = f_e / stacked_f
-
+#%%
 #Error propogation, they come out to be the same
 sigma_frac_a = np.sqrt(
     (f_e / stacked_f**2)**2 * err_a**2 +
     (f_a / stacked_f**2)**2 * err_e**2
 )
 sigma_frac_e = sigma_frac_a 
-
+print('frac a: ',frac_a,' plus minus ', sigma_frac_a)
+print('frac e: ',frac_e,' plus minus ', sigma_frac_e)
 #Mask out quiescence
 intervals = list(zip(full["Start MJD"], full["End MJD"])) + \
             list(zip(mini["Start MJD"], mini["End MJD"]))
@@ -137,7 +138,7 @@ J_corrected["Rmag Divided Version"] = -2.5 * np.log10(J_corrected['F_corr_alt'])
 print(J_corrected.head(10)[['Rmag', 'e_Rmag', 'Rmag_corr', 'e_Rmag_corr', 'J_flux']])
 print('flux of a: ', F_a)
 print('number of nan values: ', J_corrected["Rmag_corr"].isna().sum())
-
+print(akjshdjhsd)
 #%%
 ###Plotting
 J_corrected = J_corrected.sort_values('nice time')
