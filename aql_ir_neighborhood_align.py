@@ -267,4 +267,4 @@ for k, (x, y) in enumerate(src):
 
 plt.show()
 
-fits.writeto(f"/neta/xrb/AqlX-1/temp/Aql_X-1_{band}_stack_aligned_to_opt.fits", aligned, fits.getheader(file), overwrite=True)
+#fits.writeto(f"/neta/xrb/AqlX-1/temp/Aql_X-1_{band}_stack_aligned_to_opt.fits", aligned, fits.getheader(file), overwrite=True)

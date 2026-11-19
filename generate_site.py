@@ -143,6 +143,7 @@ def main():
             if prelim_matches:
                 finding_chart = prelim_matches[0]
                 print(f"  Using preliminary finding chart: {finding_chart.name}")
+                finding_title = "Finding Chart (Preliminary)"
         
         if finding_chart is not None:
         
@@ -154,7 +155,7 @@ def main():
             shutil.copy(finding_chart, finding_out_path)
         
             finding_available = True
-            finding_title = "Finding Chart (Preliminary)"
+            
         
         else:
             finding_out = None
