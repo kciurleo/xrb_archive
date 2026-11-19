@@ -180,7 +180,7 @@ for key in data:
 #%%
 
 #Resaving files because I suck
-'''
+
 for key in data:
     savetable=data[key]['df']
     band=key.split(' ')[0]
@@ -208,9 +208,9 @@ for key in data:
             index=False,
             header=False,
         )
-
+print(aksjdhasjh)
 #%%
-'''
+
 #epochs, I think based on all times
 def assign_quiescent_epochs(df, quiescent_intervals):
 

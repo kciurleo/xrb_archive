@@ -3,6 +3,11 @@
         {
             "name": "4U1254-690",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1254-690/filter_calendar.png"
@@ -44,6 +49,11 @@
         {
             "name": "4U1538-52",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/4U1538-52/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1538-52/filter_calendar.png"
@@ -85,6 +95,11 @@
         {
             "name": "4U1543-47",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/4U1543-47/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1543-47/filter_calendar.png"
@@ -126,6 +141,11 @@
         {
             "name": "4U1543-624",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1543-624/filter_calendar.png"
@@ -167,6 +187,11 @@
         {
             "name": "4U1608-52",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1608-52/filter_calendar.png"
@@ -208,6 +233,11 @@
         {
             "name": "4U1630-47",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1630-47/filter_calendar.png"
@@ -249,6 +279,11 @@
         {
             "name": "4U1636-536",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/4U1636-536/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1636-536/filter_calendar.png"
@@ -290,6 +325,11 @@
         {
             "name": "4U1658-298",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/4U1658-298/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1658-298/filter_calendar.png"
@@ -331,6 +371,11 @@
         {
             "name": "4U1702-429",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1702-429/filter_calendar.png"
@@ -372,6 +417,11 @@
         {
             "name": "4U1735-444",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1735-444/filter_calendar.png"
@@ -413,6 +463,11 @@
         {
             "name": "4U1755-338",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1755-338/filter_calendar.png"
@@ -454,6 +509,11 @@
         {
             "name": "4U1822-371",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1822-371/filter_calendar.png"
@@ -495,6 +555,11 @@
         {
             "name": "4U1907+097",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/4U1907+097/filter_calendar.png"
@@ -536,6 +601,11 @@
         {
             "name": "A0620-00",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/A0620-00/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/A0620-00/filter_calendar.png"
@@ -577,6 +647,11 @@
         {
             "name": "AqlX-1",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/AqlX-1/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/AqlX-1/filter_calendar.png"
@@ -618,6 +693,11 @@
         {
             "name": "BWCir",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/BWCir/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/BWCir/filter_calendar.png"
@@ -659,6 +739,11 @@
         {
             "name": "Cal83",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/Cal83/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/Cal83/filter_calendar.png"
@@ -700,6 +785,11 @@
         {
             "name": "CenX-3",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/CenX-3/filter_calendar.png"
@@ -741,6 +831,11 @@
         {
             "name": "CenX-4",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/CenX-4/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/CenX-4/filter_calendar.png"
@@ -782,6 +877,11 @@
         {
             "name": "CirX-1",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/CirX-1/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/CirX-1/filter_calendar.png"
@@ -823,6 +923,11 @@
         {
             "name": "GROJ0433+32",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GROJ0433+32/filter_calendar.png"
@@ -864,6 +969,11 @@
         {
             "name": "GROJ1655-40",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/GROJ1655-40/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GROJ1655-40/filter_calendar.png"
@@ -905,6 +1015,11 @@
         {
             "name": "GRS1009-45",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/GRS1009-45/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GRS1009-45/filter_calendar.png"
@@ -946,6 +1061,11 @@
         {
             "name": "GRS1716\u2212249",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/GRS1716\u2212249/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GRS1716\u2212249/filter_calendar.png"
@@ -987,6 +1107,11 @@
         {
             "name": "GRS1739-278",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GRS1739-278/filter_calendar.png"
@@ -1028,6 +1153,11 @@
         {
             "name": "GRS1915+105",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GRS1915+105/filter_calendar.png"
@@ -1069,6 +1199,11 @@
         {
             "name": "GS1354-645",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/GS1354-645/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GS1354-645/filter_calendar.png"
@@ -1110,6 +1245,11 @@
         {
             "name": "GUMus",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/GUMus/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GUMus/filter_calendar.png"
@@ -1151,6 +1291,11 @@
         {
             "name": "GX1+4",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GX1+4/filter_calendar.png"
@@ -1192,6 +1337,11 @@
         {
             "name": "GX13+1",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GX13+1/filter_calendar.png"
@@ -1233,6 +1383,11 @@
         {
             "name": "GX17+2",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GX17+2/filter_calendar.png"
@@ -1274,6 +1429,11 @@
         {
             "name": "GX301-2",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GX301-2/filter_calendar.png"
@@ -1315,6 +1475,11 @@
         {
             "name": "GX339-4",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/GX339-4/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GX339-4/filter_calendar.png"
@@ -1356,6 +1521,11 @@
         {
             "name": "GX349+2",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/GX349+2/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GX349+2/filter_calendar.png"
@@ -1397,6 +1567,11 @@
         {
             "name": "GX354-0",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GX354-0/filter_calendar.png"
@@ -1438,6 +1613,11 @@
         {
             "name": "GX5-1",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GX5-1/filter_calendar.png"
@@ -1479,6 +1659,11 @@
         {
             "name": "GX9+9",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/GX9+9/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/GX9+9/filter_calendar.png"
@@ -1520,6 +1705,11 @@
         {
             "name": "HD96670",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/HD96670/filter_calendar.png"
@@ -1561,6 +1751,11 @@
         {
             "name": "IGR17098-3628",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/IGR17098-3628/filter_calendar.png"
@@ -1602,6 +1797,11 @@
         {
             "name": "IGR17597-2201",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/IGR17597-2201/filter_calendar.png"
@@ -1643,6 +1843,11 @@
         {
             "name": "IGRJ17091-3624",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/IGRJ17091-3624/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/IGRJ17091-3624/filter_calendar.png"
@@ -1684,6 +1889,11 @@
         {
             "name": "IGRJ17191-2821",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/IGRJ17191-2821/filter_calendar.png"
@@ -1725,6 +1935,11 @@
         {
             "name": "IGRJ17379-3747",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/IGRJ17379-3747/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/IGRJ17379-3747/filter_calendar.png"
@@ -1766,6 +1981,11 @@
         {
             "name": "IGRJ17454",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/IGRJ17454/filter_calendar.png"
@@ -1807,6 +2027,11 @@
         {
             "name": "IGRJ17544-2619",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/IGRJ17544-2619/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/IGRJ17544-2619/filter_calendar.png"
@@ -1848,6 +2073,11 @@
         {
             "name": "J004308.6+411247",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J004308.6+411247/filter_calendar.png"
@@ -1889,6 +2119,11 @@
         {
             "name": "J0051-72",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J0051-72/filter_calendar.png"
@@ -1930,6 +2165,11 @@
         {
             "name": "J0051-736",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J0051-736/filter_calendar.png"
@@ -1971,6 +2211,11 @@
         {
             "name": "J0556-332",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J0556-332/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J0556-332/filter_calendar.png"
@@ -2012,6 +2257,11 @@
         {
             "name": "J0911",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J0911/filter_calendar.png"
@@ -2053,6 +2303,11 @@
         {
             "name": "J11305",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J11305/filter_calendar.png"
@@ -2094,6 +2349,11 @@
         {
             "name": "J11435",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J11435/filter_calendar.png"
@@ -2135,6 +2395,11 @@
         {
             "name": "J1305-704",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1305-704/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1305-704/filter_calendar.png"
@@ -2148,24 +2413,24 @@
                     "path": null
                 },
                 "stacked_V_image": {
-                    "available": false,
-                    "path": null
+                    "available": true,
+                    "path": "websiteplots/J1305-704/stacked_V.png"
                 },
                 "preliminary_1.3m_V_lightcurve": {
                     "available": true,
                     "path": "websiteplots/J1305-704/lightcurve_V.png"
                 },
                 "stacked_R_image": {
-                    "available": false,
-                    "path": null
+                    "available": true,
+                    "path": "websiteplots/J1305-704/stacked_R.png"
                 },
                 "preliminary_1.3m_R_lightcurve": {
                     "available": true,
                     "path": "websiteplots/J1305-704/lightcurve_R.png"
                 },
                 "stacked_I_image": {
-                    "available": false,
-                    "path": null
+                    "available": true,
+                    "path": "websiteplots/J1305-704/stacked_I.png"
                 },
                 "preliminary_1.3m_I_lightcurve": {
                     "available": true,
@@ -2176,6 +2441,11 @@
         {
             "name": "J1357",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1357/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1357/filter_calendar.png"
@@ -2217,6 +2487,11 @@
         {
             "name": "J1535-571",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1535-571/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1535-571/filter_calendar.png"
@@ -2258,6 +2533,11 @@
         {
             "name": "J1543-564",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1543-564/filter_calendar.png"
@@ -2299,6 +2579,11 @@
         {
             "name": "J1550-564",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1550-564/filter_calendar.png"
@@ -2340,6 +2625,11 @@
         {
             "name": "J1626.6",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1626.6/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1626.6/filter_calendar.png"
@@ -2361,8 +2651,8 @@
                     "path": null
                 },
                 "stacked_R_image": {
-                    "available": false,
-                    "path": null
+                    "available": true,
+                    "path": "websiteplots/J1626.6/stacked_R.png"
                 },
                 "preliminary_1.3m_R_lightcurve": {
                     "available": true,
@@ -2381,6 +2671,11 @@
         {
             "name": "J1628-41",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1628-41/filter_calendar.png"
@@ -2422,6 +2717,11 @@
         {
             "name": "J16283-4838",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J16283-4838/filter_calendar.png"
@@ -2463,6 +2763,11 @@
         {
             "name": "J1631-478",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1631-478/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1631-478/filter_calendar.png"
@@ -2504,6 +2809,11 @@
         {
             "name": "J16320-4751",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J16320-4751/filter_calendar.png"
@@ -2545,6 +2855,11 @@
         {
             "name": "J16358-4726",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J16358-4726/filter_calendar.png"
@@ -2586,6 +2901,11 @@
         {
             "name": "J1650-500",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1650-500/filter_calendar.png"
@@ -2627,6 +2947,11 @@
         {
             "name": "J165408-395636",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J165408-395636/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J165408-395636/filter_calendar.png"
@@ -2668,6 +2993,11 @@
         {
             "name": "J1659-152",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1659-152/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1659-152/filter_calendar.png"
@@ -2709,6 +3039,11 @@
         {
             "name": "J1701-462",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1701-462/filter_calendar.png"
@@ -2750,6 +3085,11 @@
         {
             "name": "J1719-356",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1719-356/filter_calendar.png"
@@ -2791,6 +3131,11 @@
         {
             "name": "J1720-318",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1720-318/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1720-318/filter_calendar.png"
@@ -2832,6 +3177,11 @@
         {
             "name": "J1726-476",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1726-476/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1726-476/filter_calendar.png"
@@ -2873,6 +3223,11 @@
         {
             "name": "J1727-203",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1727-203/filter_calendar.png"
@@ -2914,6 +3269,11 @@
         {
             "name": "J1745-26",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1745-26/filter_calendar.png"
@@ -2955,6 +3315,11 @@
         {
             "name": "J1746-322",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1746-322/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1746-322/filter_calendar.png"
@@ -2996,6 +3361,11 @@
         {
             "name": "J174716.1-281048",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J174716.1-281048/filter_calendar.png"
@@ -3037,6 +3407,11 @@
         {
             "name": "J1749.4-2807",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1749.4-2807/filter_calendar.png"
@@ -3078,6 +3453,11 @@
         {
             "name": "J1752-223",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1752-223/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1752-223/filter_calendar.png"
@@ -3119,6 +3499,11 @@
         {
             "name": "J1753",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1753/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1753/filter_calendar.png"
@@ -3160,6 +3545,11 @@
         {
             "name": "J1808.4-3658",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1808.4-3658/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1808.4-3658/filter_calendar.png"
@@ -3201,6 +3591,11 @@
         {
             "name": "J1813-095",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1813-095/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1813-095/filter_calendar.png"
@@ -3242,6 +3637,11 @@
         {
             "name": "J1817-330",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1817-330/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1817-330/filter_calendar.png"
@@ -3255,24 +3655,24 @@
                     "path": null
                 },
                 "stacked_V_image": {
-                    "available": false,
-                    "path": null
+                    "available": true,
+                    "path": "websiteplots/J1817-330/stacked_V.png"
                 },
                 "preliminary_1.3m_V_lightcurve": {
                     "available": true,
                     "path": "websiteplots/J1817-330/lightcurve_V.png"
                 },
                 "stacked_R_image": {
-                    "available": false,
-                    "path": null
+                    "available": true,
+                    "path": "websiteplots/J1817-330/stacked_R.png"
                 },
                 "preliminary_1.3m_R_lightcurve": {
                     "available": true,
                     "path": "websiteplots/J1817-330/lightcurve_R.png"
                 },
                 "stacked_I_image": {
-                    "available": false,
-                    "path": null
+                    "available": true,
+                    "path": "websiteplots/J1817-330/stacked_I.png"
                 },
                 "preliminary_1.3m_I_lightcurve": {
                     "available": true,
@@ -3283,6 +3683,11 @@
         {
             "name": "J1818-245",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1818-245/filter_calendar.png"
@@ -3324,6 +3729,11 @@
         {
             "name": "J1820",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1820/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1820/filter_calendar.png"
@@ -3365,6 +3775,11 @@
         {
             "name": "J1828-249",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1828-249/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1828-249/filter_calendar.png"
@@ -3406,6 +3821,11 @@
         {
             "name": "J1858.6-0814",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/J1858.6-0814/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1858.6-0814/filter_calendar.png"
@@ -3447,6 +3867,11 @@
         {
             "name": "J1957+032",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/J1957+032/filter_calendar.png"
@@ -3488,6 +3913,11 @@
         {
             "name": "LMCX-1",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/LMCX-1/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/LMCX-1/filter_calendar.png"
@@ -3529,6 +3959,11 @@
         {
             "name": "LMCX-2",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/LMCX-2/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/LMCX-2/filter_calendar.png"
@@ -3570,6 +4005,11 @@
         {
             "name": "LMCX-3",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/LMCX-3/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/LMCX-3/filter_calendar.png"
@@ -3611,6 +4051,11 @@
         {
             "name": "MMVel",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/MMVel/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/MMVel/filter_calendar.png"
@@ -3652,6 +4097,11 @@
         {
             "name": "NovaMusca",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/NovaMusca/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/NovaMusca/filter_calendar.png"
@@ -3693,6 +4143,11 @@
         {
             "name": "SMCX-1",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/SMCX-1/filter_calendar.png"
@@ -3734,6 +4189,11 @@
         {
             "name": "SMCX-2",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/SMCX-2/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/SMCX-2/filter_calendar.png"
@@ -3775,6 +4235,11 @@
         {
             "name": "SMCX-3",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/SMCX-3/filter_calendar.png"
@@ -3816,6 +4281,11 @@
         {
             "name": "ScoX-1",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/ScoX-1/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/ScoX-1/filter_calendar.png"
@@ -3857,6 +4327,11 @@
         {
             "name": "UYVol",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/UYVol/filter_calendar.png"
@@ -3898,6 +4373,11 @@
         {
             "name": "V1408Aql",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/V1408Aql/filter_calendar.png"
@@ -3939,6 +4419,11 @@
         {
             "name": "V4641",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart (Preliminary)",
+                    "available": true,
+                    "path": "websiteplots/V4641/finding_chart.png"
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/V4641/filter_calendar.png"
@@ -3980,6 +4465,11 @@
         {
             "name": "X0614+091",
             "products": {
+                "finding_chart": {
+                    "title": "Finding Chart",
+                    "available": false,
+                    "path": null
+                },
                 "Filter_calendar": {
                     "available": true,
                     "path": "websiteplots/X0614+091/filter_calendar.png"

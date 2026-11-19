@@ -13,17 +13,46 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from astropy.time import Time
 
+#UPDATE 11/17: My original magnitudes were not properly calibrated. 
+#These offsets calibrate correctly (pre-neighbor subtraction)
+offsets={"B": 1.26,
+        "V": 0.601,
+        "I": -0.535}
+
 #Outburst list
 full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
-band='I'
+band='V'
 #R BAND
 file1 = f'/home/kmc249/Downloads/full_aphot_{band}_lc_04_20.csv'
 
 #Read files
 J_df =pd.read_csv(file1, low_memory=False)
+
+# Read original light curve
+J_df = pd.read_csv(file1, low_memory=False)
+
+# Read CSV containing the filenames you want to keep
+allowed_files = pd.read_csv(
+    f'/neta/xrb/AqlX-1/product/just_subtracted_shifted/AqlX-1_{band}_corrected_lc_4_27.csv'
+)
+print(len(J_df))
+# Keep ONLY filenames that appear in the corrected CSV
+J_df = J_df[J_df['filename'].isin(allowed_files['filename'])].copy()
+
+print(f"Number of rows retained: {len(J_df)}")
+
+
 J_df['nice time'] = pd.to_datetime(J_df['nice time'], errors='coerce')  # NaT for invalid
+
+
+###HERE IS THE MAJOR UPDATE 11/17
+#print(J_df["Rmag"])
+J_df["Rmag"]+=offsets[band]
+#print(J_df["Rmag"])
+
+####
 
 # Convert to MJD using astropy
 mjds = Time(J_df['nice time'].values).mjd
@@ -126,10 +155,10 @@ m_e = -2.5 * np.log10(F_e)
 sigma_m_a = (2.5 / np.log(10)) * (sigma_F_a / F_a)
 sigma_m_e = (2.5 / np.log(10)) * (sigma_F_e / F_e)
 
-print(f"J magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
-print(f"J magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
+print(f"{band} magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
+print(f"{band} magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
+print(akjshdsj)
 
-print(akjhsdjh)
 #new way of magnitude errors
 J_corrected['flux_err'] = J_corrected['J_flux'] * np.log(10) * 0.4 * J_corrected['e_Rmag']
 J_corrected['e_Rmag_shifted']=(2.5 / np.log(10)) * (J_corrected['flux_err'] / J_corrected['F_corr'])

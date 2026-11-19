@@ -12,7 +12,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from astropy.time import Time
-
+#UPDATE 11/17: My original magnitudes were not properly calibrated. 
+#These offsets calibrate correctly (pre-neighbor subtraction)
 
 #Outburst list
 full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
@@ -25,6 +26,12 @@ file1 = '/home/kmc249/Downloads/full_aphot_lc_04_20.csv'
 #Read files
 J_df =pd.read_csv(file1, low_memory=False)
 J_df['nice time'] = pd.to_datetime(J_df['nice time'], errors='coerce')  # NaT for invalid
+
+
+###HERE IS THE MAJOR UPDATE 11/17
+print(J_df["Rmag"])
+J_df["Rmag"]-=0.055
+print(J_df["Rmag"])
 
 # Convert to MJD using astropy
 mjds = Time(J_df['nice time'].values).mjd
@@ -117,9 +124,9 @@ m_e = -2.5 * np.log10(F_e)
 sigma_m_a = (2.5 / np.log(10)) * (sigma_F_a / F_a)
 sigma_m_e = (2.5 / np.log(10)) * (sigma_F_e / F_e)
 
-print(f"J magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
-print(f"J magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
-
+print(f"R magnitude of a: {m_a:.3f}+/-{sigma_m_a:.3f}")
+print(f"R magnitude of e (Aql): {m_e:.3f}+/-{sigma_m_e:.3f}")
+print(aksjhd)
 #new way of magnitude errors
 J_corrected['flux_err'] = J_corrected['J_flux'] * np.log(10) * 0.4 * J_corrected['e_Rmag']
 J_corrected['e_Rmag_shifted']=(2.5 / np.log(10)) * (J_corrected['flux_err'] / J_corrected['F_corr'])

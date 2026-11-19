@@ -20,12 +20,12 @@ from astropy.visualization import ZScaleInterval, ImageNormalize, AsinhStretch
 ###per band, I will make stacked images here.
 
 
-target='J1305-704'
+target='J1626.6'
 fractions = {
     'B': 0.3,
     'V': 0.3,
     'R': 0.3,
-    'I': 0.5
+    'I': 0.3
 }
   #fraction of best frames to take in the stack, default of 0.3
 

@@ -17,7 +17,7 @@ from astropy.time import Time
 full = pd.read_csv("/home/kmc249/Downloads/full_outbursts.csv")
 mini = pd.read_csv("/home/kmc249/Downloads/mini_outbursts.csv")
 
-band='gp'
+band='V'
 ftype='banzai'
 #R BAND
 file1 = f'/home/kmc249/Downloads/{band}_usable_{ftype}.txt'

@@ -117,7 +117,55 @@ def main():
             "name": target,
             "products": {}
         }
+        #checking two places for the finding chart
+        final_dir = BASE_DIR / "PRODUCTS" / "finding_charts_optical"
         
+        #any final finding chart first?
+        final_matches = sorted(
+            final_dir.glob(f"{target}_findingchart_*.png")
+        )
+        
+        finding_chart = None
+        
+        if final_matches:
+            finding_chart = final_matches[0]
+            print(f"  Using final finding chart: {finding_chart.name}")
+            finding_title = "Finding Chart"
+        
+        else:
+            # If no final chart exists, look for a preliminary one
+            temp_dir = BASE_DIR / target / "temp"
+        
+            prelim_matches = sorted(
+                temp_dir.glob(f"{target}_*_finding_chart.png")
+            )
+        
+            if prelim_matches:
+                finding_chart = prelim_matches[0]
+                print(f"  Using preliminary finding chart: {finding_chart.name}")
+        
+        if finding_chart is not None:
+        
+            finding_out = f"websiteplots/{target}/finding_chart.png"
+            finding_out_path = OUTPUT_DIR / finding_out
+        
+            finding_out_path.parent.mkdir(parents=True, exist_ok=True)
+        
+            shutil.copy(finding_chart, finding_out_path)
+        
+            finding_available = True
+            finding_title = "Finding Chart (Preliminary)"
+        
+        else:
+            finding_out = None
+            finding_available = False
+            finding_title = "Finding Chart"
+        
+        target_info["products"]["finding_chart"] = {
+            "title": finding_title,
+            "available": finding_available,
+            "path": finding_out
+        }
         
         #getting the calendar file
         cal_file=Path(f'/neta/xrb/{target}/product/filter_patterns_{target}.png')

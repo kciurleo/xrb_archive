@@ -721,6 +721,27 @@ offsets = {
     "ip_LCO": coorr_I_SMARTS - coorr_ip_LCO,
 }
 
+# ============================================================
+# PRINT ALL APPLIED PHOTOMETRIC SHIFTS
+# ============================================================
+
+print("\nPHOTOMETRIC SHIFTS")
+print("==============================")
+
+print(f"SMARTS R : {0.0:+.4f} mag (reference)")
+print(f"LCO R    : {offsets['R_LCO']:+.4f} mag")
+print(f"LCO rp   : {offsets['Rp_LCO']:+.4f} mag")
+
+print(f"SMARTS V : {offsets['V_SMARTS']:+.4f} mag")
+print(f"LCO V    : {0.0:+.4f} mag (reference)")
+
+print(f"LCO gp   : {offsets['gp_LCO']:+.4f} mag")
+
+print(f"SMARTS I : {0.0:+.4f} mag (reference)")
+print(f"LCO ip   : {offsets['ip_LCO']:+.4f} mag")
+
+print("==============================")
+
 R_LCO_corr["mag_shifted"] = R_LCO_corr["mag_corr"] + offsets['R_LCO']
 Rp_LCO_corr["mag_shifted"] = Rp_LCO_corr["mag_corr"] + offsets['Rp_LCO']
 V_new["Rmag_shifted"] = V_new["Rmag_corr"] + offsets['V_SMARTS']
